@@ -19,12 +19,16 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 
 ## Reference 参考資料
 
-* Visual Studio CodeでJavaプログラム開発環境構築
+環境構築
 
-https://qiita.com/brgd/items/da54e5db258bc9d2538a
+* [VSCodeとGitの連携、Githubへのpushまで（初心者向け）](https://qiita.com/midori-game/items/0abf0013a70790518738)
 
-* 【備忘録】GitとGithubの基本知識
+* [JDK - IT入門書籍 スッキリシリーズ](https://sukkiri.jp/technologies/processors/jdk)
 
-https://qiita.com/moonbass630/items/383fc8300a83784e4c82
+* [Visual Studio CodeでJavaプログラム開発環境構築](https://qiita.com/brgd/items/da54e5db258bc9d2538a)
+
+Gitの使い方
+
+* [【備忘録】GitとGithubの基本知識](https://qiita.com/moonbass630/items/383fc8300a83784e4c82)
 
 
