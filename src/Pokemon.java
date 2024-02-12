@@ -31,13 +31,13 @@ public abstract class Pokemon {
 	private String ball; //ボール
 	private String item; //もちもの
 	private String status; //ステータス
-	int dexNo; //ずかん番号
-	int level; //レベル
+	private int dexNo; //ずかん番号
+	private int level; //レベル
 	int hp; //体力
-	int hp_max; //最大HP
-	int exp; //経験値
-	int exp_max; //レベルアップに必要な経験値
-	Random rand; //乱数用
+	private int hp_max; //最大HP
+	private int exp; //経験値
+	private int exp_max; //レベルアップに必要な経験値
+	private Random rand; //乱数用
 
 	//コンストラクタ
 	public Pokemon() {
@@ -56,8 +56,8 @@ public abstract class Pokemon {
 		this.setStatus(null);
 		this.setDexNo(0);
 		this.setLevel(0);
-		this.setHp_max(0);
-		this.setHp(this.getHp_max());
+		this.setHP_max(0);
+		this.setHP(this.getHP_max());
 		this.setExp(10);
 		this.setExp_max(0);
 		this.setRand(new Random());
@@ -175,19 +175,19 @@ public abstract class Pokemon {
 		this.level = level;
 	}
 
-	public int getHp() {
+	public int getHP() {
 		return this.hp;
 	}
 	
-	public void setHp(int hp) {
+	public void setHP(int hp) {
 		this.hp = hp;
 	}
 
-	public int getHp_max() {
+	public int getHP_max() {
 		return this.hp_max;
 	}
 
-	public void setHp_max(int hp_max) {
+	public void setHP_max(int hp_max) {
 		this.hp_max = hp_max;
 	}
 	

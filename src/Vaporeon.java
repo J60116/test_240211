@@ -15,13 +15,13 @@ final class Vaporeon extends Eevee{
 //		this.hp_max = super.ARRAY_EVOLVUTION[0][4];
 //		this.height = super.ARRAY_EVOLVUTION[0][5];
 //		this.weight = super.ARRAY_EVOLVUTION[0][6];
-		this.dexNo = ARRAY_EVOLVED_DEXNO[0];
+		this.setDexNo(ARRAY_EVOLVED_DEXNO[0]);
 		this.setName(ARRAY_EVOLVED_NAME[0]);
 		this.setNickname(this.getName());
 		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
 		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
-		this.hp_max = ARRAY_EVOLVED_MAXHP[0];
-		this.hp = this.hp_max;
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[0]);
+		this.hp = this.getHP_max();
 	}
 
 	@Override
