@@ -56,12 +56,16 @@ class User {
 	public void startBattle(Pokemon enemy){
 		this.battle = true;
 		Pokemon friend = this.getPocket()[0];
+		System.out.println("Go!" + friend.getNickname());
 		while(battle){
 			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
-			int num = sc.nextInt();
-			switch(num){
+			int menu = sc.nextInt();
+			switch(menu){
 				case 1:
 					friend.checkMoves();
+					System.out.print("What number of Moves do you use?: ");
+					int num = sc.nextInt();
+					friend.useMove(num, enemy);
 					break;
 				case 2:
 					break;

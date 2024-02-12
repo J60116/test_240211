@@ -265,11 +265,31 @@ public abstract class Pokemon {
 
 	//技を確認する
 	public void checkMoves(){
-		for (Move m : this.getMove()) {
-			if (m != null) {
-				System.out.println(m);
-			}
+		for(int i = 0; i < this.getMove().length; i++){
+			System.out.println("[" + (i + 1) + "] " + getMove(i));
 		}
+		// for (Move m : this.getMove()) {
+		// 	if (m != null) {
+		// 		System.out.println(m);
+		// 	}
+		// }
+	}
+
+	//自分自身に対する技
+	public void useMove(int num){
+		if(num >= 0 && num < 4){
+			//技の内容
+		}
+	}
+
+	//相手に対する技
+	public void useMove(int num, Pokemon enemy){
+		int damage = 0;
+		if(num >= 0 && num < 4){
+			System.out.println(this.getNickname() + "used" + this.getMove(num - 1).name + "!");
+			damage = this.getMove(num - 1).power;
+		}
+		enemy.setHP(enemy.getHP() - damage);
 	}
 	
 	//逃げる
