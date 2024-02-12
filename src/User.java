@@ -66,8 +66,14 @@ class User {
 					System.out.print("What number of Moves do you use?: ");
 					int num = sc.nextInt();
 					friend.useMove(num, enemy);
+					if(enemy.fainted){
+						battle = false;
+					} else if(friend.fainted){
+						/*ポケモンを入れ替える*/
+					}
 					break;
 				case 2:
+					/*ポケモンを入れ替える*/
 					break;
 				case 3:
 					System.out.print("What type of Poke Balls do you use?: ");
