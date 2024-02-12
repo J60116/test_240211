@@ -30,7 +30,7 @@ class User {
 		}
 		//ポケモンがボールに入っていない場合
 		if (pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
-			System.out.println("Please catch " + pokemon.name + " using any of PokeBall.");
+			System.out.println("Please catch " + pokemon.getName() + " using any of PokeBall.");
 			return;
 		}
 		for (int i = 0; i < this.getPocket().length; i++) {
@@ -52,7 +52,7 @@ class User {
 
 	//ニックネームをつける
 	public void giveNickname(Pokemon pokemon) {
-		System.out.println("Do you give " + pokemon.name + " a nickname?");
+		System.out.println("Do you give " + pokemon.getName() + " a nickname?");
 		int num = -1;
 		while(true){
 			try{
@@ -68,13 +68,13 @@ class User {
 				sc.nextLine();
 			}
 		}
-		String str = pokemon.name;
+		String str = null;
 		if (num == 1) {
 			while (true) {
 				System.out.print("Nickname: ");
 				str = sc.next();
-				if(str.equals(pokemon.name)){
-					System.out.println("ERROR >> Please input nickname except " + pokemon.name);
+				if(str.equals(pokemon.getName())){
+					System.out.println("ERROR >> Please input nickname except " + pokemon.getName());
 					sc.nextLine();
 					continue;
 				}
@@ -103,16 +103,16 @@ class User {
 		//既に捕まえられている場合
 		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
 			if(pokemon.getOwner().equals(this.name)) {
-				System.out.println(this.name + " has already caught " + pokemon.name + ".");
+				System.out.println(this.name + " has already caught " + pokemon.getName() + ".");
 				return;
 			} else {
-				System.out.println(pokemon.name + "'s owner is " + pokemon.getOwner() + ".");
+				System.out.println(pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
 				return;
 			}
 		}
 		pokemon.setOwner(this.name);
 		pokemon.setBall(ball);
-		System.out.println(this.name + " caught " + pokemon.name + "!");
+		System.out.println(this.name + " caught " + pokemon.getName() + "!");
 		this.giveNickname(pokemon);		
 		//ポケットに空きがある場合
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
@@ -128,7 +128,7 @@ class User {
 			for (int i = 0; i < this.box.length; i++) {
 				if (this.box[i] == null) {
 					this.box[i] = pokemon;
-					System.out.println(pokemon.name + " has moved into the box.");
+					System.out.println(pokemon.getName() + " has moved into the box.");
 					break;
 				}
 			}
@@ -154,7 +154,7 @@ class User {
 				p.recover();
 				count++;
 				if(count == 1) {
-					p_name = p.name;
+					p_name = p.getName();
 				}
 			}
 		}

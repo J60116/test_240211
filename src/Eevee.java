@@ -24,8 +24,8 @@ class Eevee extends Pokemon {
 
 	public Eevee(String owner, String ball) {
 		super(owner, ball);
-		this.name = NAME;
-		this.setNickname(this.name);
+		this.setName(NAME);
+		this.setNickname(this.getName());
 		this.setGender();
 		this.setType(0, ARRAY_TYPE[1]); //Normal
 		this.setAbility();
@@ -85,7 +85,7 @@ class Eevee extends Pokemon {
 
 	@Override
 	public void attack(Pokemon p) {
-		System.out.println(this.name + "attacked" + p.name + "!");
+		System.out.println(this.getName() + "attacked" + p.getName() + "!");
 		p.hp -= 5;
 	}
 
@@ -94,9 +94,9 @@ class Eevee extends Pokemon {
 	public void evolve(int i) {
 		System.out.println("Congratulations! Your " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
 		this.dexNo = ARRAY_EVOLVED_DEXNO[i];
-		this.name = ARRAY_EVOLVED_NAME[i];
+		this.setName(ARRAY_EVOLVED_NAME[i]);
 		if(this.getNickname().equals(NAME)) {
-			this.setNickname(this.name);
+			this.setNickname(this.getName());
 		}
 		this.setType(0, ARRAY_EVOLVED_TYPE[i]);
 		this.ability = ARRAY_EVOLVED_ABILITY[i];

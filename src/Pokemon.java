@@ -22,8 +22,8 @@ public abstract class Pokemon {
 	//名前の条件
 	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
 
-	String name; //名前
-	String nickname; //ニックネーム
+	private String name; //名前
+	private String nickname; //ニックネーム
 	String owner; //トレーナー
 	String gender; //性別
 	private String[] type; //タイプ

@@ -16,8 +16,8 @@ final class Vaporeon extends Eevee{
 //		this.height = super.ARRAY_EVOLVUTION[0][5];
 //		this.weight = super.ARRAY_EVOLVUTION[0][6];
 		this.dexNo = ARRAY_EVOLVED_DEXNO[0];
-		this.name = ARRAY_EVOLVED_NAME[0];
-		this.setNickname(this.name);
+		this.setName(ARRAY_EVOLVED_NAME[0]);
+		this.setNickname(this.getName());
 		this.setGender();
 		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
 		this.ability = ARRAY_EVOLVED_ABILITY[0];
@@ -64,12 +64,12 @@ final class Vaporeon extends Eevee{
 
 	@Override
 	public void attack(Pokemon p) {
-		System.out.println(this.name + " attacked" + p.name + "!");
+		System.out.println(this.getName() + " attacked" + p.getName() + "!");
 		p.hp -= 10;
 	}
 
 	public void HydroPump(Pokemon p){
-		System.out.println(this.name + " used Hydro Pump!");
+		System.out.println(this.getName() + " used Hydro Pump!");
 		p.hp -= 20;
 	}
 	
