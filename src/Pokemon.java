@@ -343,6 +343,11 @@ public abstract class Pokemon {
 	//回復する
 	public void recover() {
 		this.hp = this.hp_max;
+		// this.moves.mp = this.mp_max;
+		for(int i = 0; i<this.getMove().length;i++){
+			Move m = this.getMove(i);
+			m.setMP(m.getMP_max());
+		}
 		this.fainted = false;
 	}
 
