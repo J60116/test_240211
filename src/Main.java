@@ -14,11 +14,14 @@ public class Main {
 		//ポケモンが現れた
 		Pokemon eevee = new Eevee();
 
+		//捕まえていない状態でポケットに入れようとする
+		user.setPocket(3, eevee);
+
 		//ポケモンをマスターボールで捕まえる
 		user.getPokemon(eevee, "MasterBall");
 
-		//すでに捕まえているポケモンを4番目のポケットに入れようとする
-		user.setPocket(3, eevee);
+		//すでに捕まえているポケモンを5番目のポケットに入れようとする
+		user.setPocket(4, eevee);
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();

@@ -30,14 +30,14 @@ class User {
 		}
 		//ポケモンがボールに入っていない場合
 		if (pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
-			System.out.println("Please set " + pokemon.name + " in a Monster ball.");
+			System.out.println("Please catch " + pokemon.name + " using any of PokeBall.");
 			return;
 		}
 		for (int i = 0; i < this.getPocket().length; i++) {
 			if (this.getPocket()[i] != null ){
 				//既にポケットにいるポケモンを指定した場合
 				if (this.getPocket()[i].equals(pokemon)) {
-					System.out.println(this.name + " already set this Pokemon in your pocket.");
+					System.out.println("You already set this Pokemon in your pocket.");
 					return;
 				}
 				//指定したポケットが空いていない場合
