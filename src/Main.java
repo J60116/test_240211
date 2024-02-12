@@ -17,7 +17,8 @@ public class Main {
 		//ポケモンをマスターボールで捕まえる
 		user.getPokemon(eevee, "MasterBall");
 
-		user.setPocket(3,eevee);
+		//すでに捕まえているポケモンを4番目のポケットに入れようとする
+		user.setPocket(3, eevee);
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();
