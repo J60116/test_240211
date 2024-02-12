@@ -13,10 +13,6 @@ public abstract class Pokemon {
 	//	final static String[] ARRAY_IMG_BALL = { "・", "○", "●" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
-	//技の効果
-	final static String[] ARRAY_EFFECTIVE_MSG = { "×Has no effect", "△Not very effective", "〇Effective",
-			"◎Super effective" };
-	final static double[] ARRAY_EFFECTIVE_RATE = { 0.0, 0.5, 1.0, 2.0 };
 	//戦闘状態（0:戦闘中 1:戦闘可能 2:戦闘不可/ひんし状態）
 	final static String[][] ARRAY_STATUS = { { "In Battle", "○" }, { "Can Battle", "○" }, { "Can't Battle", "●" } };
 	//名前の条件
@@ -38,6 +34,7 @@ public abstract class Pokemon {
 	private int exp; //経験値
 	private int exp_max; //レベルアップに必要な経験値
 	private Random rand; //乱数用
+	Move[] move; //技
 
 	//コンストラクタ
 	public Pokemon() {
@@ -61,6 +58,7 @@ public abstract class Pokemon {
 		this.setExp(10);
 		this.setExp_max(0);
 		this.setRand(new Random());
+		this.move = new Move[4];
 	}
 	
 	//アクセサ
