@@ -15,40 +15,42 @@ final class Vaporeon extends Eevee{
 //		this.hp_max = super.ARRAY_EVOLVUTION[0][4];
 //		this.height = super.ARRAY_EVOLVUTION[0][5];
 //		this.weight = super.ARRAY_EVOLVUTION[0][6];
-		this.dexNo = ARRAY_EVOLVED_DEXNO[0];
-		this.name = ARRAY_EVOLVED_NAME[0];
-		this.setNickname(this.name);
-		this.setGender();
-		this.type[0] = ARRAY_EVOLVED_TYPE[0];
-		this.ability = ARRAY_EVOLVED_ABILITY[0];
-		this.hp_max = ARRAY_EVOLVED_MAXHP[0];
-		this.hp = this.hp_max;
+		this.setDexNo(ARRAY_EVOLVED_DEXNO[0]);
+		this.setName(ARRAY_EVOLVED_NAME[0]);
+		this.setNickname(ARRAY_EVOLVED_NAME[0]);
+		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
+		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[0]);
+		this.hp = this.getHP_max();
+		this.setMove(1, new Hydropump());
 	}
-	
-	private void setGender() {
-		//87.5%♂・12.5%♀
-		int num = this.rand.nextInt(8); //性別設定用
-		if (num != 0) {
-			this.gender = ARRAY_GENDER[1];
-		} else {
-			this.gender = ARRAY_GENDER[2];
-		}
+
+	@Override
+	public String[] getType(){
+		//アクセスできるようにsuperを使用
+		return super.getType();
+	}
+
+	@Override
+	public void setType(String[] type){
+		//アクセスできるようにsuperを使用
+		super.setType(type);
 	}
 
 	@Override
 	public void setItem(String item) {
 		//進化の石を持たせてもevolve(int)を呼び出さない
-		this.item = item;
+		super.setItem(item);
 	}
 
 	@Override
 	public void attack(Pokemon p) {
-		System.out.println(this.name + " attacked" + p.name + "!");
+		System.out.println(this.getName() + " attacked" + p.getName() + "!");
 		p.hp -= 10;
 	}
 
 	public void HydroPump(Pokemon p){
-		System.out.println(this.name + " used Hydro Pump!");
+		System.out.println(this.getName() + " used Hydro Pump!");
 		p.hp -= 20;
 	}
 	
