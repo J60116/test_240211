@@ -58,22 +58,23 @@ class User {
 		Pokemon friend = this.getPocket()[0];
 		System.out.println("Go! " + friend.getNickname() + "!");
 		while(battle){
-			System.out.print("Enemy)  ");
+			System.out.println("<<<<<<< Enemy");
 			enemy.checkHP();
-			System.out.print("Friend) ");
+			System.out.println("=======");
 			friend.checkHP();
+			System.out.println(">>>>>>> Friend");
 			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
 			int menu = sc.nextInt();
 			switch(menu){
 				case 1:
 					friend.checkMoves();
 					System.out.print("What number of Moves do you use?: ");
-					int num = sc.nextInt();
+					int num_f = sc.nextInt();
 					//味方の攻撃
-					friend.useMove(num, enemy);
+					friend.useMove(num_f, enemy);
 					//敵の攻撃
-					int r = enemy.getRand().nextInt(enemy.getMove().length) + 1;
-					enemy.useMove(r, friend);
+					int num_e = enemy.getRand().nextInt(enemy.getMove().length) + 1;
+					enemy.useMove(num_e, friend);
 					if(enemy.fainted){
 						battle = false;
 						System.out.println(this.name + " won the game!");
@@ -141,26 +142,29 @@ class User {
 		System.out.println("Pleasure to meet you, " + pokemon.getNickname() + "!");
 	}
 
-	//ポケモンを捕まえる
-	private void getPokemon(Pokemon pokemon, String ball) {
-		//ボールの名前が正しいか確認
-		boolean check = false;
+	//ボールの名前が正しいか確認
+	public boolean booleanBall(String ball){
 		for (int i = 0; i < Pokemon.ARRAY_BALL.length; i++) {
 			if (ball.equals(Pokemon.ARRAY_BALL[i][0])) {
-				check = true;
+				return true;
 			}
 		}
-		if(!check) {
-			System.out.println(ball + " is not tool to catch Pokemon.");
+		System.out.println("MISS! " + ball + " is not tool to catch Pokemon.");
+		return false;
+	}
+
+	//ポケモンを捕まえる
+	private void getPokemon(Pokemon pokemon, String ball) {
+		if(this.booleanBall(ball) == false){
 			return;
 		}
 		//既に捕まえられている場合
 		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
 			if(pokemon.getOwner().equals(this.name)) {
-				System.out.println(this.name + " has already caught " + pokemon.getName() + ".");
+				System.out.println("MISS! " + this.name + " has already caught " + pokemon.getName() + ".");
 				return;
 			} else {
-				System.out.println(pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
+				System.out.println("MISS! " + pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
 				return;
 			}
 		}

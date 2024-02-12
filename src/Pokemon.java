@@ -142,7 +142,7 @@ public abstract class Pokemon {
 			}
 		}
 		if(imputBall.isEmpty()) {
-			System.out.println(ball + " is not tool to catch Pokemon.");
+			System.out.println("MISS! " + ball + " is not tool to catch Pokemon.");
 			return;
 		}
 		this.ball = imputBall;
@@ -297,7 +297,7 @@ public abstract class Pokemon {
 		}
 		//MPが0の場合
 		if(this.getMove(num - 1).getMP() == 0){
-			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
+			System.out.println("MISS! " + this.getNickname() +" cannot use " + this.getMove(num - 1).name + ".");
 			return false;
 		}
 		return true;
