@@ -288,32 +288,36 @@ public abstract class Pokemon {
 		// 	}
 		// }
 	}
-
-	//自分自身に対する技
-	public void useMove(int num){
+	
+	//技が使えるかの確認
+	public boolean booleanMove(int num){
+		//技が選択できない場合
+		if((num - 1 < 0 && num - 1 > 3)||this.getMove(num - 1) == null){
+			return false;
+		}
 		//MPが0の場合
 		if(this.getMove(num - 1).getMP() == 0){
 			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
+			return false;
+		}
+		return true;
+	}
+
+	//自分自身に対する技
+	public void useMove(int num){
+		if(this.booleanMove(num) == false){
 			return;
 		}
-		if(num >= 0 && num < 4){
-			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
-			System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
-			/*
-			技の内容
-			*/
-		}
+		this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
+		System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
+		/*
+		技の内容
+		*/
 	}
 
 	//相手に対する技
 	public void useMove(int num, Pokemon enemy){
-		//技が選択できない場合
-		if((num - 1 < 0 && num - 1 > 3)||this.getMove(num - 1) == null){
-			return;
-		}
-		//MPが0の場合
-		if(this.getMove(num - 1).getMP() == 0){
-			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
+		if(this.booleanMove(num) == false){
 			return;
 		}
 		int damage = 0;

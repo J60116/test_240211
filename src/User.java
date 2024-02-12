@@ -72,7 +72,7 @@ class User {
 					//味方の攻撃
 					friend.useMove(num, enemy);
 					//敵の攻撃
-					int r = enemy.getRand().nextInt(enemy.getMove().length);
+					int r = enemy.getRand().nextInt(enemy.getMove().length) + 1;
 					enemy.useMove(r, friend);
 					if(enemy.fainted){
 						battle = false;
