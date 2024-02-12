@@ -98,11 +98,16 @@ class User {
 					}
 					break;
 				case 4:
-					friend.run();
+					this.run();
 					this.battle = false;
 					break;
 			}
 		}
+	}
+
+	//逃げる
+	public void run() {
+		System.out.println(this.name + " run away.");
 	}
 
 	//ニックネームをつける
