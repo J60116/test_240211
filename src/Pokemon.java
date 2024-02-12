@@ -56,8 +56,8 @@ public abstract class Pokemon {
 		this.setLevel(0);
 		this.setHP_max(0);
 		this.setHP(this.getHP_max());
-		this.setExp(10);
-		this.setExp_max(0);
+		this.setExp(0);
+		this.setExp_max(10);
 		this.setRand(new Random());
 		this.moves = new Move[4];
 	}
@@ -179,6 +179,10 @@ public abstract class Pokemon {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	//オーバーロード
+	public void setLevel() {
+		this.level++;
+	}
 
 	public int getHP() {
 		return this.hp;
@@ -207,6 +211,10 @@ public abstract class Pokemon {
 	
 	public void setExp(int exp) {
 		this.exp = exp;
+		if(this.exp > this.getExp_max()){
+			this.setLevel();
+			this.exp -= this.getExp_max();
+		}
 	}
 	
 	public int getExp_max() {

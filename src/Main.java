@@ -27,8 +27,8 @@ public class Main {
 		user.visitPokemonCenter();
 
 		//2番目と3番目のポケモンに「みずのいし」を渡す
-		user.giveItem(1 , "WaterStone");
-		user.giveItem(2 , "WaterStone");
+		// user.giveItem(1 , "WaterStone");
+		// user.giveItem(2 , "WaterStone");
 
 		//所持しているポケモンのステータスを見る
 		user.viewCurrentParty();
