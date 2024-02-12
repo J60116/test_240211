@@ -19,15 +19,17 @@ public abstract class Pokemon {
 	final static double[] ARRAY_EFFECTIVE_RATE = { 0.0, 0.5, 1.0, 2.0 };
 	//戦闘状態（0:戦闘中 1:戦闘可能 2:戦闘不可/ひんし状態）
 	final static String[][] ARRAY_STATUS = { { "In Battle", "○" }, { "Can Battle", "○" }, { "Can't Battle", "●" } };
+	//名前の条件
+	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
 
 	String name; //名前
-	private String nickname; //ニックネーム
-	private String owner; //トレーナー
+	String nickname; //ニックネーム
+	String owner; //トレーナー
 	String gender; //性別
 	String[] type; //タイプ
 	String ability; //特性
-	private String ball; //ボール
-	private String item; //もちもの
+	String ball; //ボール
+	String item; //もちもの
 	String status; //ステータス
 	int dexNo; //ずかん番号
 	int level; //レベル
@@ -37,20 +39,21 @@ public abstract class Pokemon {
 	int exp_max; //レベルアップに必要な経験値
 	Random rand; //乱数用
 
+	//コンストラクタ
 	public Pokemon() {
 		this(null , ARRAY_BALL[0][0]);
 	}
 
 	public Pokemon(String owner, String ball) {
-		this.name = null;
-		this.nickname = this.name;
+		this.name = "None";
+		this.setNickname(this.name);
 		this.setOwner(owner);
 		this.gender = ARRAY_GENDER[0];
 		this.type = new String[2];
 		this.type[0] = ARRAY_TYPE[0];
 		this.ability = null;
 		this.setBall(ball);
-		this.item = "None";
+		this.setItem("None");
 		this.status = null;
 		this.dexNo = 0;
 		this.level = 1;
@@ -60,27 +63,60 @@ public abstract class Pokemon {
 		this.exp_max = 10;
 		this.rand = new Random();
 	}
+	
+	//アクセサ
+	public String getName() {
+		return this.name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getNickname() {
 		return this.nickname;
 	}
-
+	
 	public void setNickname(String nickname) {
-		if (!nickname.matches("[A-Z][A-Za-z]{1,14}")) {
+		if (!nickname.matches(FMT_NAME)) {
 			System.out.println(nickname +" is not acceptable.");
 			return;
 		}
 		this.nickname = nickname;
 	}
-
+	
 	public String getOwner() {
 		return this.owner;
 	}
-
+	
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 
+	public String getGender() {
+		return this.gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public String[] getType() {
+		return this.type;
+	}
+	
+	public void setType(String[] type) {
+		this.type = type;
+	}
+	
+	public String getAbility() {
+		return this.ability;
+	}
+	
+	public void setAbility(String ability) {
+		this.ability = ability;
+	}
+	
 	public String getBall() {
 		return this.ball;
 	}
@@ -107,6 +143,72 @@ public abstract class Pokemon {
 		this.item = item;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public int getDexNo() {
+		return this.dexNo;
+	}
+	
+	public void setDexNo(int dexNo) {
+		this.dexNo = dexNo;
+	}
+
+	public int getLevel() {
+		return this.level;
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getHp() {
+		return this.hp;
+	}
+	
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getHp_max() {
+		return this.hp_max;
+	}
+
+	public void setHp_max(int hp_max) {
+		this.hp_max = hp_max;
+	}
+	
+	public int getExp() {
+		return this.exp;
+	}
+	
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+	
+	public int getExp_max() {
+		return this.exp_max;
+	}
+	
+	public void setExp_max(int exp_max) {
+		this.exp_max = exp_max;
+	}
+	
+	public Random getRand() {
+		return this.rand;
+	}
+	
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+
+	//メゾット
+	@Override
 	public String toString() {
 		String type = "";
 		if (this.type[1] == null) {
@@ -126,7 +228,7 @@ public abstract class Pokemon {
 	public void checkStatus() {
 		System.out.println(this.toString());
 	}
-
+	
 	//逃げる
 	public void run() {
 		System.out.println(this.nickname + " run away.");

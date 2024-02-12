@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 class User {
 	String name; //名前
@@ -33,17 +33,19 @@ class User {
 			System.out.println("Please set " + pokemon.name + " in a Monster ball.");
 			return;
 		}
-		//既にポケットにいるポケモンを指定した場合
 		for (int i = 0; i < this.getPocket().length; i++) {
-			if (this.getPocket()[i] != null && this.getPocket()[i].equals(pokemon)) {
-				System.out.println(this.name + " already have this Pokemon in your pocket.");
-				return;
+			if (this.getPocket()[i] != null ){
+				//既にポケットにいるポケモンを指定した場合
+				if (this.getPocket()[i].equals(pokemon)) {
+					System.out.println(this.name + " already set this Pokemon in your pocket.");
+					return;
+				}
+				//指定したポケットが空いていない場合
+				if (num == i) {
+					System.out.println("The pocket[" + num + "] is unavailable");
+					return;
+				}
 			}
-		}
-		//指定したポケットが空いていない場合
-		if (this.getPocket()[num] != null) {
-			System.out.println("There is already a Pokemon in the pocket["+num+"].");
-			return;
 		}
 		this.pocket[num] = pokemon;
 	}
@@ -51,14 +53,33 @@ class User {
 	//ニックネームをつける
 	public void giveNickname(Pokemon pokemon) {
 		System.out.println("Do you give " + pokemon.name + " a nickname?");
-		System.out.print("【1】YES 【0】NO : ");
-		int num = sc.nextInt();
+		int num = -1;
+		while(true){
+			try{
+				System.out.print("【1】YES 【0】NO : ");
+				num = sc.nextInt();
+				//0か1が入力された場合、ループを抜ける
+				if(num == 0 || num == 1){
+					break;
+				}
+				System.out.println("ERROR >> Please input 0 or 1");
+			} catch (InputMismatchException e){
+				System.out.println("ERROR >> Please input number");
+				sc.nextLine();
+			}
+		}
 		String str = pokemon.name;
 		if (num == 1) {
-			while (str.equals(pokemon.name)||!str.matches("[A-Z][A-Za-z]{1,9}")) {
-				if (num == 1) {
-					System.out.print("Nickname: ");
-					str = sc.next();
+			while (true) {
+				System.out.print("Nickname: ");
+				str = sc.next();
+				if(str.equals(pokemon.name)){
+					System.out.println("ERROR >> Please input nickname except " + pokemon.name);
+					sc.nextLine();
+					continue;
+				}
+				if(str.matches(Pokemon.FMT_NAME)){
+					break;
 				}
 			}
 		}
@@ -160,7 +181,6 @@ class User {
 
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
-		
 		if (this.getPocket()[num] != null) {
 			System.out.println(this.getPocket()[num].getNickname() + " received " + item + ".");
 			this.getPocket()[num].setItem(item);

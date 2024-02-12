@@ -5,17 +5,19 @@ public class Main {
 		User user = new User();
 	
 		//いま所持しているポケモン
-		user.setPocket(1,new Eevee(user.name, "PokeBall"));
-		user.setPocket(2,new Vaporeon(user.name, "SuperBall"));
+		user.setPocket(1, new Eevee(user.name, "PokeBall"));
+		user.setPocket(2, new Vaporeon(user.name, "SuperBall"));
 
-		//ポケモンが現れた
-		Pokemon eevee = new Eevee();
-		
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
 
+		//ポケモンが現れた
+		Pokemon eevee = new Eevee();
+
 		//ポケモンをマスターボールで捕まえる
 		user.getPokemon(eevee, "MasterBall");
+
+		user.setPocket(3,eevee);
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();

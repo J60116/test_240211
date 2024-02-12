@@ -37,7 +37,8 @@ final class Vaporeon extends Eevee{
 
 	@Override
 	public void setItem(String item) {
-		super.setItem(item);
+		//進化の石を持たせてもevolve(int)を呼び出さない
+		this.item = item;
 	}
 
 	@Override
