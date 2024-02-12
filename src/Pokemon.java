@@ -28,9 +28,9 @@ public abstract class Pokemon {
 	private String gender; //性別
 	private String[] type; //タイプ
 	private String ability; //特性
-	String ball; //ボール
-	String item; //もちもの
-	String status; //ステータス
+	private String ball; //ボール
+	private String item; //もちもの
+	private String status; //ステータス
 	int dexNo; //ずかん番号
 	int level; //レベル
 	int hp; //体力
