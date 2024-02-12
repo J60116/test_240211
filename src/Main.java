@@ -20,9 +20,6 @@ public class Main {
 		//ポケモンバトル
 		user.startBattle(eevee);
 
-		//ポケモンをマスターボールで捕まえる
-		// user.getPokemon(eevee, "MasterBall");
-
 		//すでに捕まえているポケモンを5番目のポケットに入れようとする
 		// user.setPocket(4, eevee);
 

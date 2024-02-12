@@ -26,7 +26,8 @@ public abstract class Move {
     @Override
 	public String toString() {
         String str = this.name + " " + "(" + this.type + ") " + this.mp + "/" + this.mp_max 
-        + "\nPower:" + this.power + " Accuracy:" + this.accuracy;
+        // + "\nPower:" + this.power + " Accuracy:" + this.accuracy
+        ;
         return str;
     }
 
