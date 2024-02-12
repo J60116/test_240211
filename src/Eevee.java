@@ -25,7 +25,7 @@ class Eevee extends Pokemon {
 	public Eevee(String owner, String ball) {
 		super(owner, ball);
 		this.setName(NAME);
-		this.setNickname(this.getName());
+		this.setNickname(NAME);
 		this.setGender();
 		this.setType(0, ARRAY_TYPE[1]); //Normal
 		this.setAbility();

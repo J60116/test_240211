@@ -133,10 +133,10 @@ public abstract class Pokemon {
 	}
 
 	public void setBall(String ball) {
-		//ボールの名前に誤りがある場合
 		String imputBall = "";
 		for (int i = 0; i < ARRAY_BALL.length; i++) {
 			if (ball.equals(ARRAY_BALL[i][0])) {
+				//ボールの名前が正しければ代入する
 				imputBall = ARRAY_BALL[i][1];
 			}
 		}
@@ -261,6 +261,15 @@ public abstract class Pokemon {
 	//ステータスを確認する
 	public void checkStatus() {
 		System.out.println(this.toString());
+	}
+
+	//技を確認する
+	public void checkMoves(){
+		for (Move m : this.getMove()) {
+			if (m != null) {
+				System.out.println(m);
+			}
+		}
 	}
 	
 	//逃げる

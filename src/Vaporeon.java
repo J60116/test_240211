@@ -17,7 +17,7 @@ final class Vaporeon extends Eevee{
 //		this.weight = super.ARRAY_EVOLVUTION[0][6];
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[0]);
 		this.setName(ARRAY_EVOLVED_NAME[0]);
-		this.setNickname(this.getName());
+		this.setNickname(ARRAY_EVOLVED_NAME[0]);
 		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
 		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
 		this.setHP_max(ARRAY_EVOLVED_MAXHP[0]);

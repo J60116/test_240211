@@ -15,13 +15,16 @@ public class Main {
 		Pokemon eevee = new Eevee();
 
 		//捕まえていない状態でポケットに入れようとする
-		user.setPocket(3, eevee);
+		// user.setPocket(3, eevee);
+
+		//ポケモンバトル
+		user.startBattle(eevee);
 
 		//ポケモンをマスターボールで捕まえる
-		user.getPokemon(eevee, "MasterrBall");
+		// user.getPokemon(eevee, "MasterBall");
 
 		//すでに捕まえているポケモンを5番目のポケットに入れようとする
-		user.setPocket(4, eevee);
+		// user.setPocket(4, eevee);
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();

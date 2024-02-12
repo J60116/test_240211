@@ -5,6 +5,7 @@ class User {
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	Pokemon[] box; //ポケモンを格納するボックス
 	Scanner sc; //文字入力用
+	boolean battle;
 
 	public User() {
 		this("Satoshi", new Eevee("Satoshi", "PokeBall"));
@@ -16,6 +17,7 @@ class User {
 		this.setPocket(0, pokemon); 
 		this.box = new Pokemon[30];
 		this.sc = new Scanner(System.in);
+		this.battle = false;
 	}
 
 	public Pokemon[] getPocket() {
@@ -50,6 +52,35 @@ class User {
 		this.pocket[num] = pokemon;
 	}
 
+	//ポケモンバトル
+	public void startBattle(Pokemon enemy){
+		this.battle = true;
+		Pokemon friend = this.getPocket()[0];
+		while(battle){
+			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
+			int num = sc.nextInt();
+			switch(num){
+				case 1:
+					friend.checkMoves();
+					break;
+				case 2:
+					break;
+				case 3:
+					System.out.print("What type of Poke Balls do you use?: ");
+					String imput = sc.next();
+					this.getPokemon(enemy, imput);
+					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
+						this.battle = false;
+					}
+					break;
+				case 4:
+					friend.run();
+					this.battle = false;
+					break;
+			}
+		}
+	}
+
 	//ニックネームをつける
 	public void giveNickname(Pokemon pokemon) {
 		System.out.println("Do you give " + pokemon.getName() + " a nickname?");
@@ -68,35 +99,35 @@ class User {
 				sc.nextLine();
 			}
 		}
-		String str = null;
+		String imputNickname = pokemon.getNickname();
 		if (num == 1) {
 			while (true) {
 				System.out.print("Nickname: ");
-				str = sc.next();
-				if(str.equals(pokemon.getName())){
+				imputNickname = sc.next();
+				if(imputNickname.equals(pokemon.getName())){
 					System.out.println("ERROR >> Please input nickname except " + pokemon.getName());
 					sc.nextLine();
 					continue;
 				}
-				if(str.matches(Pokemon.FMT_NAME)){
+				if(imputNickname.matches(Pokemon.FMT_NAME)){
 					break;
 				}
 			}
 		}
-		pokemon.setNickname(str);
+		pokemon.setNickname(imputNickname);
 		System.out.println("Pleasure to meet you, " + pokemon.getNickname() + "!");
 	}
 
 	//ポケモンを捕まえる
-	public void getPokemon(Pokemon pokemon, String ball) {
-		//ボールの名前に誤りがある場合
-		String imputBall = "";
+	private void getPokemon(Pokemon pokemon, String ball) {
+		//ボールの名前が正しいか確認
+		boolean check = false;
 		for (int i = 0; i < Pokemon.ARRAY_BALL.length; i++) {
 			if (ball.equals(Pokemon.ARRAY_BALL[i][0])) {
-				imputBall = Pokemon.ARRAY_BALL[i][1];
+				check = true;
 			}
 		}
-		if(imputBall.isEmpty()) {
+		if(!check) {
 			System.out.println(ball + " is not tool to catch Pokemon.");
 			return;
 		}
