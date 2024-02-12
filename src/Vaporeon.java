@@ -19,7 +19,7 @@ final class Vaporeon extends Eevee{
 		this.name = ARRAY_EVOLVED_NAME[0];
 		this.setNickname(this.name);
 		this.setGender();
-		this.type[0] = ARRAY_EVOLVED_TYPE[0];
+		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
 		this.ability = ARRAY_EVOLVED_ABILITY[0];
 		this.hp_max = ARRAY_EVOLVED_MAXHP[0];
 		this.hp = this.hp_max;
@@ -33,6 +33,27 @@ final class Vaporeon extends Eevee{
 		} else {
 			this.gender = ARRAY_GENDER[2];
 		}
+	}
+
+	@Override
+	public String[] getType(){
+		//アクセスできるようにsuperを使用
+		return super.getType();
+	}
+
+	@Override
+	public void setType(String[] type){
+		//アクセスできるようにsuperを使用
+		super.setType(type);
+	}
+
+	@Override
+	public void setType(int num, String type) {
+		if(num != 0||num != 1){
+			System.out.println("ERROR >> "+ type + "cannot set.");
+			return;
+		}
+		this.getType()[num] = type;
 	}
 
 	@Override

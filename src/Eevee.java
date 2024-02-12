@@ -27,7 +27,7 @@ class Eevee extends Pokemon {
 		this.name = NAME;
 		this.setNickname(this.name);
 		this.setGender();
-		this.type[0] = ARRAY_TYPE[1]; //Normal
+		this.setType(0, ARRAY_TYPE[1]); //Normal
 		this.setAbility();
 		this.dexNo = 133;
 		this.level = 1;
@@ -43,6 +43,27 @@ class Eevee extends Pokemon {
 		} else {
 			this.gender = ARRAY_GENDER[2];
 		}
+	}
+
+	@Override
+	public String[] getType(){
+		//アクセスできるようにsuperを使用
+		return super.getType();
+	}
+
+	@Override
+	public void setType(String[] type){
+		//アクセスできるようにsuperを使用
+		super.setType(type);
+	}
+
+	@Override
+	public void setType(int num, String type) {
+		if(num != 0||num != 1){
+			System.out.println("ERROR >> "+ type + "cannot set.");
+			return;
+		}
+		this.getType()[num] = type;
 	}
 	
 	private void setAbility() {
@@ -77,7 +98,7 @@ class Eevee extends Pokemon {
 		if(this.getNickname().equals(NAME)) {
 			this.setNickname(this.name);
 		}
-		this.type[0] = ARRAY_EVOLVED_TYPE[i];
+		this.setType(0, ARRAY_EVOLVED_TYPE[i]);
 		this.ability = ARRAY_EVOLVED_ABILITY[i];
 		this.hp_max = ARRAY_EVOLVED_MAXHP[i];
     }

@@ -26,7 +26,7 @@ public abstract class Pokemon {
 	String nickname; //ニックネーム
 	String owner; //トレーナー
 	String gender; //性別
-	String[] type; //タイプ
+	private String[] type; //タイプ
 	String ability; //特性
 	String ball; //ボール
 	String item; //もちもの
@@ -49,18 +49,17 @@ public abstract class Pokemon {
 		this.setNickname(this.name);
 		this.setOwner(owner);
 		this.setGender(ARRAY_GENDER[0]);
-		this.type = new String[2];
-		this.type[0] = ARRAY_TYPE[0];
+		this.setType(new String[2]);
 		this.setAbility(null);
 		this.setBall(ball);
 		this.setItem("None");
 		this.setStatus(null);
 		this.setDexNo(0);
-		this.setLevel(1);
-		this.setHp_max(1);
+		this.setLevel(0);
+		this.setHp_max(0);
 		this.setHp(this.getHp_max());
 		this.setExp(0);
-		this.setExp_max(10);
+		this.setExp_max(0);
 		this.setRand(new Random());
 	}
 	
@@ -108,6 +107,9 @@ public abstract class Pokemon {
 	public void setType(String[] type) {
 		this.type = type;
 	}
+
+	//タイプ設定用
+	abstract void setType(int num, String type);
 	
 	public String getAbility() {
 		return this.ability;
@@ -216,7 +218,7 @@ public abstract class Pokemon {
 		} else {
 			type = this.type[0] + "・" + this.type[1];
 		}
-		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + this.gender
+		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
 				+ "\nType: " + type
 				+ "\nHP: " + this.hp + "/" + this.hp_max
 				+ "\nExp.Points: " + this.exp
