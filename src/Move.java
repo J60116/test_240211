@@ -9,7 +9,7 @@ public abstract class Move {
 	
     String name;
     String type; 
-    int mp;
+    private int mp;
     int mp_max;
     int power; //威力
     int accuracy; //命中率
@@ -22,6 +22,18 @@ public abstract class Move {
         this.power = 0;
         this.accuracy = 100;
     }
+
+    public int getMP() {
+		return this.mp;
+	}
+	
+	public void setMP(int mp) {
+		this.mp = mp;
+		if(this.mp < 0){
+			this.mp = 0;
+		}
+	}
+
 
     @Override
 	public String toString() {

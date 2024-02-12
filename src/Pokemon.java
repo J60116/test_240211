@@ -35,6 +35,7 @@ public abstract class Pokemon {
 	private int exp_max; //レベルアップに必要な経験値
 	private Random rand; //乱数用
 	private Move[] moves; //技
+	boolean fainted = false;
 
 	//コンストラクタ
 	public Pokemon() {
@@ -185,6 +186,10 @@ public abstract class Pokemon {
 	
 	public void setHP(int hp) {
 		this.hp = hp;
+		if(this.hp < 0){
+			this.hp = 0;
+			this.fainted = true;
+		}
 	}
 
 	public int getHP_max() {
@@ -265,6 +270,7 @@ public abstract class Pokemon {
 
 	//技を確認する
 	public void checkMoves(){
+		System.out.println("Current Moves");
 		for(int i = 0; i < this.getMove().length; i++){
 			System.out.println("[" + (i + 1) + "] " + getMove(i));
 		}
@@ -277,15 +283,30 @@ public abstract class Pokemon {
 
 	//自分自身に対する技
 	public void useMove(int num){
+		//MPが0の場合
+		if(this.getMove(num - 1).getMP() == 0){
+			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
+			return;
+		}
 		if(num >= 0 && num < 4){
-			//技の内容
+			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
+			System.out.println(this.getNickname() + "used" + this.getMove(num - 1).name + "!");
+			/*
+			技の内容
+			*/
 		}
 	}
 
 	//相手に対する技
 	public void useMove(int num, Pokemon enemy){
+		//MPが0の場合
+		if(this.getMove(num - 1).getMP() == 0){
+			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
+			return;
+		}
 		int damage = 0;
 		if(num >= 0 && num < 4){
+			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
 			System.out.println(this.getNickname() + "used" + this.getMove(num - 1).name + "!");
 			damage = this.getMove(num - 1).power;
 		}
@@ -300,6 +321,7 @@ public abstract class Pokemon {
 	//回復する
 	public void recover() {
 		this.hp = this.hp_max;
+		this.fainted = false;
 	}
 
 	//抽象メゾット
