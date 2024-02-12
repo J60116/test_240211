@@ -34,6 +34,7 @@ public abstract class Pokemon {
 	int exp; //経験値
 	int exp_max; //レベルアップに必要な経験値
 	Random rand; //乱数用
+	Move[] move; //技
 
 	//コンストラクタ
 	public Pokemon() {
@@ -57,6 +58,7 @@ public abstract class Pokemon {
 		this.setExp(0);
 		this.setExp_max(0);
 		this.setRand(new Random());
+		this.move = new Move[4];
 	}
 	
 	//アクセサ
