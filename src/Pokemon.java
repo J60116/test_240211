@@ -45,23 +45,23 @@ public abstract class Pokemon {
 	}
 
 	public Pokemon(String owner, String ball) {
-		this.name = "None";
+		this.setName("None");
 		this.setNickname(this.name);
 		this.setOwner(owner);
-		this.gender = ARRAY_GENDER[0];
+		this.setGender(ARRAY_GENDER[0]);
 		this.type = new String[2];
 		this.type[0] = ARRAY_TYPE[0];
-		this.ability = null;
+		this.setAbility(null);
 		this.setBall(ball);
 		this.setItem("None");
-		this.status = null;
-		this.dexNo = 0;
-		this.level = 1;
-		this.hp_max = 1;
-		this.hp = this.hp_max;
-		this.exp = 0;
-		this.exp_max = 10;
-		this.rand = new Random();
+		this.setStatus(null);
+		this.setDexNo(0);
+		this.setLevel(1);
+		this.setHp_max(1);
+		this.setHp(this.getHp_max());
+		this.setExp(0);
+		this.setExp_max(10);
+		this.setRand(new Random());
 	}
 	
 	//アクセサ
