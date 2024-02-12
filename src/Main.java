@@ -4,9 +4,6 @@ public class Main {
 		//ポケモントレーナーの生成
 		User user = new User();
 
-		Move move = new Tackle();
-		System.out.println(move);
-
 		//いま所持しているポケモン
 		user.setPocket(1, new Eevee(user.name, "PokeBall"));
 		user.setPocket(2, new Vaporeon(user.name, "SuperBall"));
@@ -21,7 +18,7 @@ public class Main {
 		user.setPocket(3, eevee);
 
 		//ポケモンをマスターボールで捕まえる
-		user.getPokemon(eevee, "MasterBall");
+		user.getPokemon(eevee, "MasterrBall");
 
 		//すでに捕まえているポケモンを5番目のポケットに入れようとする
 		user.setPocket(4, eevee);

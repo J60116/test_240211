@@ -90,13 +90,13 @@ class User {
 	//ポケモンを捕まえる
 	public void getPokemon(Pokemon pokemon, String ball) {
 		//ボールの名前に誤りがある場合
-		String str = "";
+		String imputBall = "";
 		for (int i = 0; i < Pokemon.ARRAY_BALL.length; i++) {
 			if (ball.equals(Pokemon.ARRAY_BALL[i][0])) {
-				str = Pokemon.ARRAY_BALL[i][1];
+				imputBall = Pokemon.ARRAY_BALL[i][1];
 			}
 		}
-		if(str.isEmpty()) {
+		if(imputBall.isEmpty()) {
 			System.out.println(ball + " is not tool to catch Pokemon.");
 			return;
 		}

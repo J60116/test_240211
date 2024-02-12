@@ -133,17 +133,18 @@ public abstract class Pokemon {
 	}
 
 	public void setBall(String ball) {
-		String str = "";
+		//ボールの名前に誤りがある場合
+		String imputBall = "";
 		for (int i = 0; i < ARRAY_BALL.length; i++) {
 			if (ball.equals(ARRAY_BALL[i][0])) {
-				str = ARRAY_BALL[i][1];
+				imputBall = ARRAY_BALL[i][1];
 			}
 		}
-		if(str.isEmpty()) {
+		if(imputBall.isEmpty()) {
 			System.out.println(ball + " is not tool to catch Pokemon.");
 			return;
 		}
-		this.ball = str;
+		this.ball = imputBall;
 	}
 
 	public String getItem() {

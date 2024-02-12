@@ -22,6 +22,7 @@ final class Vaporeon extends Eevee{
 		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
 		this.setHP_max(ARRAY_EVOLVED_MAXHP[0]);
 		this.hp = this.getHP_max();
+		this.setMove(1, new Hydropump());
 	}
 
 	@Override
