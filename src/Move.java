@@ -15,22 +15,18 @@ public abstract class Move {
     int accuracy; //命中率
 
     public Move(){
-        this("None");
-    }
-
-    public Move(String name){
-        this.name = name;
-        type = ARRAY_TYPE[0];
-        mp_max = 0;
-        mp = this.mp_max;
-        power = 0;
-        accuracy = 100;
+        this.name = null;
+        this.type = ARRAY_TYPE[0];
+        this.mp_max = 0;
+        this.mp = this.mp_max;
+        this.power = 0;
+        this.accuracy = 100;
     }
 
     @Override
 	public String toString() {
-        String str = this.type + " " + this.name + " " + this.mp + "/" + this.mp_max 
-        + "\nPower:" + this.power + "Accuracy: " + this.accuracy;
+        String str = this.name + " " + "(" + this.type + ") " + this.mp + "/" + this.mp_max 
+        + "\nPower:" + this.power + " Accuracy:" + this.accuracy;
         return str;
     }
 
