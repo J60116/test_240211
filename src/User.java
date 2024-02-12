@@ -54,8 +54,16 @@ class User {
 
 	//ポケモンバトル
 	public void startBattle(Pokemon enemy){
-		this.battle = true;
+		if(enemy.fainted){
+			System.out.println(this.name + " cannot start battle because Enemy fainted.");
+			return;
+		}
 		Pokemon friend = this.getPocket()[0];
+		if(friend.fainted){
+			System.out.println(this.name + " cannot start battle because " + friend.getNickname() + "fainted.");
+			return;
+		}
+		this.battle = true;
 		System.out.println("Go! " + friend.getNickname() + "!");
 		while(battle){
 			System.out.println("<<<<<<< Enemy");

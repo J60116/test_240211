@@ -182,6 +182,7 @@ public abstract class Pokemon {
 	//オーバーロード
 	public void setLevel() {
 		this.level++;
+		System.out.println("Level up!");
 	}
 
 	public int getHP() {
@@ -211,9 +212,9 @@ public abstract class Pokemon {
 	
 	public void setExp(int exp) {
 		this.exp = exp;
-		if(this.exp > this.getExp_max()){
+		if(this.exp_max - this.exp <= 0){
 			this.setLevel();
-			this.exp -= this.getExp_max();
+			this.exp = Math.abs(this.exp_max - this.exp);
 		}
 	}
 	
@@ -345,8 +346,10 @@ public abstract class Pokemon {
 		this.hp = this.hp_max;
 		// this.moves.mp = this.mp_max;
 		for(int i = 0; i<this.getMove().length;i++){
-			Move m = this.getMove(i);
-			m.setMP(m.getMP_max());
+			if(this.getMove(i) != null){
+				Move m = this.getMove(i);
+				m.setMP(m.getMP_max());
+			}
 		}
 		this.fainted = false;
 	}
