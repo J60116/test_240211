@@ -11,7 +11,7 @@ class Eevee extends Pokemon {
 	//static final Object[] JOLTEON = {135, "Thunders", ARRAY_TYPE[3], "Chikuden", 0.8, 24.5, 65};
 	//static final Object[] FLAREON = {136, "Booster", ARRAY_TYPE[1], "Moraibi", 0.9, 25.0, 65};
 	//static final Object[][] ARRAY_EVOLUTION = {VAPOREON, JOLTEON, FLAREON};
-	static final int[] ARRAY_EVOLVED_DEXNO = { 0134, 0135, 0136 };
+	static final int[] ARRAY_EVOLVED_DEXNO = { 134, 135, 136 };
 	static final String[] ARRAY_EVOLVED_NAME = { "Showers", "Thunders", "Booster" };
 	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[3], ARRAY_TYPE[4], ARRAY_TYPE[2] };
 	static final String[] ARRAY_EVOLVED_ABILITY = { "Chosui", "Chikuden", "Moraibi" };
@@ -39,9 +39,9 @@ class Eevee extends Pokemon {
 		//87.5%♂・12.5%♀
 		int num = this.rand.nextInt(8); //性別設定用
 		if (num != 0) {
-			this.gender = ARRAY_GENDER[1];
+			this.setGender(ARRAY_GENDER[1]);
 		} else {
-			this.gender = ARRAY_GENDER[2];
+			this.setGender(ARRAY_GENDER[2]);
 		}
 	}
 
@@ -59,8 +59,8 @@ class Eevee extends Pokemon {
 
 	@Override
 	public void setType(int num, String type) {
-		if(num != 0||num != 1){
-			System.out.println("ERROR >> "+ type + "cannot set.");
+		if(num != 0 && num != 1){
+			System.out.println("ERROR >> "+ type + " cannot set.");
 			return;
 		}
 		this.getType()[num] = type;
@@ -68,7 +68,7 @@ class Eevee extends Pokemon {
 	
 	private void setAbility() {
 		int num = this.rand.nextInt(ARRAY_ABILITY.length); //特性設定用
-		this.ability = ARRAY_ABILITY[num];
+		this.setAbility(ARRAY_ABILITY[num]);
 	}
 	
 	@Override
@@ -99,7 +99,7 @@ class Eevee extends Pokemon {
 			this.setNickname(this.getName());
 		}
 		this.setType(0, ARRAY_EVOLVED_TYPE[i]);
-		this.ability = ARRAY_EVOLVED_ABILITY[i];
+		this.setAbility(ARRAY_EVOLVED_ABILITY[i]);
 		this.hp_max = ARRAY_EVOLVED_MAXHP[i];
     }
 	

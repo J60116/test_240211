@@ -18,21 +18,10 @@ final class Vaporeon extends Eevee{
 		this.dexNo = ARRAY_EVOLVED_DEXNO[0];
 		this.setName(ARRAY_EVOLVED_NAME[0]);
 		this.setNickname(this.getName());
-		this.setGender();
 		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
-		this.ability = ARRAY_EVOLVED_ABILITY[0];
+		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
 		this.hp_max = ARRAY_EVOLVED_MAXHP[0];
 		this.hp = this.hp_max;
-	}
-	
-	private void setGender() {
-		//87.5%♂・12.5%♀
-		int num = this.rand.nextInt(8); //性別設定用
-		if (num != 0) {
-			this.gender = ARRAY_GENDER[1];
-		} else {
-			this.gender = ARRAY_GENDER[2];
-		}
 	}
 
 	@Override
@@ -49,7 +38,7 @@ final class Vaporeon extends Eevee{
 
 	@Override
 	public void setType(int num, String type) {
-		if(num != 0||num != 1){
+		if(num != 0 && num != 1){
 			System.out.println("ERROR >> "+ type + "cannot set.");
 			return;
 		}

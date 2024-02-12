@@ -24,10 +24,10 @@ public abstract class Pokemon {
 
 	private String name; //名前
 	private String nickname; //ニックネーム
-	String owner; //トレーナー
-	String gender; //性別
+	private String owner; //トレーナー
+	private String gender; //性別
 	private String[] type; //タイプ
-	String ability; //特性
+	private String ability; //特性
 	String ball; //ボール
 	String item; //もちもの
 	String status; //ステータス
@@ -58,7 +58,7 @@ public abstract class Pokemon {
 		this.setLevel(0);
 		this.setHp_max(0);
 		this.setHp(this.getHp_max());
-		this.setExp(0);
+		this.setExp(10);
 		this.setExp_max(0);
 		this.setRand(new Random());
 	}
