@@ -56,8 +56,12 @@ class User {
 	public void startBattle(Pokemon enemy){
 		this.battle = true;
 		Pokemon friend = this.getPocket()[0];
-		System.out.println("Go!" + friend.getNickname());
+		System.out.println("Go! " + friend.getNickname() + "!");
 		while(battle){
+			System.out.print("Enemy:  ");
+			enemy.checkHP();
+			System.out.print("Friend: ");
+			friend.checkHP();
 			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
 			int menu = sc.nextInt();
 			switch(menu){
@@ -68,8 +72,13 @@ class User {
 					friend.useMove(num, enemy);
 					if(enemy.fainted){
 						battle = false;
+						System.out.println(this.name + " won the game!");
 					} else if(friend.fainted){
+						battle = false;
+						System.out.println(this.name + " lose the game...");
 						/*ポケモンを入れ替える*/
+						// System.out.println("Will you switch your Pokemon?");
+						// System.out.print("[1]Switch Pokemon [2]Run : ");
 					}
 					break;
 				case 2:

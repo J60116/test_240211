@@ -189,6 +189,7 @@ public abstract class Pokemon {
 		if(this.hp < 0){
 			this.hp = 0;
 			this.fainted = true;
+			System.out.println(this.getNickname() + " fainted.");
 		}
 	}
 
@@ -268,6 +269,13 @@ public abstract class Pokemon {
 		System.out.println(this.toString());
 	}
 
+	//バトル画面にて表示するポケモン情報
+	public void checkHP(){
+		String str = this.nickname + " Lv." + this.level + " " + this.gender 
+				+ " HP: " + this.hp + "/" + this.hp_max;
+		System.out.println(str);
+	}
+
 	//技を確認する
 	public void checkMoves(){
 		System.out.println("Current Moves");
@@ -290,7 +298,7 @@ public abstract class Pokemon {
 		}
 		if(num >= 0 && num < 4){
 			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
-			System.out.println(this.getNickname() + "used" + this.getMove(num - 1).name + "!");
+			System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
 			/*
 			技の内容
 			*/
@@ -307,7 +315,7 @@ public abstract class Pokemon {
 		int damage = 0;
 		if(num >= 0 && num < 4){
 			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
-			System.out.println(this.getNickname() + "used" + this.getMove(num - 1).name + "!");
+			System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
 			damage = this.getMove(num - 1).power;
 		}
 		enemy.setHP(enemy.getHP() - damage);
