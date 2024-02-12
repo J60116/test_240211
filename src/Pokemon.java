@@ -272,7 +272,7 @@ public abstract class Pokemon {
 	//バトル画面にて表示するポケモン情報
 	public void checkHP(){
 		String str = this.nickname + " Lv." + this.level + " " + this.gender 
-				+ " HP: " + this.hp + "/" + this.hp_max;
+				+ " HP:" + this.hp + "/" + this.hp_max;
 		System.out.println(str);
 	}
 
@@ -307,17 +307,19 @@ public abstract class Pokemon {
 
 	//相手に対する技
 	public void useMove(int num, Pokemon enemy){
+		//技が選択できない場合
+		if((num - 1 < 0 && num - 1 > 3)||this.getMove(num - 1) == null){
+			return;
+		}
 		//MPが0の場合
 		if(this.getMove(num - 1).getMP() == 0){
 			System.out.println(this.getNickname() +" cannnot use " + this.getMove(num - 1).name + ".");
 			return;
 		}
 		int damage = 0;
-		if(num >= 0 && num < 4){
-			this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
-			System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
-			damage = this.getMove(num - 1).power;
-		}
+		this.getMove(num - 1).setMP(this.getMove(num - 1).getMP() - 1);
+		System.out.println(this.getNickname() + " used " + this.getMove(num - 1).name + "!");
+		damage = this.getMove(num - 1).power;
 		enemy.setHP(enemy.getHP() - damage);
 	}
 	

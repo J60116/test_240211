@@ -58,9 +58,9 @@ class User {
 		Pokemon friend = this.getPocket()[0];
 		System.out.println("Go! " + friend.getNickname() + "!");
 		while(battle){
-			System.out.print("Enemy:  ");
+			System.out.print("Enemy)  ");
 			enemy.checkHP();
-			System.out.print("Friend: ");
+			System.out.print("Friend) ");
 			friend.checkHP();
 			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
 			int menu = sc.nextInt();
@@ -69,7 +69,11 @@ class User {
 					friend.checkMoves();
 					System.out.print("What number of Moves do you use?: ");
 					int num = sc.nextInt();
+					//味方の攻撃
 					friend.useMove(num, enemy);
+					//敵の攻撃
+					int r = enemy.getRand().nextInt(enemy.getMove().length);
+					enemy.useMove(r, friend);
 					if(enemy.fainted){
 						battle = false;
 						System.out.println(this.name + " won the game!");
