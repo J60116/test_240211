@@ -22,7 +22,7 @@ public abstract class Pokemon {
 	private String nickname; //ニックネーム
 	private String owner; //トレーナー
 	private String gender; //性別
-	private String[] type; //タイプ
+	private String[] types; //タイプ
 	private String ability; //特性
 	private String ball; //ボール
 	private String item; //もちもの
@@ -34,7 +34,7 @@ public abstract class Pokemon {
 	private int exp; //経験値
 	private int exp_max; //レベルアップに必要な経験値
 	private Random rand; //乱数用
-	Move[] move; //技
+	private Move[] moves; //技
 
 	//コンストラクタ
 	public Pokemon() {
@@ -58,7 +58,7 @@ public abstract class Pokemon {
 		this.setExp(10);
 		this.setExp_max(0);
 		this.setRand(new Random());
-		this.move = new Move[4];
+		this.moves = new Move[4];
 	}
 	
 	//アクセサ
@@ -99,11 +99,16 @@ public abstract class Pokemon {
 	}
 	
 	public String[] getType() {
-		return this.type;
+		return this.types;
+	}
+
+	//オーバーロード
+	public String getType(int num) {
+		return getType()[num];
 	}
 	
-	public void setType(String[] type) {
-		this.type = type;
+	public void setType(String[] types) {
+		this.types = types;
 	}
 
 	//オーバーロード
@@ -213,14 +218,36 @@ public abstract class Pokemon {
 		this.rand = rand;
 	}
 
+	public Move[] getMove() {
+		return this.moves;
+	}
+
+	//オーバーロード
+	public Move getMove(int num) {
+		return getMove()[num];
+	}
+	
+	public void setMove(Move[] moves) {
+		this.moves = moves;
+	}
+
+	//オーバーロード
+	public void setMove(int num, Move move) {
+		if(num < 0 || num > 3){
+			System.out.println("ERROR >> "+ move + " cannot set.");
+			return;
+		}
+		this.getMove()[num] = move;
+	}
+
 	//メゾット
 	@Override
 	public String toString() {
 		String type = "";
-		if (this.type[1] == null) {
-			type = this.type[0];
+		if (this.types[1] == null) {
+			type = this.types[0];
 		} else {
-			type = this.type[0] + "・" + this.type[1];
+			type = this.types[0] + "・" + this.types[1];
 		}
 		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
 				+ "\nType: " + type
