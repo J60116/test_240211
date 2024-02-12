@@ -56,15 +56,6 @@ class Eevee extends Pokemon {
 		//アクセスできるようにsuperを使用
 		super.setType(type);
 	}
-
-	@Override
-	public void setType(int num, String type) {
-		if(num != 0 && num != 1){
-			System.out.println("ERROR >> "+ type + " cannot set.");
-			return;
-		}
-		this.getType()[num] = type;
-	}
 	
 	private void setAbility() {
 		int num = this.rand.nextInt(ARRAY_ABILITY.length); //特性設定用

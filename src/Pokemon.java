@@ -108,8 +108,14 @@ public abstract class Pokemon {
 		this.type = type;
 	}
 
-	//タイプ設定用
-	abstract void setType(int num, String type);
+	//オーバーロード
+	public void setType(int num, String type) {
+		if(num != 0 && num != 1){
+			System.out.println("ERROR >> "+ type + " cannot set.");
+			return;
+		}
+		this.getType()[num] = type;
+	}
 	
 	public String getAbility() {
 		return this.ability;

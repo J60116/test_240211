@@ -37,15 +37,6 @@ final class Vaporeon extends Eevee{
 	}
 
 	@Override
-	public void setType(int num, String type) {
-		if(num != 0 && num != 1){
-			System.out.println("ERROR >> "+ type + "cannot set.");
-			return;
-		}
-		this.getType()[num] = type;
-	}
-
-	@Override
 	public void setItem(String item) {
 		//進化の石を持たせてもevolve(int)を呼び出さない
 		this.item = item;
