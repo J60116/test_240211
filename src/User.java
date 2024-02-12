@@ -78,6 +78,8 @@ class User {
 					if(enemy.fainted){
 						battle = false;
 						System.out.println(this.name + " won the game!");
+						//経験値を増やす
+						friend.setExp(friend.getExp() + 5);
 					} else if(friend.fainted){
 						battle = false;
 						System.out.println(this.name + " lose the game...");

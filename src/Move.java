@@ -34,10 +34,9 @@ public abstract class Move {
 		}
 	}
 
-
     @Override
 	public String toString() {
-        String str = this.name + " " + "(" + this.type + ") " + this.mp + "/" + this.mp_max 
+        String str = this.name + " " + "(" + this.type + ") MP:" + this.mp + "/" + this.mp_max 
         // + "\nPower:" + this.power + " Accuracy:" + this.accuracy
         ;
         return str;

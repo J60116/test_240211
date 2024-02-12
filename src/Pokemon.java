@@ -260,7 +260,7 @@ public abstract class Pokemon {
 				+ "\nType: " + type
 				+ "\nHP: " + this.hp + "/" + this.hp_max
 				+ "\nExp.Points: " + this.exp
-				;
+				+ "\nTo Next Lv.: " + (this.exp_max - this.exp);
 		return str;
 	}
 
