@@ -95,14 +95,33 @@ class User {
 		}
 		System.out.println("\n" + this.getName() + " look for " + pokemon.getName() + " in the grass.");
 		// 草むらの生成
-		String[][] grass = new String[][]{{"w","w","w","w","w","w"},{"1","2","3","4","5","6"}};
-		//1から6まで数字を保存
+		String[][] grass = new String[5][8];
+		for(int i = 1; i <= 3; i++){
+			//ポケモンが隠れている可能性がある場所を保存
+			int a = pokemon.getRand().nextInt(3) + 1;
+			int b = a + pokemon.getRand().nextInt(2) + 2;
+			//草むらの中に数値を表示する
+			grass[i][a] = (2*i)-1 + ")";
+			grass[i][b] = (2*i) + ")";
+		}
+		//それ以外の場所にはwwを代入
+		for(int i = 0; i < grass.length; i++){	
+			for(int j = 0; j < grass[i].length; j++){
+				if(grass[i][j] == null){
+					grass[i][j] = "ww";
+				}
+			}
+		}
+		//ポケモンが実際に隠れている場所を保存
 		int random = pokemon.getRand().nextInt(6) + 1;
-		int imput = -1;
-		while(imput != random){
+		int input = -1;
+		while(input != random){
 			//草むらの表示
 			System.out.println();
 			for(int i = 0; i < grass.length; i++){	
+				if(i % 2 == 0){
+					System.out.print(" ");
+				}
 				for(int j = 0; j < grass[i].length; j++){
 					if(j > 0){
 						System.out.print(" ");
@@ -111,16 +130,34 @@ class User {
 				}
 				System.out.println();
 			}
-			System.out.print("Select: ");
-			imput = sc.nextInt();
-			if(imput != random){
+			//探す場所を数字にて選択
+			System.out.print("\nSelect: ");
+			input = sc.nextInt();
+			if(input == random){
+				//数値が一致したらループを抜ける
+				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
+				break;
+			} else {
+				//草を刈り取ったかどうか
+				boolean remove = false;
+				for(int i = 1; i < grass.length - 1; i++){	
+					for(int j = 0; j < grass[i].length; j++){
+						//探した場所の草は刈り取る
+						if(grass[i][j].equals(input+")")){
+							grass[i][j] = "  ";
+							remove = true;
+							break;
+						}
+					}
+					if(remove){
+						break;
+					}
+				}
 				System.out.println(this.getName() + " could not find " + pokemon.getName() + ".");
-				grass[1][imput - 1] = " ";
 			}
 		}
-		System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
+		//バトルを開始する
 		startBattle(pokemon);
-		
 	}
 	
 	//相手から声を掛けられる
@@ -198,8 +235,8 @@ class User {
 					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
-					String imput = sc.nextLine();
-					this.getPokemon(enemy, imput);
+					String input = sc.nextLine();
+					this.getPokemon(enemy, input);
 					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
 						this.falseBattle();;
 					}
@@ -246,22 +283,22 @@ class User {
 				sc.nextLine();
 			}
 		}
-		String imput = pokemon.getNickname();
+		String input = pokemon.getNickname();
 		if (num == 1) {
 			while (true) {
 				System.out.print("Nickname: ");
-				imput = sc.next();
-				if(imput.equals(pokemon.getName())){
+				input = sc.next();
+				if(input.equals(pokemon.getName())){
 					System.out.println("ERROR >> Please input nickname except " + pokemon.getName());
 					sc.nextLine();
 					continue;
 				}
-				if(imput.matches(Pokemon.FMT_NAME)){
+				if(input.matches(Pokemon.FMT_NAME)){
 					break;
 				}
 			}
 		}
-		pokemon.setNickname(imput);
+		pokemon.setNickname(input);
 		System.out.println("Pleasure to meet you, " + pokemon.getNickname() + "!");
 	}
 
