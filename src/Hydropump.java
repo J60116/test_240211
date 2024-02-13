@@ -2,12 +2,12 @@ public class Hydropump extends Move{
 
     public Hydropump(){
         super();
-        this.name = "Hydro pump";
-        this.type = ARRAY_TYPE[3];
+        this.setName("Hydro pump");
+        this.setType(ARRAY_TYPE[2]);
         this.setMP_max(5);
         this.setMP(this.getMP_max());
-        this.power = 110;
-        this.accuracy = 80;
+        this.setPower(110);
+        this.setAccuracy(80);
     }
 
 }

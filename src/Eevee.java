@@ -13,7 +13,7 @@ class Eevee extends Pokemon {
 	//static final Object[][] ARRAY_EVOLUTION = {VAPOREON, JOLTEON, FLAREON};
 	static final int[] ARRAY_EVOLVED_DEXNO = { 134, 135, 136 };
 	static final String[] ARRAY_EVOLVED_NAME = { "Showers", "Thunders", "Booster" };
-	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[3], ARRAY_TYPE[4], ARRAY_TYPE[2] };
+	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[2], ARRAY_TYPE[3], ARRAY_TYPE[1] };
 	static final String[] ARRAY_EVOLVED_ABILITY = { "Chosui", "Chikuden", "Moraibi" };
 	// static final double[][] ARRAY_EVOLVED_HW = { { 1.0, 29.0 }, { 0.8, 24.5 }, { 0.9, 25.0 } };
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
@@ -27,13 +27,13 @@ class Eevee extends Pokemon {
 		this.setName(NAME);
 		this.setNickname(NAME);
 		this.setGender();
-		this.setType(0, ARRAY_TYPE[1]); //Normal
+		this.setTypes(0, ARRAY_TYPE[0]); //Normal
 		this.setAbility();
 		this.setDexNo(133);
 		this.setLevel(1);
 		this.setHP_max(55);
 		this.hp = this.getHP_max();
-		this.setMove(0, new Tackle());
+		this.setMoves(0, new Tackle());
 	}
 
 	private void setGender() {
@@ -47,15 +47,15 @@ class Eevee extends Pokemon {
 	}
 
 	@Override
-	public String[] getType(){
+	public String[] getTypes(){
 		//アクセスできるようにsuperを使用
-		return super.getType();
+		return super.getTypes();
 	}
 
 	@Override
-	public void setType(String[] type){
+	public void setTypes(String[] type){
 		//アクセスできるようにsuperを使用
-		super.setType(type);
+		super.setTypes(type);
 	}
 	
 	private void setAbility() {
@@ -75,12 +75,6 @@ class Eevee extends Pokemon {
 		super.setItem(item);
 	}
 
-	@Override
-	public void attack(Pokemon p) {
-		System.out.println(this.getName() + "attacked" + p.getName() + "!");
-		p.hp -= 5;
-	}
-
 	//進化
 	@Override
 	public void evolve(int i) {
@@ -90,7 +84,7 @@ class Eevee extends Pokemon {
 		if(this.getNickname().equals(NAME)) {
 			this.setNickname(this.getName());
 		}
-		this.setType(0, ARRAY_EVOLVED_TYPE[i]);
+		this.setTypes(0, ARRAY_EVOLVED_TYPE[i]);
 		this.setAbility(ARRAY_EVOLVED_ABILITY[i]);
 		this.setHP_max(ARRAY_EVOLVED_MAXHP[i]);
     }

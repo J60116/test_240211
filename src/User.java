@@ -1,12 +1,12 @@
 import java.util.*;
 
 class User {
-	String name; //名前
+	private String name; //名前
 	private Pokemon[] pocket; //ポケモンを格納するポケット
-	Pokemon[] box; //ポケモンを格納するボックス
+	private Pokemon[] box; //ポケモンを格納するボックス
 	Scanner sc; //文字入力用
-	boolean battle;
-
+	private boolean battle; //バトル中かどうか
+	
 	public User() {
 		this("Satoshi", new Eevee("Satoshi", "PokeBall"));
 	}
@@ -20,11 +20,19 @@ class User {
 		this.battle = false;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Pokemon[] getPocket() {
 		return this.pocket;
 	}
 
-	public void setPocket(int num, Pokemon pokemon) {
+	private void setPocket(int num, Pokemon pokemon) {
 		//ボールの情報がないまま呼び出した場合
 		if (pokemon.getBall() == null) {
 			pokemon.setBall(Pokemon.ARRAY_BALL[0][0]);
@@ -51,73 +59,151 @@ class User {
 		}
 		this.pocket[num] = pokemon;
 	}
+	
+	public boolean getBattle() {
+		return this.battle;
+	}
+	
+	public void trueBattle() {
+		this.battle = true;
+	}
+	
+	public void falseBattle() {
+		this.battle = false;
+		//ひんし状態以外のポケモンをcan battleに変更
+		for (Pokemon p : this.getPocket()) {
+			if (p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[0][0])) {
+				p.setStatus(Pokemon.ARRAY_STATUS[2][0]);
+			}
+		}
+		
+	}
+	
+	//メゾット
+	//ポケモンを探す
+	public void lookForPokemon(Pokemon pokemon) {
+		//野生ポケモンでない場合
+		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
+			System.out.println("\n" + pokemon.getName() + " has owner.");
+			return;
+		}
+		System.out.println("\n" + this.getName() + " look for " + pokemon.getName() + " in the grass.");
+		//0か1の数字を保存
+		int random = pokemon.getRand().nextInt(2);
+		if(random != 0) {
+			System.out.println(this.getName() + " could not find " + pokemon.getName() + ".");
+		} else {
+			System.out.println("A wild " + pokemon.getName() + " has appeared!");
+			startBattle(pokemon);
+		}
+	}
+	
+	//相手から声を掛けられる
+	public void isCalled(User opponent) {
+		// System.out.println("You are challenged by " + opponent.getName());
+		// Pokemon pokemon = opponent.getPocket()[0];
+		// System.out.println(opponent.getName() + " sent out " + pokemon.getName() + "!");
+		// startBattle(pokemon);
+	}
+	
+	//バトル画面の表示
+	private void dispBattleScreen(Pokemon enemy, Pokemon friend) {
+		System.out.println("\n<<<<<<< Enemy");
+		enemy.checkBattleStatus();
+		System.out.println("=======");
+		friend.checkBattleStatus();
+		System.out.println(">>>>>>> Friend\n");
+	}
 
 	//ポケモンバトル
 	public void startBattle(Pokemon enemy){
-		if(enemy.fainted){
-			System.out.println(this.name + " cannot start battle because Enemy fainted.");
+		//ポケモンがひんし状態の場合
+		if(enemy.getFainted()){
+			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
 			return;
 		}
+		//1番目のポケモンを指定する
 		Pokemon friend = this.getPocket()[0];
-		if(friend.fainted){
-			System.out.println(this.name + " cannot start battle because " + friend.getNickname() + "fainted.");
+		if(friend.getFainted()){
+			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + "fainted.");
 			return;
 		}
-		this.battle = true;
+		this.trueBattle();
+		//ポケモンの戦闘状態をIn Battleにする
+		friend.setStatus(Pokemon.ARRAY_STATUS[1][0]);
+		enemy.setStatus(Pokemon.ARRAY_STATUS[1][0]);
 		System.out.println("Go! " + friend.getNickname() + "!");
+		//バトルが終わるまで繰り返す
 		while(battle){
-			System.out.println("<<<<<<< Enemy");
-			enemy.checkHP();
-			System.out.println("=======");
-			friend.checkHP();
-			System.out.println(">>>>>>> Friend");
-			System.out.print("[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
+			this.dispBattleScreen(enemy, friend);
+			System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
 			int menu = sc.nextInt();
+			sc.nextLine();
 			switch(menu){
 				case 1:
+					//Battle
+					//味方の技の選択
 					friend.checkMoves();
 					System.out.print("What number of Moves do you use?: ");
 					int num_f = sc.nextInt();
 					//味方の攻撃
-					friend.useMove(num_f, enemy);
+					this.giveInstructions(friend, num_f, enemy);
+					//friend.useMove(num_f, enemy);
+					//敵の技の選択
+					int num_e = enemy.getRand().nextInt(4) + 1;
 					//敵の攻撃
-					int num_e = enemy.getRand().nextInt(enemy.getMove().length) + 1;
 					enemy.useMove(num_e, friend);
-					if(enemy.fainted){
-						battle = false;
-						System.out.println(this.name + " won the game!");
-						//経験値を増やす
+					//どちらかが瀕死状態になればバトルを終える
+					if(enemy.getFainted()){
+						System.out.println(this.getName() + " won the game!");
+						//In Battleのポケモンの経験値を増やす
 						friend.setExp(friend.getExp() + 5);
-					} else if(friend.fainted){
-						battle = false;
-						System.out.println(this.name + " lose the game...");
+						this.falseBattle();
+					} else if(friend.getFainted()){
+						System.out.println(this.getName() + " lose the game...");
+						this.falseBattle();
 						/*ポケモンを入れ替える*/
 						// System.out.println("Will you switch your Pokemon?");
 						// System.out.print("[1]Switch Pokemon [2]Run : ");
 					}
 					break;
 				case 2:
+					//Pokemon
 					/*ポケモンを入れ替える*/
+//					this.switchPokemon(a,b);
 					break;
 				case 3:
+					//Throw PokeBall
+					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
-					String imput = sc.next();
+					String imput = sc.nextLine();
 					this.getPokemon(enemy, imput);
 					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
-						this.battle = false;
+						this.falseBattle();;
 					}
 					break;
 				case 4:
+					//Run
 					this.run();
-					this.battle = false;
+					this.falseBattle();
 					break;
 			}
 		}
 	}
+	
+	//ポケモンに技の指示を出す
+	public void giveInstructions(Pokemon pokemon, int num, Pokemon enemy){
+		pokemon.useMove(num, enemy);
+	}
+	
+	//ポケモンの入れ替え
+	public void switchPokemon(int a, int b) {
+		
+	}
 
 	//逃げる
 	public void run() {
-		System.out.println(this.name + " run away.");
+		System.out.println(this.getName() + " run away.");
 	}
 
 	//ニックネームをつける
@@ -164,7 +250,7 @@ class User {
 				return true;
 			}
 		}
-		System.out.println("MISS! " + ball + " is not tool to catch Pokemon.");
+		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.");
 		return false;
 	}
 
@@ -175,24 +261,24 @@ class User {
 		}
 		//既に捕まえられている場合
 		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
-			if(pokemon.getOwner().equals(this.name)) {
-				System.out.println("MISS! " + this.name + " has already caught " + pokemon.getName() + ".");
+			if(pokemon.getOwner().equals(this.getName())) {
+				System.out.println("MISS! " + this.getName() + " has already caught " + pokemon.getName() + ".");
 				return;
 			} else {
 				System.out.println("MISS! " + pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
 				return;
 			}
 		}
-		pokemon.setOwner(this.name);
+		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
-		System.out.println(this.name + " caught " + pokemon.getName() + "!");
+		System.out.println(this.getName() + " caught " + pokemon.getName() + "!");
 		this.giveNickname(pokemon);		
 		//ポケットに空きがある場合
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
 			for (int i = 0; i < this.getPocket().length; i++) {
 				if (this.getPocket()[i] == null) {
 					this.setPocket(i, pokemon);
-					System.out.println(this.name + " put " + pokemon.getNickname() + " in the pocket["+i+"].");
+					System.out.println(this.getName() + " put " + pokemon.getNickname() + " in the pocket["+i+"].");
 					return;
 				}
 			}
@@ -219,7 +305,7 @@ class User {
 
 	//ポケモンセンターに行く
 	public void visitPokemonCenter() {
-		System.out.println(this.name + " visited the pokemon center.");
+		System.out.println("\n" + this.getName() + " visited the pokemon center.");
 		int count = 0;
 		String p_name = "";
 		for (Pokemon p : this.pocket) {
@@ -235,7 +321,7 @@ class User {
 		if(count>1) {
 			System.out.print(" and the rest of your team");
 		}
-		System.out.println(" should be all better now!\n");
+		System.out.println(" should be all better now!");
 		
 	}
 
@@ -254,11 +340,15 @@ class User {
 
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
-		if (this.getPocket()[num] != null) {
+		if(this.getPocket()[num].getFainted()){
+			System.out.println("Miss!" + this.name + "could not give" + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
+			return;
+		}
+		if (this.getPocket()[num] == null) {
+			System.out.println("Miss! There is no Pokemon in the pocket[" + num + "].");
+		} else {
 			System.out.println(this.getPocket()[num].getNickname() + " received " + item + ".");
 			this.getPocket()[num].setItem(item);
-		} else {
-			System.out.println("There is no Pokemon in the pocket[" + num + "].");
 		}
 	}
 
