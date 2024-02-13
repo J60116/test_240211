@@ -76,11 +76,13 @@ public abstract class Pokemon {
 	}
 
 	public void setNickname(String nickname) {
-		if (!nickname.matches(FMT_NAME)) {
-			System.out.println(nickname + " is not acceptable.");
+		//先頭文字を大文字に変換
+		String str = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
+		if (!str.matches(FMT_NAME)) {
+			System.out.println("MISS! " + str + " is not acceptable.");
 			return;
 		}
-		this.nickname = nickname;
+		this.nickname = str;
 	}
 
 	public String getOwner() {
@@ -291,6 +293,20 @@ public abstract class Pokemon {
 		return str;
 	}
 
+	// @Override
+	// public boolean equals(Object object){
+	// 	if(object instanceof Pokemon){
+	// 		Pokemon pokemon = (Pokemon)object;
+	// 		if(this.name == pokemon.getName() && this.nickname == pokemon.getNickname() 
+	// 			&& this.level == pokemon.getLevel() && this.gender == pokemon.getGender()
+	// 			&& this.hp == pokemon.getHP() && this.hp_max == pokemon.getHP_max()
+	// 			&& this.getMoves() == pokemon.getMoves()){
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// } 
+
 	//ステータスを確認する
 	public void checkStatus() {
 		System.out.println(this.toString());
@@ -298,7 +314,7 @@ public abstract class Pokemon {
 
 	//ステータスを確認する(バトル画面用)
 	public void checkBattleStatus() {
-		String str = this.nickname + " Lv." + this.level + " " + this.gender
+		String str = this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
 				+ " HP:" + this.hp + "/" + this.hp_max;
 		System.out.println(str);
 	}
