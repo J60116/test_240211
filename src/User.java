@@ -66,17 +66,23 @@ class User {
 	
 	public void trueBattle() {
 		this.battle = true;
+		//先頭にいるポケモンの戦闘状態をIn Battleにする
+		for (Pokemon p : this.getPocket()) {
+			if (p != null && !p.getStatus().equals(Pokemon.ARRAY_STATUS[0])) {
+				p.setStatus(Pokemon.ARRAY_STATUS[1]);
+				break;
+			}
+		}
 	}
 	
 	public void falseBattle() {
 		this.battle = false;
-		//ひんし状態以外のポケモンをcan battleに変更
+		//In battleのポケモンをCan battleに変更
 		for (Pokemon p : this.getPocket()) {
-			if (p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[0][0])) {
-				p.setStatus(Pokemon.ARRAY_STATUS[2][0]);
+			if (p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[1])) {
+				p.setStatus(Pokemon.ARRAY_STATUS[2]);
 			}
 		}
-		
 	}
 	
 	//メゾット
@@ -129,12 +135,9 @@ class User {
 			return;
 		}
 		this.trueBattle();
-		//ポケモンの戦闘状態をIn Battleにする
-		friend.setStatus(Pokemon.ARRAY_STATUS[1][0]);
-		enemy.setStatus(Pokemon.ARRAY_STATUS[1][0]);
 		System.out.println("Go! " + friend.getNickname() + "!");
 		//バトルが終わるまで繰り返す
-		while(battle){
+		while(this.getBattle()){
 			this.dispBattleScreen(enemy, friend);
 			System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
 			int menu = sc.nextInt();
@@ -224,22 +227,22 @@ class User {
 				sc.nextLine();
 			}
 		}
-		String imputNickname = pokemon.getNickname();
+		String imput = pokemon.getNickname();
 		if (num == 1) {
 			while (true) {
 				System.out.print("Nickname: ");
-				imputNickname = sc.next();
-				if(imputNickname.equals(pokemon.getName())){
+				imput = sc.next();
+				if(imput.equals(pokemon.getName())){
 					System.out.println("ERROR >> Please input nickname except " + pokemon.getName());
 					sc.nextLine();
 					continue;
 				}
-				if(imputNickname.matches(Pokemon.FMT_NAME)){
+				if(imput.matches(Pokemon.FMT_NAME)){
 					break;
 				}
 			}
 		}
-		pokemon.setNickname(imputNickname);
+		pokemon.setNickname(imput);
 		System.out.println("Pleasure to meet you, " + pokemon.getNickname() + "!");
 	}
 
@@ -306,6 +309,7 @@ class User {
 	//ポケモンセンターに行く
 	public void visitPokemonCenter() {
 		System.out.println("\n" + this.getName() + " visited the pokemon center.");
+		//ポケモンの数を数える
 		int count = 0;
 		String p_name = "";
 		for (Pokemon p : this.pocket) {
@@ -318,7 +322,8 @@ class User {
 			}
 		}
 		System.out.print(p_name);
-		if(count>1) {
+		//ポケモンが複数いる場合
+		if(count > 1) {
 			System.out.print(" and the rest of your team");
 		}
 		System.out.println(" should be all better now!");

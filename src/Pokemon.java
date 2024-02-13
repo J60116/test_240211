@@ -9,12 +9,12 @@ public abstract class Pokemon {
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "PokeBall", "(p)" }, { "SuperBall", "(s)" },
 			{ "MasterBall", "(m)" } };
 	//	final static String[] ARRAY_IMG_BALL = { "W)", "○", "◎", "●", "E)" };
-	//ボールの画像(0:ボールなし（野生または敵）1:戦闘可能、2:瀕死状態）
-	//	final static String[] ARRAY_IMG_BALL = { "・", "○", "●" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
 	//戦闘状態（0:戦闘不可/ひんし状態 1:戦闘中 2:戦闘可能）
-	final static String[][] ARRAY_STATUS = { { "Can't Battle", "●" }, { "In Battle", "○" }, { "Can Battle", "○" } };
+	final static String[] ARRAY_STATUS = { "Can't Battle", "In Battle", "Can Battle" };
+	//ボールの画像(0:ひんし状態 1:戦闘可能）
+	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
 	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
 
@@ -51,7 +51,7 @@ public abstract class Pokemon {
 		this.setAbility(null);
 		this.setBall(ball);
 		this.setItem("None");
-		this.setStatus(ARRAY_STATUS[2][0]);
+		this.setStatus(ARRAY_STATUS[2]);
 		this.setDexNo(0);
 		this.setLevel(0);
 		this.setHP_max(0);
@@ -211,11 +211,12 @@ public abstract class Pokemon {
 	}
 
 	public void setExp(int exp) {
-		this.exp = exp;
-		if (this.getExp_max() - this.exp <= 0) {
-			this.exp = Math.abs(this.getExp_max() - this.exp);
-			//ステータスが戦闘中の場合
-			if (this.getStatus().equals(ARRAY_STATUS[1][0])) {
+		//ひんし状態でない場合
+		if (!this.getStatus().equals(ARRAY_STATUS[0])) {
+			this.exp = exp;
+			//経験値がたまった場合
+			if (this.getExp_max() - this.exp <= 0) {
+				this.exp = Math.abs(this.getExp_max() - this.exp);
 				this.setLevel();
 			}
 		}
@@ -265,7 +266,7 @@ public abstract class Pokemon {
 
 	public void trueFainted() {
 		this.fainted = true;
-		this.setStatus(ARRAY_STATUS[0][0]);
+		this.setStatus(ARRAY_STATUS[0]);
 		System.out.println(this.getNickname() + " fainted.");
 	}
 
