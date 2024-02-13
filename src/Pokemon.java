@@ -298,7 +298,7 @@ public abstract class Pokemon {
 
 	//ステータスを確認する(バトル画面用)
 	public void checkBattleStatus() {
-		String str = this.nickname + " Lv." + this.level + " " + this.gender
+		String str = this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
 				+ " HP:" + this.hp + "/" + this.hp_max;
 		System.out.println(str);
 	}

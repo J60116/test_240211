@@ -43,20 +43,20 @@ class User {
 			System.out.println("Please catch " + pokemon.getName() + " using any of PokeBall.");
 			return;
 		}
-		for (int i = 0; i < this.getPocket().length; i++) {
-			if (this.getPocket()[i] != null ){
-				//既にポケットにいるポケモンを指定した場合
-				if (this.getPocket()[i].equals(pokemon)) {
-					System.out.println("You already set this Pokemon in your pocket.");
-					return;
-				}
-				//指定したポケットが空いていない場合
-				if (num == i) {
-					System.out.println("The pocket[" + num + "] is unavailable");
-					return;
-				}
-			}
-		}
+		// for (int i = 0; i < this.getPocket().length; i++) {
+		// 	if (this.getPocket()[i] != null ){
+		// 		//既にポケットにいるポケモンを指定した場合
+		// 		if (this.getPocket()[i].equals(pokemon)) {
+		// 			System.out.println("You already set this Pokemon in your pocket.");
+		// 			return;
+		// 		}
+		// 		//指定したポケットが空いていない場合
+		// 		if (num == i) {
+		// 			System.out.println("The pocket[" + num + "] is unavailable");
+		// 			return;
+		// 		}
+		// 	}
+		// }
 		this.pocket[num] = pokemon;
 	}
 	
@@ -252,8 +252,34 @@ class User {
 					break;
 				case 2:
 					//Pokemon
-					/*ポケモンを入れ替える*/
-//					this.switchPokemon(a,b);
+					//ポケモンの数が不足している場合
+					if(countPokemon() <= 1){
+						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
+						break;
+					}
+					for(int i=0;i<getPocket().length;i++){
+						if(getPocket()[i]!=null){
+							System.out.println((i + 1) + ": " + getPocket()[i].getNickname() + "/" + getPocket()[i].getName() + " (" + getPocket()[i].getStatus() + ")");
+						}
+					}
+					System.out.print("Which Pokemon do you select?: ");
+					int num = sc.nextInt();
+					if(this.getPocket()[num-1].getStatus().equals(Pokemon.ARRAY_STATUS[1])){
+						System.out.println("MISS! You selected Pokemon in battle.");
+						break;
+					}
+					if(this.getPocket()[num-1] == null){
+						System.out.println("MISS! Pocket[" + (num-1) + "]" + " is null.");
+						break;
+					}
+					if(this.getPocket()[num-1].getFainted()){
+						System.out.println(this.getName() + " cannot select fainted Pokemon.");
+						break;
+					}
+					friend.setStatus(Pokemon.ARRAY_STATUS[2]);
+					friend = this.getPocket()[num-1];
+					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
+					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					break;
 				case 3:
 					//Throw PokeBall
@@ -283,8 +309,31 @@ class User {
 	}
 	
 	//ポケモンの入れ替え
-	public void switchPokemon(int a, int b) {
-		
+	public void switchPokemon(int a) {
+
+	}
+
+	//戦闘中のポケモンを調べる
+	public Pokemon getInBattlePokemon(){
+		Pokemon pokemon = null;
+		for(Pokemon p : this.getPocket()){
+			if(p.getStatus().equals(Pokemon.ARRAY_STATUS[1])){
+				pokemon = p;
+				break;
+			}
+		}
+		return pokemon;
+	}
+
+	//ポケモンの数を数える
+	public int countPokemon(){
+		int count = 0;
+		for(Pokemon p : this.getPocket()){
+			if(p != null){
+				count++;
+			}
+		}
+		return count;
 	}
 
 	//逃げる
