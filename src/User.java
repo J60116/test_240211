@@ -237,29 +237,19 @@ class User {
 					//敵の攻撃
 					enemy.useMove(num_e, friend);
 					//どちらかが瀕死状態になればバトルを終える
-					if(enemy.getFainted()){
-						System.out.println(this.getName() + " won the game!");
-						//In Battleのポケモンの経験値を増やす
-						friend.setExp(friend.getExp() + 5);
-						this.falseBattle();
-					} else if(friend.getFainted()){
-						System.out.println(this.getName() + " lose the game...");
-						this.falseBattle();
-						/*ポケモンを入れ替える*/
-						// System.out.println("Will you switch your Pokemon?");
-						// System.out.print("[1]Switch Pokemon [2]Run : ");
-					}
+					this.judgeButtle(friend, enemy);
+		
 					break;
 				case 2:
 					//Pokemon
 					//ポケモンの数が不足している場合
-					if(countPokemon() <= 1){
+					if(this.countPokemon() <= 1){
 						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
 						break;
 					}
-					for(int i=0;i<getPocket().length;i++){
-						if(getPocket()[i]!=null){
-							System.out.println((i + 1) + ": " + getPocket()[i].getNickname() + "/" + getPocket()[i].getName() + " (" + getPocket()[i].getStatus() + ")");
+					for(int i=0;i<this.getPocket().length;i++){
+						if(this.getPocket()[i]!=null){
+							System.out.println((i + 1) + ": " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
 						} else {
 							System.out.println((i + 1) + ": null");
 						}
@@ -304,10 +294,7 @@ class User {
 					//敵の攻撃を受ける
 					num_e = enemy.getRand().nextInt(4) + 1;
 					enemy.useMove(num_e, friend);
-					if(friend.getFainted()){
-						System.out.println(this.getName() + " lose the game...");
-						this.falseBattle();
-					}
+					this.judgeButtle(friend, enemy);
 					break;
 				case 3:
 					//Throw PokeBall
@@ -336,9 +323,28 @@ class User {
 		pokemon.useMove(num, enemy);
 	}
 	
-	//ポケモンの入れ替え
-	public void switchPokemon(int a) {
+	//バトル結果の判定
+	private void judgeButtle(Pokemon friend, Pokemon enemy){
+		if(enemy.getFainted()){
+			//敵が気絶した場合
+			System.out.println(this.getName() + " won the game!");
+			//In Battleのポケモンの経験値を５つ増やす
+			friend.setExp(friend.getExp() + 5);
+			this.falseBattle();
+		} else if(friend.getFainted()){
+			//味方が気絶した場合
+			System.out.println(this.getName() + " lose the game...");
+			this.falseBattle();
+			/*ポケモンを入れ替える*/
+			// System.out.println("Will you switch your Pokemon?");
+			// System.out.print("[1]Switch Pokemon [2]Run : ");
+		}
+	}
 
+	//ポケモンの入れ替え
+	public Pokemon switchPokemon(Pokemon inBattle) {
+		Pokemon canBattle = null;
+		return canBattle;
 	}
 
 	//戦闘中のポケモンを調べる
