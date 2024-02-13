@@ -15,8 +15,11 @@ public class Main {
 		user.lookForPokemon(eevee);
 		user.lookForPokemon(vaporeon);
 
+		//所持しているポケモンの確認
+		user.viewCurrentParty();
+
 		//ポケモンセンターに行く
-		user.visitPokemonCenter();
+		// user.visitPokemonCenter();
 
 		//1番目のポケモンに「みずのいし」を渡す
 		user.giveItem(0 , "WaterStone");

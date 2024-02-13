@@ -402,7 +402,7 @@ class User {
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
 		if(this.getPocket()[num].getFainted()){
-			System.out.println("Miss!" + this.name + "could not give" + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
+			System.out.println("Miss! " + this.name + " could not give " + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
 			return;
 		}
 		if (this.getPocket()[num] == null) {
