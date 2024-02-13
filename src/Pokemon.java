@@ -293,6 +293,20 @@ public abstract class Pokemon {
 		return str;
 	}
 
+	// @Override
+	// public boolean equals(Object object){
+	// 	if(object instanceof Pokemon){
+	// 		Pokemon pokemon = (Pokemon)object;
+	// 		if(this.name == pokemon.getName() && this.nickname == pokemon.getNickname() 
+	// 			&& this.level == pokemon.getLevel() && this.gender == pokemon.getGender()
+	// 			&& this.hp == pokemon.getHP() && this.hp_max == pokemon.getHP_max()
+	// 			&& this.getMoves() == pokemon.getMoves()){
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// } 
+
 	//ステータスを確認する
 	public void checkStatus() {
 		System.out.println(this.toString());

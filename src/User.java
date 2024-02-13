@@ -247,52 +247,34 @@ class User {
 						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
 						break;
 					}
-					for(int i=0;i<this.getPocket().length;i++){
-						if(this.getPocket()[i]!=null){
-							System.out.println((i + 1) + ": " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
-						} else {
-							System.out.println((i + 1) + ": null");
-						}
-					}
-					int num = 0;
-					while(true){
-						try{
-							System.out.print("Which Pokemon do you select?: ");
-							num = sc.nextInt();
-							//0か1が入力された場合、ループを抜ける
-							if(num >= 1 && num <= 6){
-								break;
-							}
-							System.out.println("ERROR >> Please select number between 1 and 6");
-						} catch (InputMismatchException e){
-							num = 0;
-							break;
-						}
-					}
-					if(num<1||num>6){
-						System.out.println("MISS! Please input number");
-						break;
-					}
-					if(this.getPocket()[num-1] == null){
+					//入れ替える予定のポケモン
+					Pokemon pokemon = this.switchPokemon(friend);
+					//nullを選択した場合
+					if(pokemon == null){
 						System.out.println("MISS! Pokemon is null.");
 						break;
 					}
-					if(this.getPocket()[num-1].getStatus().equals(Pokemon.ARRAY_STATUS[1])){
-						System.out.println("MISS! You selected Pokemon in battle.");
+					//ひんし状態のポケモンを選択した場合
+					if(pokemon.getFainted()){
+						System.out.println(this.getName() + " cannot select fainted Pokemon.");
 						break;
 					}
-					if(this.getPocket()[num-1].getFainted()){
-						System.out.println(this.getName() + " cannot select fainted Pokemon.");
+					//戦闘中のポケモンを選択した場合
+					if(pokemon.equals(friend)){
+						System.out.println("MISS! You selected Pokemon in battle.");
 						break;
 					}
 					//入れ替える前にCan Battleに戻しておく
 					friend.setStatus(Pokemon.ARRAY_STATUS[2]);
 					//ポケモンを入れ替える
-					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
-					friend = this.getPocket()[num-1];
+					friend = pokemon;
+					//入れ替えたポケモンをIn Battleに変更
 					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
+					friend = pokemon;
+					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					//敵の攻撃を受ける
 					num_e = enemy.getRand().nextInt(4) + 1;
+					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
 					enemy.useMove(num_e, friend);
 					this.judgeButtle(friend, enemy);
 					break;
@@ -342,10 +324,56 @@ class User {
 	}
 
 	//ポケモンの入れ替え
-	public Pokemon switchPokemon(Pokemon inBattle) {
+	private Pokemon switchPokemon(Pokemon inBattle) {
+		//バトルに繰り出す予定のポケモンを宣言
 		Pokemon canBattle = null;
+		//所持しているポケモンの確認
+		for(int i=0;i<this.getPocket().length;i++){
+			if(this.getPocket()[i]!=null){
+				System.out.println((i + 1) + ": " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
+			} else {
+				System.out.println((i + 1) + ": null");
+			}
+		}
+		int num = 0;
+		while(true){
+			try{
+				System.out.print("Which Pokemon do you select?: ");
+				num = sc.nextInt();
+				//0か1が入力された場合、ループを抜ける
+				if(num >= 1 && num <= 6){
+					break;
+				}
+				System.out.println("ERROR >> Please select number between 1 and 6");
+			} catch (InputMismatchException e){
+				System.out.println("ERROR >> Please input number");
+				sc.nextLine();
+				continue;
+			}
+		}
+		// if(this.booleanSwitch(num)){
+		// 	//入れ替える前にCan Battleに戻しておく
+		// 	inBattle.setStatus(Pokemon.ARRAY_STATUS[2]);
+			//ポケモンを入れ替える
+			canBattle = this.getPocket()[num-1];
+		// 	//入れ替えたポケモンをIn Battleに変更
+		// 	canBattle.setStatus(Pokemon.ARRAY_STATUS[1]);
+		// }
 		return canBattle;
 	}
+	
+	//入れ替え可能かの判定
+	// private boolean booleanSwitch(int num){
+	// 	// if(this.getPocket()[num-1] == null){
+	// 	// 	System.out.println("MISS! Pokemon is null.");
+	// 	// 	return false;
+	// 	// }
+	// 	// if(this.getPocket()[num-1].getFainted()){
+	// 	// 	System.out.println(this.getName() + " cannot select fainted Pokemon.");
+	// 	// 	return false;
+	// 	// }
+	// 	// return true;
+	// }
 
 	//戦闘中のポケモンを調べる
 	public Pokemon getInBattlePokemon(){
