@@ -101,8 +101,8 @@ class User {
 			int a = pokemon.getRand().nextInt(3) + 1;
 			int b = a + pokemon.getRand().nextInt(2) + 2;
 			//草むらの中に数値を表示する
-			grass[i][a] = "(" +(2 * i - 1) + ")";
-			grass[i][b] = "(" +(2 * i) + ")";
+			grass[i][a] = "(" + (2 * i - 1) + ")";
+			grass[i][b] = "(" + (2 * i) + ")";
 		}
 		//それ以外の場所にはwwを代入
 		for(int i = 0; i < grass.length; i++){	
@@ -131,11 +131,11 @@ class User {
 				System.out.println();
 			}
 			//探す場所を数字にて選択
-			System.out.print("\nSelect num: ");
+			System.out.print("\nSelect number: ");
 			try{
 				input = sc.nextInt();
 			} catch (InputMismatchException e){
-				System.out.println("MISS! Please input num.");
+				System.out.println("MISS! Please input number.");
 				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
 				sc.nextLine();
 				return;
@@ -144,6 +144,11 @@ class User {
 				//数値が一致したらループを抜ける
 				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 				break;
+			} else if (input < 0 || input > 6){
+				System.out.println("MISS! Please select number between 1 and 6.");
+				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
+				sc.nextLine();
+				return;
 			} else {
 				//草を刈り取ったかどうか
 				boolean remove = false;
@@ -160,7 +165,7 @@ class User {
 						break;
 					}
 				}
-				System.out.println(this.getName() + " could not find " + pokemon.getName() + ".");
+				System.out.println(pokemon.getName() + " was not there.");
 			}
 		}
 		//バトルを開始する
@@ -202,9 +207,21 @@ class User {
 		//バトルが終わるまで繰り返す
 		while(this.getBattle()){
 			this.dispBattleScreen(enemy, friend);
-			System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
-			int menu = sc.nextInt();
-			sc.nextLine();
+			int menu = -1;
+			while(true){
+				try{
+					System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
+					menu = sc.nextInt();
+					//0か1が入力された場合、ループを抜ける
+					if(menu >= 1 && menu <= 4){
+						break;
+					}
+					System.out.println("ERROR >> Please select number between 1 and 4");
+				} catch (InputMismatchException e){
+					System.out.println("ERROR >> Please input number");
+				}
+			}
+			
 			switch(menu){
 				case 1:
 					//Battle
@@ -242,6 +259,9 @@ class User {
 					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
+					//1行読み飛ばし
+					sc.nextLine();
+					//モンスターボールの名前を取得
 					String input = sc.nextLine();
 					this.getPokemon(enemy, input);
 					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
