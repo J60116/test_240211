@@ -19,7 +19,7 @@ public class Main {
 		user.viewCurrentParty();
 
 		//ポケモンセンターに行く
-		// user.visitPokemonCenter();
+		user.visitPokemonCenter();
 
 		//1番目のポケモンに「みずのいし」を渡す
 		user.giveItem(0 , "WaterStone");

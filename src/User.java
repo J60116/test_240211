@@ -93,7 +93,7 @@ class User {
 			System.out.println("\n" + pokemon.getName() + " has owner.");
 			return;
 		}
-		System.out.println("\n" + this.getName() + " look for " + pokemon.getName() + " in the grass.");
+		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the grass.");
 		// 草むらの生成
 		String[][] grass = new String[5][8];
 		for(int i = 1; i <= 3; i++){
@@ -101,14 +101,14 @@ class User {
 			int a = pokemon.getRand().nextInt(3) + 1;
 			int b = a + pokemon.getRand().nextInt(2) + 2;
 			//草むらの中に数値を表示する
-			grass[i][a] = (2*i)-1 + ")";
-			grass[i][b] = (2*i) + ")";
+			grass[i][a] = "(" +(2 * i - 1) + ")";
+			grass[i][b] = "(" +(2 * i) + ")";
 		}
 		//それ以外の場所にはwwを代入
 		for(int i = 0; i < grass.length; i++){	
 			for(int j = 0; j < grass[i].length; j++){
 				if(grass[i][j] == null){
-					grass[i][j] = "ww";
+					grass[i][j] = "www";
 				}
 			}
 		}
@@ -131,8 +131,15 @@ class User {
 				System.out.println();
 			}
 			//探す場所を数字にて選択
-			System.out.print("\nSelect: ");
-			input = sc.nextInt();
+			System.out.print("\nSelect num: ");
+			try{
+				input = sc.nextInt();
+			} catch (InputMismatchException e){
+				System.out.println("MISS! Please input num.");
+				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
+				sc.nextLine();
+				return;
+			}
 			if(input == random){
 				//数値が一致したらループを抜ける
 				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
@@ -143,8 +150,8 @@ class User {
 				for(int i = 1; i < grass.length - 1; i++){	
 					for(int j = 0; j < grass[i].length; j++){
 						//探した場所の草は刈り取る
-						if(grass[i][j].equals(input+")")){
-							grass[i][j] = "  ";
+						if(grass[i][j].equals("(" + input + ")")){
+							grass[i][j] = "   ";
 							remove = true;
 							break;
 						}
