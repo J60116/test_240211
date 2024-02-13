@@ -3,7 +3,7 @@ final class Vaporeon extends Eevee{
 	static final String NAME = "Showers";
 
 	public Vaporeon(){
-		this(null, ARRAY_BALL[0][1]);
+		this(null, ARRAY_BALL[0][0]);
 	}
 
 	public Vaporeon(String owner, String ball){
@@ -18,40 +18,29 @@ final class Vaporeon extends Eevee{
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[0]);
 		this.setName(ARRAY_EVOLVED_NAME[0]);
 		this.setNickname(ARRAY_EVOLVED_NAME[0]);
-		this.setType(0, ARRAY_EVOLVED_TYPE[0]);
+		this.setTypes(0, ARRAY_EVOLVED_TYPE[0]);
 		this.setAbility(ARRAY_EVOLVED_ABILITY[0]);
 		this.setHP_max(ARRAY_EVOLVED_MAXHP[0]);
 		this.hp = this.getHP_max();
-		this.setMove(1, new Hydropump());
+		this.setMoves(1, new Hydropump());
 	}
 
 	@Override
-	public String[] getType(){
+	public String[] getTypes(){
 		//アクセスできるようにsuperを使用
-		return super.getType();
+		return super.getTypes();
 	}
 
 	@Override
-	public void setType(String[] type){
+	public void setTypes(String[] type){
 		//アクセスできるようにsuperを使用
-		super.setType(type);
+		super.setTypes(type);
 	}
 
 	@Override
 	public void setItem(String item) {
 		//進化の石を持たせてもevolve(int)を呼び出さない
 		super.setItem(item);
-	}
-
-	@Override
-	public void attack(Pokemon p) {
-		System.out.println(this.getName() + " attacked" + p.getName() + "!");
-		p.hp -= 10;
-	}
-
-	public void HydroPump(Pokemon p){
-		System.out.println(this.getName() + " used Hydro Pump!");
-		p.hp -= 20;
 	}
 	
 	@Override
