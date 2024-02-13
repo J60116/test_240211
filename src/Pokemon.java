@@ -211,8 +211,8 @@ public abstract class Pokemon {
 	}
 
 	public void setExp(int exp) {
-		//ひんし状態でない場合
-		if (!this.getStatus().equals(ARRAY_STATUS[0])) {
+		//In Battleの場合
+		if (this.getStatus().equals(ARRAY_STATUS[1])) {
 			this.exp = exp;
 			//経験値がたまった場合
 			if (this.getExp_max() - this.exp <= 0) {

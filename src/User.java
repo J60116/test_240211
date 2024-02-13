@@ -94,14 +94,33 @@ class User {
 			return;
 		}
 		System.out.println("\n" + this.getName() + " look for " + pokemon.getName() + " in the grass.");
-		//0か1の数字を保存
-		int random = pokemon.getRand().nextInt(2);
-		if(random != 0) {
-			System.out.println(this.getName() + " could not find " + pokemon.getName() + ".");
-		} else {
-			System.out.println("A wild " + pokemon.getName() + " has appeared!");
-			startBattle(pokemon);
+		// 草むらの生成
+		String[][] grass = new String[][]{{"w","w","w","w","w","w"},{"1","2","3","4","5","6"}};
+		//1から6まで数字を保存
+		int random = pokemon.getRand().nextInt(6) + 1;
+		int imput = -1;
+		while(imput != random){
+			//草むらの表示
+			System.out.println();
+			for(int i = 0; i < grass.length; i++){	
+				for(int j = 0; j < grass[i].length; j++){
+					if(j > 0){
+						System.out.print(" ");
+					}
+					System.out.print(grass[i][j]);
+				}
+				System.out.println();
+			}
+			System.out.print("Select: ");
+			imput = sc.nextInt();
+			if(imput != random){
+				System.out.println(this.getName() + " could not find " + pokemon.getName() + ".");
+				grass[1][imput - 1] = " ";
+			}
 		}
+		System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
+		startBattle(pokemon);
+		
 	}
 	
 	//相手から声を掛けられる
