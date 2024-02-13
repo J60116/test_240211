@@ -264,14 +264,27 @@ class User {
 							System.out.println((i + 1) + ": null");
 						}
 					}
-					System.out.print("Which Pokemon do you select?: ");
-					int num = sc.nextInt();
+					int num = 0;
+					while(true){
+						try{
+							System.out.print("Which Pokemon do you select?: ");
+							num = sc.nextInt();
+							//0か1が入力された場合、ループを抜ける
+							if(num >= 1 && num <= 6){
+								break;
+							}
+							System.out.println("ERROR >> Please select number between 1 and 6");
+						} catch (InputMismatchException e){
+							num = 0;
+							break;
+						}
+					}
 					if(num<1||num>6){
-						System.out.println("MISS! You selected wrong number.");
+						System.out.println("MISS! Please input number");
 						break;
 					}
 					if(this.getPocket()[num-1] == null){
-						System.out.println("MISS! " + num + ": Pokemon is null.");
+						System.out.println("MISS! Pokemon is null.");
 						break;
 					}
 					if(this.getPocket()[num-1].getStatus().equals(Pokemon.ARRAY_STATUS[1])){
@@ -379,12 +392,13 @@ class User {
 			while (true) {
 				System.out.print("Nickname: ");
 				input = sc.next();
-				if(input.equals(pokemon.getName())){
-					System.out.println("ERROR >> Please input nickname except " + pokemon.getName());
+				String inputName = input.substring(0,1).toUpperCase() + input.substring(1);
+				if(inputName.equals(pokemon.getName())){
+					System.out.println("ERROR >> Please input nickname except \"" + pokemon.getName()+"\"");
 					sc.nextLine();
 					continue;
 				}
-				if(input.matches(Pokemon.FMT_NAME)){
+				if(inputName.matches(Pokemon.FMT_NAME)){
 					break;
 				}
 			}

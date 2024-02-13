@@ -76,11 +76,13 @@ public abstract class Pokemon {
 	}
 
 	public void setNickname(String nickname) {
-		if (!nickname.matches(FMT_NAME)) {
-			System.out.println(nickname + " is not acceptable.");
+		//先頭文字を大文字に変換
+		String str = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
+		if (!str.matches(FMT_NAME)) {
+			System.out.println("MISS! " + str + " is not acceptable.");
 			return;
 		}
-		this.nickname = nickname;
+		this.nickname = str;
 	}
 
 	public String getOwner() {
