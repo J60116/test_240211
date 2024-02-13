@@ -260,16 +260,22 @@ class User {
 					for(int i=0;i<getPocket().length;i++){
 						if(getPocket()[i]!=null){
 							System.out.println((i + 1) + ": " + getPocket()[i].getNickname() + "/" + getPocket()[i].getName() + " (" + getPocket()[i].getStatus() + ")");
+						} else {
+							System.out.println((i + 1) + ": null");
 						}
 					}
 					System.out.print("Which Pokemon do you select?: ");
 					int num = sc.nextInt();
-					if(this.getPocket()[num-1].getStatus().equals(Pokemon.ARRAY_STATUS[1])){
-						System.out.println("MISS! You selected Pokemon in battle.");
+					if(num<1||num>6){
+						System.out.println("MISS! You selected wrong number.");
 						break;
 					}
 					if(this.getPocket()[num-1] == null){
-						System.out.println("MISS! Pocket[" + (num-1) + "]" + " is null.");
+						System.out.println("MISS! " + num + ": Pokemon is null.");
+						break;
+					}
+					if(this.getPocket()[num-1].getStatus().equals(Pokemon.ARRAY_STATUS[1])){
+						System.out.println("MISS! You selected Pokemon in battle.");
 						break;
 					}
 					if(this.getPocket()[num-1].getFainted()){
@@ -280,6 +286,7 @@ class User {
 					friend = this.getPocket()[num-1];
 					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
 					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
+					
 					break;
 				case 3:
 					//Throw PokeBall
