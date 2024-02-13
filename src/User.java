@@ -282,11 +282,19 @@ class User {
 						System.out.println(this.getName() + " cannot select fainted Pokemon.");
 						break;
 					}
+					//入れ替える前にCan Battleに戻しておく
 					friend.setStatus(Pokemon.ARRAY_STATUS[2]);
+					//ポケモンを入れ替える
+					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					friend = this.getPocket()[num-1];
 					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
-					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
-					
+					//敵の攻撃を受ける
+					num_e = enemy.getRand().nextInt(4) + 1;
+					enemy.useMove(num_e, friend);
+					if(friend.getFainted()){
+						System.out.println(this.getName() + " lose the game...");
+						this.falseBattle();
+					}
 					break;
 				case 3:
 					//Throw PokeBall
