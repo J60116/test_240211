@@ -319,7 +319,7 @@ public abstract class Pokemon {
 	public void checkMoves() {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
-			System.out.println((i + 1) + ": " + getMoves(i));
+			System.out.println("[" + (i + 1) + "] " + getMoves(i));
 		}
 		// for (Moves m : this.getMoves()) {
 		// 	if (m != null) {
