@@ -24,7 +24,7 @@ public abstract class Pokemon {
 	private String status; //戦闘状態
 	private int dexNo; //ずかん番号
 	private int level; //レベル
-	int hp; //体力
+	private int hp; //体力
 	private int hp_max; //最大HP
 	private int exp; //経験値
 	private int exp_max; //レベルアップに必要な経験値
@@ -269,6 +269,7 @@ public abstract class Pokemon {
 
 	public void falseFainted() {
 		this.fainted = false;
+		this.setStatus(ARRAY_STATUS[2]);
 	}
 
 	//メゾット
@@ -403,7 +404,8 @@ public abstract class Pokemon {
 
 	//回復する
 	public void recover() {
-		this.hp = this.hp_max;
+		this.setHP(this.getHP_max());
+		this.falseFainted();
 		// this.moves.mp = this.mp_max;
 		for (int i = 0; i < this.getMoves().length; i++) {
 			if (this.getMoves(i) != null) {

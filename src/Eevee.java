@@ -32,7 +32,7 @@ class Eevee extends Pokemon {
 		this.setDexNo(133);
 		this.setLevel(1);
 		this.setHP_max(55);
-		this.hp = this.getHP_max();
+		this.setHP(this.getHP_max());
 		this.setMoves(0, new Tackle());
 	}
 
