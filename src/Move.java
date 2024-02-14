@@ -1,8 +1,5 @@
 public abstract class Move {
-    //タイプ
-    final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
-			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
-	//技の効果
+    //技の効果
 	final static String[] ARRAY_EFFECTIVE_MSG = { "×Has no effect", "△Not very effective", "〇Effective",
 			"◎Super effective" };
 	final static double[] ARRAY_EFFECTIVE_RATE = { 0.0, 0.5, 1.0, 2.0 };
@@ -16,7 +13,7 @@ public abstract class Move {
 
     public Move(){
         this.name = null;
-        this.type = ARRAY_TYPE[1];
+        this.type = Pokemon.ARRAY_TYPE[0];//Normal
         this.mp_max = 0;
         this.mp = this.mp_max;
         this.power = 0;

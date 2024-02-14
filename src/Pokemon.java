@@ -1,14 +1,9 @@
 import java.util.Random;
 
 public abstract class Pokemon {
-
 	//タイプ
 	final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
 			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
-	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
-	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "PokeBall", "(p)" }, { "SuperBall", "(s)" },
-			{ "MasterBall", "(m)" } };
-	//	final static String[] ARRAY_IMG_BALL = { "W)", "○", "◎", "●", "E)" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
 	//戦闘状態（0:戦闘不可/ひんし状態 1:戦闘中 2:戦闘可能）
@@ -29,7 +24,7 @@ public abstract class Pokemon {
 	private String status; //戦闘状態
 	private int dexNo; //ずかん番号
 	private int level; //レベル
-	int hp; //体力
+	private int hp; //体力
 	private int hp_max; //最大HP
 	private int exp; //経験値
 	private int exp_max; //レベルアップに必要な経験値
@@ -39,7 +34,7 @@ public abstract class Pokemon {
 
 	//コンストラクタ
 	public Pokemon() {
-		this(null, ARRAY_BALL[0][0]);
+		this(null, User.ARRAY_BALL[0][0]);
 	}
 
 	public Pokemon(String owner, String ball) {
@@ -136,18 +131,18 @@ public abstract class Pokemon {
 	}
 
 	public void setBall(String ball) {
-		String input = "";
-		for (int i = 0; i < ARRAY_BALL.length; i++) {
-			if (ball.equals(ARRAY_BALL[i][0])) {
+		String imgBall = "";
+		for (int i = 0; i < User.ARRAY_BALL.length; i++) {
+			if (ball.equals(User.ARRAY_BALL[i][0])) {
 				//ボールの名前が正しければ代入する
-				input = ARRAY_BALL[i][1];
+				imgBall = User.ARRAY_BALL[i][1];
 			}
 		}
-		if (input.isEmpty()) {
+		if (imgBall.isEmpty()) {
 			System.out.println("MISS! " + ball + " is not tool to catch Pokemon.");
 			return;
 		}
-		this.ball = input;
+		this.ball = imgBall;
 	}
 
 	public String getItem() {
@@ -274,6 +269,7 @@ public abstract class Pokemon {
 
 	public void falseFainted() {
 		this.fainted = false;
+		this.setStatus(ARRAY_STATUS[2]);
 	}
 
 	//メゾット
@@ -408,7 +404,8 @@ public abstract class Pokemon {
 
 	//回復する
 	public void recover() {
-		this.hp = this.hp_max;
+		this.setHP(this.getHP_max());
+		this.falseFainted();
 		// this.moves.mp = this.mp_max;
 		for (int i = 0; i < this.getMoves().length; i++) {
 			if (this.getMoves(i) != null) {

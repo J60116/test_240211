@@ -19,7 +19,7 @@ class Eevee extends Pokemon {
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
 
 	public Eevee() {
-		this(null, ARRAY_BALL[0][0]);
+		this(null, User.ARRAY_BALL[0][0]);
 	}
 
 	public Eevee(String owner, String ball) {
@@ -32,8 +32,18 @@ class Eevee extends Pokemon {
 		this.setDexNo(133);
 		this.setLevel(1);
 		this.setHP_max(55);
-		this.hp = this.getHP_max();
+		this.setHP(this.getHP_max());
 		this.setMoves(0, new Tackle());
+	}
+
+	//進化ポケモンのコンストラクタ設定用
+	public void setConstructor(int num){
+		this.setDexNo(ARRAY_EVOLVED_DEXNO[num]);
+		this.setName(ARRAY_EVOLVED_NAME[num]);
+		this.setNickname(ARRAY_EVOLVED_NAME[num]);
+		this.setTypes(0, ARRAY_EVOLVED_TYPE[num]);
+		this.setAbility(ARRAY_EVOLVED_ABILITY[num]);
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[num]);
 	}
 
 	private void setGender() {
