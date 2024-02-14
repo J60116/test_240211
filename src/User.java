@@ -196,6 +196,37 @@ class User {
 		System.out.println(">>>>>>> Friend\n");
 	}
 
+	//数値入力画面の表示
+	public int inputInt(int min, int max, String message){
+		//入力範囲の文字列を作成
+		String str = " between " + min + " and " + max;
+		if(max - min == 1){
+			str = min + " or " + max;
+		} else if (max == min){
+			str = String.valueOf(min);
+		}
+		//戻り値の初期値は-1とする
+		int num = -1;
+		while(true){
+			try{
+				//第３引数の文字列を表示
+				System.out.print(message);
+				//入力値を受け取る
+				num = sc.nextInt();
+				//min =< num <= max の場合、ループを抜ける
+				if(num >= min && num <= max){
+					break;
+				}
+				System.out.println("ERROR >> Please select number " + str);
+			} catch (InputMismatchException e){
+				//数値以外が入力された場合
+				System.out.println("ERROR >> Please input number");
+				sc.nextLine();
+			}
+		}
+		return num;
+	}
+
 	//ポケモンバトル
 	public void startBattle(Pokemon enemy){
 		//ポケモンがひんし状態の場合
@@ -214,43 +245,15 @@ class User {
 		//バトルが終わるまで繰り返す
 		while(this.getBattle()){
 			this.dispBattleScreen(enemy, friend);
-			int menu = -1;
-			while(true){
-				try{
-					System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
-					//Menuを選択
-					menu = sc.nextInt();
-					//0か1が入力された場合、ループを抜ける
-					if(menu >= 1 && menu <= 4){
-						break;
-					}
-					System.out.println("ERROR >> Please select number between 1 and 4");
-				} catch (InputMismatchException e){
-					System.out.println("ERROR >> Please input number");
-					sc.nextLine();
-				}
-			}
-			
+			String msgMenu = "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ";
+			int menu = this.inputInt(1,4,msgMenu);		
 			switch(menu){
 				case 1:
 					//Battle
 					//味方の技の選択
 					friend.checkMoves();
-					int num_f = 0;
-					while(true){
-						try{
-							System.out.print("What number of Move do you use?: ");
-							num_f = sc.nextInt();
-							//0か1が入力された場合、ループを抜ける
-							if(num_f >= 1 && num_f <= 4){
-								break;
-							}
-							System.out.println("ERROR >> Please select number between 1 and 4");
-						} catch (InputMismatchException e){
-							System.out.println("ERROR >> Please input number");
-							sc.nextLine();
-						}
-					}
+					String msgMove = "What number of Move do you use?: ";
+					int num_f = this.inputInt(1,4,msgMove);
 					//味方の攻撃
 					System.out.println("\nFriend -> Enemy");
 					this.giveInstructions(friend, num_f, enemy);
@@ -360,27 +363,13 @@ class User {
 				System.out.println((i + 1) + ": null");
 			}
 		}
-		int num = 0;
-		while(true){
-			try{
-				System.out.print("Which Pokemon do you select?: ");
-				num = sc.nextInt();
-				//0か1が入力された場合、ループを抜ける
-				if(num >= 1 && num <= 6){
-					break;
-				}
-				System.out.println("ERROR >> Please select number between 1 and 6");
-			} catch (InputMismatchException e){
-				System.out.println("ERROR >> Please input number");
-				sc.nextLine();
-				continue;
-			}
-		}
+		String msgSwitch = "Which Pokemon do you select?: ";
+		int num = this.inputInt(1, 6, msgSwitch);
 		// if(this.booleanSwitch(num)){
 		// 	//入れ替える前にCan Battleに戻しておく
 		// 	inBattle.setStatus(Pokemon.ARRAY_STATUS[2]);
-			//ポケモンを入れ替える
-			canBattle = this.getPocket()[num-1];
+		// ポケモンを入れ替える
+		canBattle = this.getPocket()[num - 1];
 		// 	//入れ替えたポケモンをIn Battleに変更
 		// 	canBattle.setStatus(Pokemon.ARRAY_STATUS[1]);
 		// }
@@ -431,21 +420,7 @@ class User {
 	//ニックネームをつける
 	public void giveNickname(Pokemon pokemon) {
 		System.out.println("Do you give " + pokemon.getName() + " a nickname?");
-		int num = -1;
-		while(true){
-			try{
-				System.out.print("【1】YES 【0】NO : ");
-				num = sc.nextInt();
-				//0か1が入力された場合、ループを抜ける
-				if(num == 0 || num == 1){
-					break;
-				}
-				System.out.println("ERROR >> Please input 0 or 1");
-			} catch (InputMismatchException e){
-				System.out.println("ERROR >> Please input number");
-				sc.nextLine();
-			}
-		}
+		int num = this.inputInt(0, 1, "【1】YES 【0】NO : ");
 		String input = pokemon.getNickname();
 		if (num == 1) {
 			while (true) {
@@ -455,7 +430,6 @@ class User {
 				if(inputName.equals(pokemon.getName())){
 					System.out.println("ERROR >> Please input nickname except \"" + pokemon.getName()+"\"");
 					sc.nextLine();
-					continue;
 				}
 				if(inputName.matches(Pokemon.FMT_NAME)){
 					break;
