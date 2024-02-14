@@ -3,7 +3,9 @@ import java.util.*;
 class User {
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
-			{ "Master Ball", "(m)" } };
+			{ "Hyper Ball", "(h)" }, { "Master Ball", "(m)" } };
+	// ボールの捕獲補正率
+	// final static double[] ARRAY_BALL_RATE = { 0.0, 1.0, 1.5, 2.0, 100.0};
 	private String name; //名前
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	private Pokemon[] box; //ポケモンを格納するボックス
