@@ -3,7 +3,7 @@ public class Hydropump extends Move{
     public Hydropump(){
         super();
         this.setName("Hydro pump");
-        this.setType(ARRAY_TYPE[2]);
+        this.setType(Pokemon.ARRAY_TYPE[2]);//Water
         this.setMP_max(5);
         this.setMP(this.getMP_max());
         this.setPower(110);
