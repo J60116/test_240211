@@ -151,24 +151,24 @@ class User {
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
-				System.out.println("MISS! Please select number between 1 and 6.");
-				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
+				System.out.println("MISS! There is no (" + input + ") in the grass.");
+				System.out.println(this.name + " gave up looking for " + pokemon.getName() + "...");
 				sc.nextLine();
 				return;
 			} else {
 				//randomと不一致の場合
-				//草を刈り取ったかどうか
-				boolean remove = false;
+				boolean find = false;
 				for(int i = 1; i < grass.length - 1; i++){	
 					for(int j = 0; j < grass[i].length; j++){
-						//探した場所の草は刈り取る
 						if(grass[i][j].equals("(" + input + ")")){
-							grass[i][j] = "   ";
-							remove = true;
+							//探す場所を見つける
+							find = true;
+							//探した場所には草が生える
+							grass[i][j] = "www";
 							break;
 						}
 					}
-					if(remove){
+					if(find){
 						break;
 					}
 				}
