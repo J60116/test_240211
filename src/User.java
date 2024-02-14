@@ -229,7 +229,7 @@ class User {
 
 	//ポケモンバトル
 	public void startBattle(Pokemon enemy){
-		//ポケモンがひんし状態の場合
+		//対戦相手がひんし状態の場合
 		if(enemy.getFainted()){
 			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
 			return;
@@ -262,7 +262,7 @@ class User {
 					int num_e = enemy.getRand().nextInt(4) + 1;
 					enemy.useMove(num_e, friend);
 					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
-					this.judgeButtle(friend, enemy);
+					this.judgeBattle(friend, enemy);
 					break;
 				case 2:
 					//Pokemon
@@ -295,7 +295,7 @@ class User {
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
 					enemy.useMove(num_e, friend);
 					//判定
-					this.judgeButtle(friend, enemy);
+					this.judgeBattle(friend, enemy);
 					break;
 				case 3:
 					//Throw PokeBall
@@ -327,7 +327,7 @@ class User {
 	}
 	
 	//バトル結果の判定
-	private void judgeButtle(Pokemon friend, Pokemon enemy){
+	private void judgeBattle(Pokemon friend, Pokemon enemy){
 		if(enemy.getFainted()){
 			//敵が気絶した場合
 			System.out.println(this.getName() + " won the game!");
@@ -347,7 +347,7 @@ class User {
 	//ポケモンを選ぶ
 	private Pokemon selectPokemon() {
 		//戻り値となるポケモンの宣言
-		Pokemon substitute = null;
+		Pokemon pokemon = null;
 		//所持しているポケモンの確認
 		System.out.println("Current Party: ");
 		for(int i = 0; i < this.getPocket().length; i++){
@@ -360,8 +360,8 @@ class User {
 		String msgSwitch = "Which Pokemon do you select?: ";
 		int num = this.inputInt(1, 6, msgSwitch);
 		// 選択したポケモンを戻り値として返す
-		substitute = this.getPocket()[num - 1];
-		return substitute;
+		pokemon = this.getPocket()[num - 1];
+		return pokemon;
 	}
 	
 	//入れ替え可能かの判定
@@ -397,7 +397,7 @@ class User {
 		return pokemon;
 	}
 
-	//ポケモンの数を数える
+	//所持しているポケモンの数を数える
 	public int countPokemon(){
 		int count = 0;
 		for(Pokemon p : this.getPocket()){
