@@ -272,21 +272,9 @@ class User {
 						break;
 					}
 					//入れ替え予定のポケモンを宣言
-					Pokemon substitute = this.switchPokemon(friend);
+					Pokemon substitute = this.selectPokemon();
 					//入れ替えが可能か確認する
-					if(substitute == null){
-						//nullを選択した場合
-						System.out.println("MISS! Pokemon is null.");
-						break;
-					}
-					if(substitute.getFainted()){
-						//ひんし状態のポケモンを選択した場合
-						System.out.println("MISS! " + this.getName() + " cannot select fainted Pokemon.");
-						break;
-					}
-					if(substitute.equals(friend)){
-						//戦闘中のポケモンを選択した場合
-						System.out.println("MISS! You selected Pokemon in battle.");
+					if(!this.booleanSwitch(friend, substitute)){
 						break;
 					}
 					//入れ替え前にCan Battleに戻しておく
@@ -351,43 +339,46 @@ class User {
 		}
 	}
 
-	//ポケモンの入れ替え
-	private Pokemon switchPokemon(Pokemon inBattle) {
-		//バトルに繰り出す予定のポケモンを宣言
-		Pokemon canBattle = null;
+	//ポケモンを選ぶ
+	private Pokemon selectPokemon() {
+		//戻り値となるポケモンの宣言
+		Pokemon substitute = null;
 		//所持しているポケモンの確認
-		for(int i=0;i<this.getPocket().length;i++){
-			if(this.getPocket()[i]!=null){
-				System.out.println((i + 1) + ": " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
+		System.out.println("Current Party: ");
+		for(int i = 0; i < this.getPocket().length; i++){
+			if(this.getPocket()[i] != null){
+				System.out.println("[" + (i + 1) + "] " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
 			} else {
-				System.out.println((i + 1) + ": null");
+				System.out.println("[" + (i + 1) + "] null");
 			}
 		}
 		String msgSwitch = "Which Pokemon do you select?: ";
 		int num = this.inputInt(1, 6, msgSwitch);
-		// if(this.booleanSwitch(num)){
-		// 	//入れ替える前にCan Battleに戻しておく
-		// 	inBattle.setStatus(Pokemon.ARRAY_STATUS[2]);
-		// ポケモンを入れ替える
-		canBattle = this.getPocket()[num - 1];
-		// 	//入れ替えたポケモンをIn Battleに変更
-		// 	canBattle.setStatus(Pokemon.ARRAY_STATUS[1]);
-		// }
-		return canBattle;
+		// 選択したポケモンを戻り値として返す
+		substitute = this.getPocket()[num - 1];
+		return substitute;
 	}
 	
 	//入れ替え可能かの判定
-	// private boolean booleanSwitch(int num){
-	// 	// if(this.getPocket()[num-1] == null){
-	// 	// 	System.out.println("MISS! Pokemon is null.");
-	// 	// 	return false;
-	// 	// }
-	// 	// if(this.getPocket()[num-1].getFainted()){
-	// 	// 	System.out.println(this.getName() + " cannot select fainted Pokemon.");
-	// 	// 	return false;
-	// 	// }
-	// 	// return true;
-	// }
+	private boolean booleanSwitch(Pokemon friend, Pokemon substitute){
+		//入れ替えが可能か確認する
+		if(substitute == null){
+			//nullを選択した場合
+			System.out.println("MISS! Pokemon is null.");
+			return false;
+		}
+		if(substitute.getFainted()){
+			//ひんし状態のポケモンを選択した場合
+			System.out.println("MISS! " + this.getName() + " cannot select fainted Pokemon.");
+			return false;
+		}
+		if(substitute.equals(friend)){
+			//戦闘中のポケモンを選択した場合
+			System.out.println("MISS! You selected Pokemon in battle.");
+			return false;
+		}
+		return true;
+	}
 
 	//戦闘中のポケモンを調べる
 	public Pokemon getInBattlePokemon(){
