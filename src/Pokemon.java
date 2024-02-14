@@ -6,8 +6,8 @@ public abstract class Pokemon {
 	final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
 			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
-	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "PokeBall", "(p)" }, { "SuperBall", "(s)" },
-			{ "MasterBall", "(m)" } };
+	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
+			{ "Master Ball", "(m)" } };
 	//	final static String[] ARRAY_IMG_BALL = { "W)", "○", "◎", "●", "E)" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
@@ -136,18 +136,18 @@ public abstract class Pokemon {
 	}
 
 	public void setBall(String ball) {
-		String input = "";
+		String imgBall = "";
 		for (int i = 0; i < ARRAY_BALL.length; i++) {
 			if (ball.equals(ARRAY_BALL[i][0])) {
 				//ボールの名前が正しければ代入する
-				input = ARRAY_BALL[i][1];
+				imgBall = ARRAY_BALL[i][1];
 			}
 		}
-		if (input.isEmpty()) {
+		if (imgBall.isEmpty()) {
 			System.out.println("MISS! " + ball + " is not tool to catch Pokemon.");
 			return;
 		}
-		this.ball = input;
+		this.ball = imgBall;
 	}
 
 	public String getItem() {
@@ -323,7 +323,7 @@ public abstract class Pokemon {
 	public void checkMoves() {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
-			System.out.println("[" + (i + 1) + "] " + getMoves(i));
+			System.out.println((i + 1) + ": " + getMoves(i));
 		}
 		// for (Moves m : this.getMoves()) {
 		// 	if (m != null) {

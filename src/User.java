@@ -8,7 +8,7 @@ class User {
 	private boolean battle; //バトル中かどうか
 	
 	public User() {
-		this("Satoshi", new Eevee("Satoshi", "PokeBall"));
+		this("Satoshi", new Eevee("Satoshi", "Poke Ball"));
 	}
 
 	public User(String name, Pokemon pokemon) {
@@ -98,13 +98,13 @@ class User {
 		String[][] grass = new String[5][8];
 		for(int i = 1; i <= 3; i++){
 			//ポケモンが隠れている可能性がある場所を保存
-			int a = pokemon.getRand().nextInt(3) + 1;
-			int b = a + pokemon.getRand().nextInt(2) + 2;
+			int a = pokemon.getRand().nextInt(2) + 1;
+			int b = a + pokemon.getRand().nextInt(3) + 2;
 			//草むらの中に数値を表示する
 			grass[i][a] = "(" + (2 * i - 1) + ")";
 			grass[i][b] = "(" + (2 * i) + ")";
 		}
-		//それ以外の場所にはwwを代入
+		//それ以外の場所にはwwwを代入
 		for(int i = 0; i < grass.length; i++){	
 			for(int j = 0; j < grass[i].length; j++){
 				if(grass[i][j] == null){
@@ -135,21 +135,23 @@ class User {
 			try{
 				input = sc.nextInt();
 			} catch (InputMismatchException e){
-				System.out.println("MISS! Please input number.");
-				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
+				//数値以外が入力された場合
+				System.out.println("ERROR >> Please input number.");
 				sc.nextLine();
-				return;
+				continue;
 			}
 			if(input == random){
-				//数値が一致したらループを抜ける
+				//randomと一致したらループを抜ける
 				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 				break;
-			} else if (input < 0 || input > 6){
+			} else if (input < 1 || input > 6){
+				//1～6以外が入力された場合はメゾットを中断する
 				System.out.println("MISS! Please select number between 1 and 6.");
 				System.out.println(this.name + " gave up looking for " + pokemon.getName() + ".");
 				sc.nextLine();
 				return;
 			} else {
+				//randomと不一致の場合
 				//草を刈り取ったかどうか
 				boolean remove = false;
 				for(int i = 1; i < grass.length - 1; i++){	
@@ -211,6 +213,7 @@ class User {
 			while(true){
 				try{
 					System.out.print("Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");
+					//Menuを選択
 					menu = sc.nextInt();
 					//0か1が入力された場合、ループを抜ける
 					if(menu >= 1 && menu <= 4){
@@ -219,6 +222,7 @@ class User {
 					System.out.println("ERROR >> Please select number between 1 and 4");
 				} catch (InputMismatchException e){
 					System.out.println("ERROR >> Please input number");
+					sc.nextLine();
 				}
 			}
 			
@@ -227,55 +231,69 @@ class User {
 					//Battle
 					//味方の技の選択
 					friend.checkMoves();
-					System.out.print("What number of Moves do you use?: ");
-					int num_f = sc.nextInt();
+					int num_f = 0;
+					while(true){
+						try{
+							System.out.print("What number of Move do you use?: ");
+							num_f = sc.nextInt();
+							//0か1が入力された場合、ループを抜ける
+							if(num_f >= 1 && num_f <= 4){
+								break;
+							}
+							System.out.println("ERROR >> Please select number between 1 and 4");
+						} catch (InputMismatchException e){
+							System.out.println("ERROR >> Please input number");
+							sc.nextLine();
+						}
+					}
 					//味方の攻撃
+					System.out.println("\nFriend -> Enemy");
 					this.giveInstructions(friend, num_f, enemy);
-					//friend.useMove(num_f, enemy);
-					//敵の技の選択
-					int num_e = enemy.getRand().nextInt(4) + 1;
 					//敵の攻撃
+					System.out.println("\nEnemy -> Friend");
+					int num_e = enemy.getRand().nextInt(4) + 1;
 					enemy.useMove(num_e, friend);
-					//どちらかが瀕死状態になればバトルを終える
+					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
 					this.judgeButtle(friend, enemy);
-		
 					break;
 				case 2:
 					//Pokemon
-					//ポケモンの数が不足している場合
 					if(this.countPokemon() <= 1){
+						//ポケモンの数が不足している場合
 						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
 						break;
 					}
-					//入れ替える予定のポケモン
-					Pokemon pokemon = this.switchPokemon(friend);
-					//nullを選択した場合
-					if(pokemon == null){
+					//入れ替え予定のポケモンを宣言
+					Pokemon substitute = this.switchPokemon(friend);
+					//入れ替えが可能か確認する
+					if(substitute == null){
+						//nullを選択した場合
 						System.out.println("MISS! Pokemon is null.");
 						break;
 					}
-					//ひんし状態のポケモンを選択した場合
-					if(pokemon.getFainted()){
-						System.out.println(this.getName() + " cannot select fainted Pokemon.");
+					if(substitute.getFainted()){
+						//ひんし状態のポケモンを選択した場合
+						System.out.println("MISS! " + this.getName() + " cannot select fainted Pokemon.");
 						break;
 					}
-					//戦闘中のポケモンを選択した場合
-					if(pokemon.equals(friend)){
+					if(substitute.equals(friend)){
+						//戦闘中のポケモンを選択した場合
 						System.out.println("MISS! You selected Pokemon in battle.");
 						break;
 					}
-					//入れ替える前にCan Battleに戻しておく
+					//入れ替え前にCan Battleに戻しておく
 					friend.setStatus(Pokemon.ARRAY_STATUS[2]);
-					//ポケモンを入れ替える
-					friend = pokemon;
+					//入れ替え
+					friend = substitute;
 					//入れ替えたポケモンをIn Battleに変更
 					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
-					friend = pokemon;
 					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					//敵の攻撃を受ける
+					System.out.println("\nEnemy -> Friend");
 					num_e = enemy.getRand().nextInt(4) + 1;
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
 					enemy.useMove(num_e, friend);
+					//判定
 					this.judgeButtle(friend, enemy);
 					break;
 				case 3:
@@ -286,7 +304,8 @@ class User {
 					sc.nextLine();
 					//モンスターボールの名前を取得
 					String input = sc.nextLine();
-					this.getPokemon(enemy, input);
+					this.throwPokeBall(enemy, input);
+					//判定
 					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
 						this.falseBattle();;
 					}
@@ -294,6 +313,7 @@ class User {
 				case 4:
 					//Run
 					this.run();
+					//判定
 					this.falseBattle();
 					break;
 			}
@@ -448,12 +468,12 @@ class User {
 				return true;
 			}
 		}
-		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.");
+		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.\nPlease input \"Poke Ball\", \"Super Ball\" or \"Master Ball\"");
 		return false;
 	}
-
-	//ポケモンを捕まえる
-	private void getPokemon(Pokemon pokemon, String ball) {
+	
+	//ポケモンにボールを投げる
+	private void throwPokeBall(Pokemon pokemon, String ball) {
 		if(this.booleanBall(ball) == false){
 			return;
 		}
@@ -547,7 +567,7 @@ class User {
 		if (this.getPocket()[num] == null) {
 			System.out.println("Miss! There is no Pokemon in the pocket[" + num + "].");
 		} else {
-			System.out.println(this.getPocket()[num].getNickname() + " received " + item + ".");
+			System.out.println("\n" + this.getPocket()[num].getNickname() + " received " + item + ".");
 			this.getPocket()[num].setItem(item);
 		}
 	}
