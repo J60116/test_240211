@@ -224,6 +224,8 @@ class User {
 				sc.nextLine();
 			}
 		}
+		//1行読み飛ばし
+		sc.nextLine();
 		return num;
 	}
 
@@ -301,8 +303,6 @@ class User {
 					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
-					//1行読み飛ばし
-					sc.nextLine();
 					//モンスターボールの名前を取得
 					String input = sc.nextLine();
 					this.throwPokeBall(enemy, input);
@@ -374,12 +374,12 @@ class User {
 		}
 		if(substitute.getFainted()){
 			//ひんし状態のポケモンを選択した場合
-			System.out.println("MISS! " + this.getName() + " cannot select fainted Pokemon.");
+			System.out.println("MISS! " + this.getName() + " is in fainted.");
 			return false;
 		}
 		if(substitute.equals(friend)){
 			//戦闘中のポケモンを選択した場合
-			System.out.println("MISS! You selected Pokemon in battle.");
+			System.out.println("MISS! You cannot select Pokemon in battle.");
 			return false;
 		}
 		return true;
@@ -432,13 +432,13 @@ class User {
 		if (num == 1) {
 			while (true) {
 				System.out.print("Nickname: ");
-				input = sc.next();
-				String inputName = input.substring(0,1).toUpperCase() + input.substring(1);
-				if(inputName.equals(pokemon.getName())){
+				input = sc.nextLine();
+				String str = input.substring(0,1).toUpperCase() + input.substring(1);
+				if(str.equals(pokemon.getName())){
 					System.out.println("ERROR >> Please input nickname except \"" + pokemon.getName()+"\"");
-					sc.nextLine();
+					continue;
 				}
-				if(inputName.matches(Pokemon.FMT_NAME)){
+				if(str.matches(Pokemon.FMT_NAME)){
 					break;
 				}
 			}
