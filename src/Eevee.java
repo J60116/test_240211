@@ -36,6 +36,16 @@ class Eevee extends Pokemon {
 		this.setMoves(0, new Tackle());
 	}
 
+	//進化ポケモンのコンストラクタ設定用
+	public void setConstructor(int num){
+		this.setDexNo(ARRAY_EVOLVED_DEXNO[num]);
+		this.setName(ARRAY_EVOLVED_NAME[num]);
+		this.setNickname(ARRAY_EVOLVED_NAME[num]);
+		this.setTypes(0, ARRAY_EVOLVED_TYPE[num]);
+		this.setAbility(ARRAY_EVOLVED_ABILITY[num]);
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[num]);
+	}
+
 	private void setGender() {
 		//87.5%♂・12.5%♀
 		int num = this.getRand().nextInt(8); //性別設定用
