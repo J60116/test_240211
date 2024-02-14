@@ -271,6 +271,11 @@ class User {
 						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
 						break;
 					}
+					if(this.countCanBattlePokemon() == 0){
+						//Can Battleのポケモンがいない場合
+						System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
+						break;
+					}
 					//入れ替え予定のポケモンを宣言
 					Pokemon substitute = this.selectPokemon();
 					//入れ替えが可能か確認する
@@ -315,7 +320,7 @@ class User {
 			}
 		}
 	}
-	
+
 	//ポケモンに技の指示を出す
 	public void giveInstructions(Pokemon pokemon, int num, Pokemon enemy){
 		pokemon.useMove(num, enemy);
@@ -397,6 +402,17 @@ class User {
 		int count = 0;
 		for(Pokemon p : this.getPocket()){
 			if(p != null){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	//CanBattleなポケモンの数を数える
+	public int countCanBattlePokemon(){
+		int count = 0;
+		for(Pokemon p : this.getPocket()){
+			if(p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[2])){
 				count++;
 			}
 		}
