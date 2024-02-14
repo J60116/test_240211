@@ -151,7 +151,7 @@ class User {
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
-				System.out.println("MISS! There is no (" + input + ") in the grass.");
+				System.out.println(this.name + " could not find (" + input + ") in the grass.");
 				System.out.println(this.name + " gave up looking for " + pokemon.getName() + "...");
 				sc.nextLine();
 				return;
