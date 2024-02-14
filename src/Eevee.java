@@ -19,7 +19,7 @@ class Eevee extends Pokemon {
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
 
 	public Eevee() {
-		this(null, ARRAY_BALL[0][0]);
+		this(null, User.ARRAY_BALL[0][0]);
 	}
 
 	public Eevee(String owner, String ball) {

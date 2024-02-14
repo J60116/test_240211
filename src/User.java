@@ -1,6 +1,9 @@
 import java.util.*;
 
 class User {
+	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
+	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
+			{ "Master Ball", "(m)" } };
 	private String name; //名前
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	private Pokemon[] box; //ポケモンを格納するボックス
@@ -35,11 +38,11 @@ class User {
 	private void setPocket(int num, Pokemon pokemon) {
 		//ボールの情報がないまま呼び出した場合
 		if (pokemon.getBall() == null) {
-			pokemon.setBall(Pokemon.ARRAY_BALL[0][0]);
+			pokemon.setBall(ARRAY_BALL[0][0]);
 			return;
 		}
 		//ポケモンがボールに入っていない場合
-		if (pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
+		if (pokemon.getBall().equals(ARRAY_BALL[0][1])) {
 			System.out.println("Please catch " + pokemon.getName() + " using any of PokeBall.");
 			return;
 		}
@@ -89,7 +92,7 @@ class User {
 	//ポケモンを探す
 	public void lookForPokemon(Pokemon pokemon) {
 		//野生ポケモンでない場合
-		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
+		if(!pokemon.getBall().equals(ARRAY_BALL[0][1])) {
 			System.out.println("\n" + pokemon.getName() + " has owner.");
 			return;
 		}
@@ -306,7 +309,7 @@ class User {
 					String input = sc.nextLine();
 					this.throwPokeBall(enemy, input);
 					//判定
-					if(enemy.getBall() != Pokemon.ARRAY_BALL[0][1]){
+					if(enemy.getBall() != ARRAY_BALL[0][1]){
 						this.falseBattle();;
 					}
 					break;
@@ -463,8 +466,8 @@ class User {
 
 	//ボールの名前が正しいか確認
 	public boolean booleanBall(String ball){
-		for (int i = 0; i < Pokemon.ARRAY_BALL.length; i++) {
-			if (ball.equals(Pokemon.ARRAY_BALL[i][0])) {
+		for (int i = 0; i < ARRAY_BALL.length; i++) {
+			if (ball.equals(ARRAY_BALL[i][0])) {
 				return true;
 			}
 		}
@@ -478,7 +481,7 @@ class User {
 			return;
 		}
 		//既に捕まえられている場合
-		if(!pokemon.getBall().equals(Pokemon.ARRAY_BALL[0][1])) {
+		if(!pokemon.getBall().equals(ARRAY_BALL[0][1])) {
 			if(pokemon.getOwner().equals(this.getName())) {
 				System.out.println("MISS! " + this.getName() + " has already caught " + pokemon.getName() + ".");
 				return;

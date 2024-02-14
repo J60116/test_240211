@@ -3,7 +3,7 @@ final class Vaporeon extends Eevee{
 	static final String NAME = "Showers";
 
 	public Vaporeon(){
-		this(null, ARRAY_BALL[0][0]);
+		this(null, User.ARRAY_BALL[0][0]);
 	}
 
 	public Vaporeon(String owner, String ball){
