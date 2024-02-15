@@ -202,16 +202,16 @@ class User {
 	}
 
 	//ポケモンバトル
-	public void startBattle(Pokemon enemy){
+	private void startBattle(Pokemon enemy){
 		//対戦相手がひんし状態の場合
 		if(enemy.getFainted()){
 			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
 			return;
 		}
-		//1番目のポケモンを指定する
+		// 1番目のポケモンを指定する
 		Pokemon friend = this.getPocket()[0];
 		if(friend.getFainted()){
-			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + "fainted.");
+			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + " fainted.");
 			return;
 		}
 		this.trueBattle();
@@ -270,6 +270,13 @@ class User {
 					enemy.useMove(num_e, friend);
 					//判定
 					this.judgeBattle(friend, enemy);
+					//手持ちのポケモンが全滅した場合
+					if(this.countCanBattlePokemon() == 0){
+						System.out.println(this.name + " is out of usable Pokemon.");
+						System.out.println(this.name + " blacked out...");
+						this.visitPokemonCenter();
+						break;
+					}
 					break;
 				case 3:
 					//Throw PokeBall
@@ -304,6 +311,7 @@ class User {
 			//敵が気絶した場合
 			System.out.println(this.getName() + " won the game!");
 			//In Battleのポケモンの経験値を５つ増やす
+			System.out.println(this.getName() + " gained 5 Exp. points.");
 			friend.setExp(friend.getExp() + 5);
 			this.falseBattle();
 		} else if(friend.getFainted()){
