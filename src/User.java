@@ -285,9 +285,17 @@ class User {
 					break;
 				case 4:
 					//Run
-					this.run();
-					//判定
-					this.falseBattle();
+					num_e = enemy.getRand().nextInt(4) + 1;
+					if(num_e != 1){
+						//75%の確率で逃げる
+						this.run();
+						this.falseBattle();
+					} else {
+						//25%の確率で攻撃を受ける(1番目の技)
+						System.out.println(this.name + " could not run away!");
+						System.out.println("\nEnemy -> Friend");
+						enemy.useMove(num_e, friend);
+					}
 					break;
 			}
 		}
@@ -400,7 +408,7 @@ class User {
 
 	//逃げる
 	public void run() {
-		System.out.println(this.getName() + " run away.");
+		System.out.println(this.getName() + " could run away smoothly!");
 	}
 
 	//ニックネームをつける
