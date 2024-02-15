@@ -3,9 +3,12 @@ public abstract class Move {
 	final static String[] ARRAY_EFFECTIVE_MSG = { "×Has no effect", "△Not very effective", "〇Effective",
 			"◎Super effective" };
 	final static double[] ARRAY_EFFECTIVE_RATE = { 0.0, 0.5, 1.0, 2.0 };
-	
+	//技のタイプ（0:物理技、1:特殊技、2:変化技）
+	final static String[] ARRAY_MOVE_TYPE = { "Physical", "Special", "Status"};
+
     private String name;
     private String type; 
+    private String moveType; 
     private int mp;
     private int mp_max;
     private int power; //威力
@@ -14,6 +17,7 @@ public abstract class Move {
     public Move(){
         this.name = null;
         this.type = Pokemon.ARRAY_TYPE[0];//Normal
+		this.moveType = ARRAY_MOVE_TYPE[0];//Physical
         this.mp_max = 0;
         this.mp = this.mp_max;
         this.power = 0;
@@ -34,6 +38,14 @@ public abstract class Move {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getMoveType() {
+		return this.moveType;
+	}
+
+	public void setMoveType(String moveType) {
+		this.moveType = moveType;
 	}
 
 	public int getMP_max() {

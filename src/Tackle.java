@@ -4,6 +4,7 @@ public class Tackle extends Move {
         super();
         this.setName("Tackle");
         this.setType(Pokemon.ARRAY_TYPE[0]);//Normal
+        this.setMoveType(ARRAY_MOVE_TYPE[0]);
         this.setMP_max(35);
         this.setMP(this.getMP_max());
         this.setPower(10);
