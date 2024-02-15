@@ -25,6 +25,7 @@ class User {
 		this.box = new Pokemon[30];
 		this.sc = new Scanner(System.in);
 		this.battle = false;
+		System.out.println(this.getName() + ", welcome to new world!\nLet's go on an adventure with " + pokemon.getName() + ".");
 	}
 
 	public String getName() {
@@ -108,7 +109,7 @@ class User {
 		if(Environment.list.contains(habitat)){
 			this.lookFor(Environment.getPokemon(habitat), Environment.getView(habitat));
 		} else {
-			System.out.println("\n" + this.getName() + " had a good time there.");
+			System.out.println(this.getName() + " had a good time there.");
 		}
 	}
 
@@ -520,7 +521,7 @@ class User {
 		//ポケモンの数を数える
 		int count = 0;
 		String p_name = "";
-		for (Pokemon p : this.pocket) {
+		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
 				p.recover();
 				count++;
@@ -543,24 +544,24 @@ class User {
 		System.out.println("\n--------------------------");
 		System.out.println("POKEMON STATUS SUMMARY");
 		System.out.println("--------------------------");
-		for (Pokemon p : this.pocket) {
+		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
 				p.checkStatus();
+				System.out.println("--------------------------");
 			}
 		}
-		System.out.println("--------------------------\n");
 	}
 
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
 		if(this.getPocket()[num].getFainted()){
-			System.out.println("Miss! " + this.name + " could not give " + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
+			System.out.println("Miss! " + this.getName() + " could not give " + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
 			return;
 		}
 		if (this.getPocket()[num] == null) {
 			System.out.println("Miss! There is no Pokemon in the pocket[" + num + "].");
 		} else {
-			System.out.println("\n" + this.getPocket()[num].getNickname() + " received " + item + ".");
+			System.out.println("\n" + this.getName() + " gave " + this.getPocket()[num].getNickname() + " " + item + ".");
 			this.getPocket()[num].setItem(item);
 		}
 	}
