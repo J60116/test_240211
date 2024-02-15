@@ -361,11 +361,11 @@ public abstract class Pokemon {
 	}
 
 	//相手に対する技
-	public void useMove(int num, Pokemon enemy) {
+	public void useMove(int num, Pokemon opponent) {
 		if (!this.booleanMove(num)) {
 			return;
 		}
-		if(enemy.getFainted()) {
+		if(opponent.getFainted()) {
 			return;
 		}
 		//技のMPを1減らす
@@ -378,17 +378,17 @@ public abstract class Pokemon {
 			if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[0])){
 				//技の威力
 				int damage = this.getMoves(num - 1).getPower();
-				enemy.getDamage(damage);
+				opponent.getDamage(damage);
 			} else if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[2])){
 				//変化技の場合
-				// (作成中)
-				for(int i = 0; i<enemy.getMoves().length; i++){
-					if(enemy.getMoves(i)!=null){
+				// (作成中：命中率を下げる技)
+				for(int i = 0; i < opponent.getMoves().length; i++){
+					if(opponent.getMoves(i)!=null){
 						//命中率を2割下げる
-						enemy.getMoves(i).setAccuracy(enemy.getMoves(i).getAccuracy() * 80 / 100);
+						opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
 					}
 				}
-				System.out.println(enemy.getName() + "\'s power was low.");
+				System.out.println(opponent.getName() + "\'s accuracy was low.");
 			} 
 			/*
 			 * 技のタイプ
