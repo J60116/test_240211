@@ -22,7 +22,7 @@ public class Main {
 		user.visitPokemonCenter();
 
 		//1番目のポケモンに「みずのいし」を渡す
-		user.giveItem(0 , "Water Stone");
+		user.giveItem(0 , "Leaf Stone");
 		
 		//所持しているポケモンの確認
 		user.viewCurrentParty();

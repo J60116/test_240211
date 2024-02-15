@@ -426,7 +426,7 @@ class User {
 				return true;
 			}
 		}
-		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.\nPlease input \"Poke Ball\", \"Super Ball\", \\\"Hyper Ball\\\" or \"Master Ball\"");
+		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.\nPlease input \"Poke Ball\", \"Super Ball\", \"Hyper Ball\" or \"Master Ball\"");
 		return false;
 	}
 	
