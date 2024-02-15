@@ -270,13 +270,6 @@ class User {
 					enemy.useMove(num_e, friend);
 					//判定
 					this.judgeBattle(friend, enemy);
-					//手持ちのポケモンが全滅した場合
-					if(this.countCanBattlePokemon() == 0){
-						System.out.println(this.name + " is out of usable Pokemon.");
-						System.out.println(this.name + " blacked out...");
-						this.visitPokemonCenter();
-						break;
-					}
 					break;
 				case 3:
 					//Throw PokeBall
@@ -321,6 +314,12 @@ class User {
 			/*ポケモンを入れ替える*/
 			// System.out.println("Will you switch your Pokemon?");
 			// System.out.print("[1]Switch Pokemon [2]Run : ");
+		}
+		//手持ちのポケモンが全滅した場合
+		if(this.countCanBattlePokemon() == 0){
+			System.out.println("\n" + this.name + " is out of usable Pokemon.");
+			System.out.println(this.name + " blacked out...");
+			this.visitPokemonCenter();
 		}
 	}
 

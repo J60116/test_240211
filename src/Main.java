@@ -6,12 +6,8 @@ public class Main {
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
-
-		//ポケモンの生成
-		Pokemon eevee = new Eevee();
-		Pokemon vaporeon = new Vaporeon();
 		
-		//ポケモンを探す
+		//冒険に出かける
 		user.goTo("Grassland");
 		user.goTo("River");
 
