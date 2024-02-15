@@ -34,6 +34,7 @@ class Eevee extends Pokemon {
 		this.setHP_max(55);
 		this.setHP(this.getHP_max());
 		this.setMoves(0, new Tackle());
+		this.setMoves(1, new Growl());
 	}
 
 	//進化ポケモンのコンストラクタ設定用
