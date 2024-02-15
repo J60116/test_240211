@@ -8,18 +8,18 @@ public abstract class Move {
 
     private String name;
     private String type; 
-    private String moveType; 
     private int mp;
     private int mp_max;
+    private String moveType; 
     private int power; //威力
     private int accuracy; //命中率
 
     public Move(){
         this.name = null;
         this.type = Pokemon.ARRAY_TYPE[0];//Normal
-		this.moveType = ARRAY_MOVE_TYPE[0];//Physical
         this.mp_max = 0;
         this.mp = this.mp_max;
+		this.moveType = ARRAY_MOVE_TYPE[0];//Physical
         this.power = 0;
         this.accuracy = 100;
     }

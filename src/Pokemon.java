@@ -374,9 +374,22 @@ public abstract class Pokemon {
 		//技の命中率
 		int per = this.getRand().nextInt(101);
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
-			//技の威力
-			int damage = this.getMoves(num - 1).getPower();
-			enemy.getDamage(damage);
+			//物理技の場合
+			if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[0])){
+				//技の威力
+				int damage = this.getMoves(num - 1).getPower();
+				enemy.getDamage(damage);
+			} else if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[2])){
+				//変化技の場合
+				// (作成中)
+				for(Move m : enemy.getMoves()){
+					if(m!=null){
+						//威力を2割下げる
+						m.setAccuracy(m.getAccuracy() * 80 / 100);
+					}
+				}
+				System.out.println(enemy.getName() + "\'s power was low.");
+			} 
 			/*
 			 * 技のタイプ
 			 * 
