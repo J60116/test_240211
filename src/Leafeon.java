@@ -8,7 +8,7 @@ final class Leafon extends Eevee{
 
 	public Leafon(String owner, String ball){ 
 		super(owner, ball);
-		super.setEvolvedConstructor(0);
+		super.setEvolvedConstructor(3);
 		this.setHP(this.getHP_max());
 		this.setMoves(1, new Leafblade());
 	}
