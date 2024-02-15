@@ -91,50 +91,22 @@ class User {
 	}
 	
 	//メゾット
+	public void goTo(String habitat){
+		//行く先に生息するポケモン
+		Pokemon pokemon = Environment.getPokemon(habitat);
+		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the " + habitat + ".");
+		this.lookForPokemon(pokemon, Environment.getView(habitat));
+	}
+
 	//ポケモンを探す
-	public void lookForPokemon(Pokemon pokemon) {
-		//野生ポケモンでない場合
-		if(!pokemon.getBall().equals(ARRAY_BALL[0][1])) {
-			System.out.println("\n" + pokemon.getName() + " has owner.");
-			return;
-		}
-		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the grass.");
-		// 草むらの生成
-		String[][] grass = new String[5][8];
-		for(int i = 1; i <= 3; i++){
-			//ポケモンが隠れている可能性がある場所を保存
-			int a = pokemon.getRand().nextInt(2) + 1;
-			int b = a + pokemon.getRand().nextInt(3) + 2;
-			//草むらの中に数値を表示する
-			grass[i][a] = "(" + (2 * i - 1) + ")";
-			grass[i][b] = "(" + (2 * i) + ")";
-		}
-		//それ以外の場所にはwwwを代入
-		for(int i = 0; i < grass.length; i++){	
-			for(int j = 0; j < grass[i].length; j++){
-				if(grass[i][j] == null){
-					grass[i][j] = "www";
-				}
-			}
-		}
+	public void lookForPokemon(Pokemon pokemon, String[][] view) {
 		//ポケモンが実際に隠れている場所を保存
 		int random = pokemon.getRand().nextInt(6) + 1;
 		int input = -1;
 		while(input != random){
-			//草むらの表示
+			//風景の表示
 			System.out.println();
-			for(int i = 0; i < grass.length; i++){	
-				if(i % 2 == 0){
-					System.out.print(" ");
-				}
-				for(int j = 0; j < grass[i].length; j++){
-					if(j > 0){
-						System.out.print(" ");
-					}
-					System.out.print(grass[i][j]);
-				}
-				System.out.println();
-			}
+			Environment.dispView(view);
 			//探す場所を数字にて選択
 			System.out.print("\nSelect number: ");
 			try{
@@ -151,20 +123,20 @@ class User {
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
-				System.out.println(this.name + " could not find (" + input + ") in the grass.");
+				System.out.println(this.name + " could not find (" + input + ")");
 				System.out.println(this.name + " gave up looking for " + pokemon.getName() + "...");
 				sc.nextLine();
 				return;
 			} else {
 				//randomと不一致の場合
 				boolean find = false;
-				for(int i = 1; i < grass.length - 1; i++){	
-					for(int j = 0; j < grass[i].length; j++){
-						if(grass[i][j].equals("(" + input + ")")){
+				for(int i = 1; i < view.length - 1; i++){	
+					for(int j = 0; j < view[i].length; j++){
+						if(view[i][j].equals("(" + input + ")")){
 							//探す場所を見つける
 							find = true;
-							//探した場所には草が生える
-							grass[i][j] = "www";
+							//数値を非表示にする
+							view[i][j] = view[1][0];
 							break;
 						}
 					}

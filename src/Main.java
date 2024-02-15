@@ -12,8 +12,8 @@ public class Main {
 		Pokemon vaporeon = new Vaporeon();
 		
 		//ポケモンを探す
-		user.lookForPokemon(eevee);
-		user.lookForPokemon(vaporeon);
+		user.goTo("Grassland");
+		user.goTo("River");
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
