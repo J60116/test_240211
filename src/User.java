@@ -1,6 +1,7 @@
 import java.util.*;
+import java.lang.Exception;
 
-class User {
+public class User extends Exception {
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
 			{ "Hyper Ball", "(h)" }, { "Master Ball", "(m)" } };
@@ -185,6 +186,9 @@ class User {
 
 	//数値入力画面の表示
 	public int inputInt(int min, int max, String message){
+		if(min >= max){
+			// throw new illegalArgumentException("Wrong position: " + min + " is larger than " + max);
+		}
 		//入力範囲の文字列を作成
 		String str = " between " + min + " and " + max;
 		if(max - min == 1){
