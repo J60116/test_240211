@@ -81,4 +81,19 @@ public class Environment{
 		return view;
 	}
 
+	//風景の表示
+	public static void dispView(String[][] view){
+		for(int i = 0; i < view.length; i++){	
+			if(i % 2 == 0){
+				System.out.print(" ");
+			}
+			for(int j = 0; j < view[i].length; j++){
+				if(j > 0){
+					System.out.print(" ");
+				}
+				System.out.print(view[i][j]);
+			}
+			System.out.println();
+		}
+	}
 }
