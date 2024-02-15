@@ -230,7 +230,7 @@ class User {
 	}
 
 	//ポケモンバトル
-	public void startBattle(Pokemon enemy){
+	private void startBattle(Pokemon enemy){
 		//対戦相手がひんし状態の場合
 		if(enemy.getFainted()){
 			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
