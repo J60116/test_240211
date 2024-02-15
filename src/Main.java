@@ -8,8 +8,9 @@ public class Main {
 		user.viewCurrentParty();
 		
 		//冒険に出かける
-		user.goTo("Grassland");
-		user.goTo("River");
+		user.goTo("sea");
+		user.goTo("flower garden");
+		user.goTo("river");
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
