@@ -1,15 +1,18 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 public class Environment{
 	//クラス変数	
     //生息地名リスト
-    public final static String ARRAY_HABITATS[] = { "Grassland", "River", "sea", "rocky mountain", "snowy mountain" };
+    public static final String ARRAY_HABITATS[] = { "Grassland", "River", "sea", "rocky mountain", "snowy mountain" };
+    public static final List<String> list = Arrays.asList(ARRAY_HABITATS);
 	//生息地マップ
-	public final static Map<String, Set<Pokemon>> inhabitMap = new HashMap<String, Set<Pokemon>>();
+	public static final Map<String, Set<Pokemon>> map = new HashMap<String, Set<Pokemon>>();
     
 	//クラスメゾット
 	//生息地のポケモンをランダムに１種類取得する
@@ -24,12 +27,12 @@ public class Environment{
         river.add(new Vaporeon());
         
         //生息マップの作成
-        inhabitMap.put(ARRAY_HABITATS[0], grassland);
-        inhabitMap.put(ARRAY_HABITATS[1], river);
+        map.put(ARRAY_HABITATS[0], grassland);
+        map.put(ARRAY_HABITATS[1], river);
 
 		//戻り値用
 		Pokemon pokemon = null;
-		for(Pokemon p : inhabitMap.get(habitat)){
+		for(Pokemon p : map.get(habitat)){
 			pokemon = p;
 			break;
 		}
