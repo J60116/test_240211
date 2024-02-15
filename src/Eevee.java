@@ -37,7 +37,7 @@ class Eevee extends Pokemon {
 	}
 
 	//進化ポケモンのコンストラクタ設定用
-	public void setConstructor(int num){
+	public void setEvolvedConstructor(int num){
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[num]);
 		this.setName(ARRAY_EVOLVED_NAME[num]);
 		this.setNickname(ARRAY_EVOLVED_NAME[num]);

@@ -8,7 +8,7 @@ final class Vaporeon extends Eevee{
 
 	public Vaporeon(String owner, String ball){
 		super(owner, ball);
-		super.setConstructor(0);
+		super.setEvolvedConstructor(0);
 		this.setHP(this.getHP_max());
 		this.setMoves(1, new Hydropump());
 	}
