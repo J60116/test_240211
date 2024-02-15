@@ -91,50 +91,22 @@ class User {
 	}
 	
 	//メゾット
+	public void goTo(String habitat){
+		//行く先に生息するポケモン
+		Pokemon pokemon = Environment.getPokemon(habitat);
+		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the " + habitat + ".");
+		this.lookFor(pokemon, Environment.getView(habitat));
+	}
+
 	//ポケモンを探す
-	public void lookForPokemon(Pokemon pokemon) {
-		//野生ポケモンでない場合
-		if(!pokemon.getBall().equals(ARRAY_BALL[0][1])) {
-			System.out.println("\n" + pokemon.getName() + " has owner.");
-			return;
-		}
-		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the grass.");
-		// 草むらの生成
-		String[][] grass = new String[5][8];
-		for(int i = 1; i <= 3; i++){
-			//ポケモンが隠れている可能性がある場所を保存
-			int a = pokemon.getRand().nextInt(2) + 1;
-			int b = a + pokemon.getRand().nextInt(3) + 2;
-			//草むらの中に数値を表示する
-			grass[i][a] = "(" + (2 * i - 1) + ")";
-			grass[i][b] = "(" + (2 * i) + ")";
-		}
-		//それ以外の場所にはwwwを代入
-		for(int i = 0; i < grass.length; i++){	
-			for(int j = 0; j < grass[i].length; j++){
-				if(grass[i][j] == null){
-					grass[i][j] = "www";
-				}
-			}
-		}
+	private void lookFor(Pokemon pokemon, String[][] view) {
 		//ポケモンが実際に隠れている場所を保存
 		int random = pokemon.getRand().nextInt(6) + 1;
 		int input = -1;
 		while(input != random){
-			//草むらの表示
+			//風景の表示
 			System.out.println();
-			for(int i = 0; i < grass.length; i++){	
-				if(i % 2 == 0){
-					System.out.print(" ");
-				}
-				for(int j = 0; j < grass[i].length; j++){
-					if(j > 0){
-						System.out.print(" ");
-					}
-					System.out.print(grass[i][j]);
-				}
-				System.out.println();
-			}
+			Environment.dispView(view);
 			//探す場所を数字にて選択
 			System.out.print("\nSelect number: ");
 			try{
@@ -151,20 +123,20 @@ class User {
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
-				System.out.println(this.name + " could not find (" + input + ") in the grass.");
+				System.out.println(this.name + " could not find (" + input + ")");
 				System.out.println(this.name + " gave up looking for " + pokemon.getName() + "...");
 				sc.nextLine();
 				return;
 			} else {
 				//randomと不一致の場合
 				boolean find = false;
-				for(int i = 1; i < grass.length - 1; i++){	
-					for(int j = 0; j < grass[i].length; j++){
-						if(grass[i][j].equals("(" + input + ")")){
+				for(int i = 1; i < view.length - 1; i++){	
+					for(int j = 0; j < view[i].length; j++){
+						if(view[i][j].equals("(" + input + ")")){
 							//探す場所を見つける
 							find = true;
-							//探した場所には草が生える
-							grass[i][j] = "www";
+							//数値を非表示にする
+							view[i][j] = view[1][0];
 							break;
 						}
 					}
@@ -236,10 +208,10 @@ class User {
 			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
 			return;
 		}
-		//1番目のポケモンを指定する
+		// 1番目のポケモンを指定する
 		Pokemon friend = this.getPocket()[0];
 		if(friend.getFainted()){
-			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + "fainted.");
+			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + " fainted.");
 			return;
 		}
 		this.trueBattle();
@@ -300,6 +272,11 @@ class User {
 					this.judgeBattle(friend, enemy);
 					break;
 				case 3:
+					//対戦相手が野生のポケモンではない場合
+					if(!enemy.getBall().equals(ARRAY_BALL[0][1])){
+						System.out.println("MISS! Enemy's owner is " + enemy.getOwner());
+						break;
+					}
 					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
@@ -313,9 +290,17 @@ class User {
 					break;
 				case 4:
 					//Run
-					this.run();
-					//判定
-					this.falseBattle();
+					num_e = enemy.getRand().nextInt(4) + 1;
+					if(num_e != 1){
+						//75%の確率で逃げる
+						this.run();
+						this.falseBattle();
+					} else {
+						//25%の確率で攻撃を受ける(1番目の技)
+						System.out.println(this.name + " could not run away!");
+						System.out.println("\nEnemy -> Friend");
+						enemy.useMove(num_e, friend);
+					}
 					break;
 			}
 		}
@@ -332,6 +317,7 @@ class User {
 			//敵が気絶した場合
 			System.out.println(this.getName() + " won the game!");
 			//In Battleのポケモンの経験値を５つ増やす
+			System.out.println(this.getName() + " gained 5 Exp. points.");
 			friend.setExp(friend.getExp() + 5);
 			this.falseBattle();
 		} else if(friend.getFainted()){
@@ -341,6 +327,12 @@ class User {
 			/*ポケモンを入れ替える*/
 			// System.out.println("Will you switch your Pokemon?");
 			// System.out.print("[1]Switch Pokemon [2]Run : ");
+		}
+		//手持ちのポケモンが全滅した場合
+		if(this.countCanBattlePokemon() == 0){
+			System.out.println("\n" + this.name + " is out of usable Pokemon.");
+			System.out.println(this.name + " blacked out...");
+			this.visitPokemonCenter();
 		}
 	}
 
@@ -421,7 +413,7 @@ class User {
 
 	//逃げる
 	public void run() {
-		System.out.println(this.getName() + " run away.");
+		System.out.println(this.getName() + " could run away smoothly!");
 	}
 
 	//ニックネームをつける
@@ -454,7 +446,7 @@ class User {
 				return true;
 			}
 		}
-		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.\nPlease input \"Poke Ball\", \"Super Ball\" or \"Master Ball\"");
+		System.out.println("MISS! \"" + ball + "\" is not tool to catch Pokemon.\nPlease input \"Poke Ball\", \"Super Ball\", \"Hyper Ball\" or \"Master Ball\"");
 		return false;
 	}
 	

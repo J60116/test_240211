@@ -4,19 +4,19 @@ class Eevee extends Pokemon {
 	static final String[] ARRAY_ABILITY = { "Nigeashi", "Tekiouryoku" };
 	//Object[] EEVEE = { 133, "Eievui", ARRAY_TYPE[0], "Nigeashi", 0.3, 6.5, 55 };
 	//進化の石
-	static final String[] ARRAY_EVOLUTIONARY_STONE = { "WaterStone", "ThunderStone", "FireStone" };
+	static final String[] ARRAY_EVOLUTIONARY_STONE = { "Water Stone", "Thunder Stone", "Fire Stone" , "Leaf Stone"};
 	//進化ポケモンの情報
 	//0:DexNo 1:Name 2:Type 3:Ability 4:Height 5:Weight 6:HP_MAX
 	//static final Object[] VAPOREON = {134, "Showers", ARRAY_TYPE[2], "Chosui", 1.0, 29.0, 130};
 	//static final Object[] JOLTEON = {135, "Thunders", ARRAY_TYPE[3], "Chikuden", 0.8, 24.5, 65};
 	//static final Object[] FLAREON = {136, "Booster", ARRAY_TYPE[1], "Moraibi", 0.9, 25.0, 65};
 	//static final Object[][] ARRAY_EVOLUTION = {VAPOREON, JOLTEON, FLAREON};
-	static final int[] ARRAY_EVOLVED_DEXNO = { 134, 135, 136 };
-	static final String[] ARRAY_EVOLVED_NAME = { "Showers", "Thunders", "Booster" };
-	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[2], ARRAY_TYPE[3], ARRAY_TYPE[1] };
-	static final String[] ARRAY_EVOLVED_ABILITY = { "Chosui", "Chikuden", "Moraibi" };
+	static final int[] ARRAY_EVOLVED_DEXNO = { 134, 135, 136, 470};
+	static final String[] ARRAY_EVOLVED_NAME = { "Showers", "Thunders", "Booster", "Leafia"};
+	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[2], ARRAY_TYPE[3], ARRAY_TYPE[1], ARRAY_TYPE[4]};
+	static final String[] ARRAY_EVOLVED_ABILITY = { "Chosui", "Chikuden", "Moraibi", "Leaf Guard" };
 	// static final double[][] ARRAY_EVOLVED_HW = { { 1.0, 29.0 }, { 0.8, 24.5 }, { 0.9, 25.0 } };
-	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
+	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65, 65 };
 
 	public Eevee() {
 		this(null, User.ARRAY_BALL[0][0]);
@@ -34,10 +34,11 @@ class Eevee extends Pokemon {
 		this.setHP_max(55);
 		this.setHP(this.getHP_max());
 		this.setMoves(0, new Tackle());
+		this.setMoves(1, new Sandattack());
 	}
 
 	//進化ポケモンのコンストラクタ設定用
-	public void setConstructor(int num){
+	public void setEvolvedConstructor(int num){
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[num]);
 		this.setName(ARRAY_EVOLVED_NAME[num]);
 		this.setNickname(ARRAY_EVOLVED_NAME[num]);
@@ -88,6 +89,7 @@ class Eevee extends Pokemon {
 	//進化
 	@Override
 	public void evolve(int i) {
+		System.out.println("What? "+ this.getName() + " is evolving...");
 		System.out.println("Congratulations! Your " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[i]);
 		this.setName(ARRAY_EVOLVED_NAME[i]);

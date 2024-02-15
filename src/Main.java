@@ -6,14 +6,10 @@ public class Main {
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
-
-		//ポケモンの生成
-		Pokemon eevee = new Eevee();
-		Pokemon vaporeon = new Vaporeon();
 		
-		//ポケモンを探す
-		user.lookForPokemon(eevee);
-		user.lookForPokemon(vaporeon);
+		//冒険に出かける
+		user.goTo("Grassland");
+		user.goTo("River");
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
@@ -22,7 +18,7 @@ public class Main {
 		user.visitPokemonCenter();
 
 		//1番目のポケモンに「みずのいし」を渡す
-		user.giveItem(0 , "WaterStone");
+		user.giveItem(0 , "Leaf Stone");
 		
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
