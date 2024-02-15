@@ -1,12 +1,12 @@
-final class Leafon extends Eevee{ 
+final class Leafeon extends Eevee{ 
 	//リーフィア
 	static final String NAME = "Leafia";
 
-	public Leafon(){
+	public Leafeon(){
 		this(null, User.ARRAY_BALL[0][0]);
 	}
 
-	public Leafon(String owner, String ball){ 
+	public Leafeon(String owner, String ball){ 
 		super(owner, ball);
 		super.setEvolvedConstructor(3);
 		this.setHP(this.getHP_max());

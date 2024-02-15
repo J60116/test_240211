@@ -17,7 +17,7 @@ public class Environment{
         //草原のポケモン
         Set<Pokemon> grassland = new HashSet<>();
         grassland.add(new Eevee());
-//		grassland.add(new Leafeon());　//Leafia
+		grassland.add(new Leafeon());
         
         //川のポケモン
         Set<Pokemon> river = new HashSet<>();
