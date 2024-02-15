@@ -95,11 +95,11 @@ class User {
 		//行く先に生息するポケモン
 		Pokemon pokemon = Environment.getPokemon(habitat);
 		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the " + habitat + ".");
-		this.lookForPokemon(pokemon, Environment.getView(habitat));
+		this.lookFor(pokemon, Environment.getView(habitat));
 	}
 
 	//ポケモンを探す
-	public void lookForPokemon(Pokemon pokemon, String[][] view) {
+	private void lookFor(Pokemon pokemon, String[][] view) {
 		//ポケモンが実際に隠れている場所を保存
 		int random = pokemon.getRand().nextInt(6) + 1;
 		int input = -1;
