@@ -89,6 +89,7 @@ class Eevee extends Pokemon {
 	//進化
 	@Override
 	public void evolve(int i) {
+		System.out.println("What? "+ this.getName() + " is evolving...");
 		System.out.println("Congratulations! Your " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
 		this.setDexNo(ARRAY_EVOLVED_DEXNO[i]);
 		this.setName(ARRAY_EVOLVED_NAME[i]);
