@@ -272,6 +272,11 @@ class User {
 					this.judgeBattle(friend, enemy);
 					break;
 				case 3:
+					//対戦相手が野生のポケモンではない場合
+					if(!enemy.getBall().equals(ARRAY_BALL[0][1])){
+						System.out.println("MISS! Enemy's owner is " + enemy.getOwner());
+						break;
+					}
 					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.print("What type of Poke Balls do you use?: ");
