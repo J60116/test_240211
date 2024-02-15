@@ -5,18 +5,15 @@ import java.util.Random;
 import java.util.Set;
 
 public class Environment{
-
+	//クラス変数	
     //生息地名リスト
     public final static String ARRAY_HABITATS[] = { "Grassland", "River", "sea", "rocky mountain", "snowy mountain" };
-    public final static String ARRAY_PARTS[] = { "www", "///", "sea", "rocky mountain", "snowy mountain" };
+	//生息地マップ
+	public final static Map<String, Set<Pokemon>> inhabitMap = new HashMap<String, Set<Pokemon>>();
     
-	public final static Map<String, Set<Pokemon>> inhabitMap = new HashMap<String, Set<Pokemon>>();; //生息地マップ
-    
-    public static String name; //生息地名
-    public static Set<Pokemon> inhabit; //生息するポケモン
-    
-    public static Pokemon getPokemon(String habitat){
-        
+	//クラスメゾット
+	//生息地のポケモンをランダムに１種類取得する
+    public static Pokemon getPokemon(String habitat){    
         //草原のポケモン
         Set<Pokemon> grassland = new HashSet<>();
         grassland.add(new Eevee());
@@ -30,7 +27,7 @@ public class Environment{
         inhabitMap.put(ARRAY_HABITATS[0], grassland);
         inhabitMap.put(ARRAY_HABITATS[1], river);
 
-		//
+		//戻り値用
 		Pokemon pokemon = null;
 		for(Pokemon p : inhabitMap.get(habitat)){
 			pokemon = p;
@@ -39,10 +36,13 @@ public class Environment{
 		return pokemon;		
     }
 	
+	//生息地の風景を取得する
 	public static String[][] getView(String habitat) {
+		//戻り値用
 		String[][] view = new String[5][8];
 		Random rand = new Random();
 		if(habitat.equals(ARRAY_HABITATS[0])){
+			//Grassland
 			for(int i = 1; i <= 3; i++){
 				//ポケモンが隠れている可能性がある場所を保存
 				int a = rand.nextInt(2) + 1;
@@ -60,7 +60,23 @@ public class Environment{
 				}
 			}
 		} else if(habitat.equals(ARRAY_HABITATS[1])){
-
+			//River
+			for(int i = 1; i <= 3; i++){
+				int a = rand.nextInt(2) + 1;
+				int b = a + rand.nextInt(3) + 2;
+				view[i][a] = "(" + (2 * i - 1) + ")";
+				view[i][b] = "(" + (2 * i) + ")";
+			}
+			for(int i = 0; i < view.length; i++){	
+				for(int j = 0; j < view[i].length; j++){
+					if(i==0){
+						view[i][j] = "///";
+					}
+					if(view[i][j] == null){
+						view[i][j] = "~~~";
+					}
+				}
+			}
 		}
 		return view;
 	}
