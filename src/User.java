@@ -7,6 +7,7 @@ class User {
 	// ボールの捕獲補正率
 	// final static double[] ARRAY_BALL_RATE = { 0.0, 1.0, 1.5, 2.0, 100.0};
 	private String name; //名前
+	private String location; //今いる場所
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	private Pokemon[] box; //ポケモンを格納するボックス
 	Scanner sc; //文字入力用
@@ -18,6 +19,7 @@ class User {
 
 	public User(String name, Pokemon pokemon) {
 		this.name = name;
+		this.location = "Masara Town";
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon); 
 		this.box = new Pokemon[30];
@@ -31,6 +33,14 @@ class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public Pokemon[] getPocket() {
@@ -92,10 +102,14 @@ class User {
 	
 	//メゾット
 	public void goTo(String habitat){
-		//行く先に生息するポケモン
-		Pokemon pokemon = Environment.getPokemon(habitat);
-		System.out.println("\n" + this.getName() + " have started looking for " + pokemon.getName() + " in the " + habitat + ".");
-		this.lookFor(pokemon, Environment.getView(habitat));
+		this.setLocation(habitat);
+		System.out.println("\n" + this.getName() + " went to the " + habitat + ".");
+		//行き先がポケモンの生息地かどうかの判定
+		if(Environment.list.contains(habitat)){
+			this.lookFor(Environment.getPokemon(habitat), Environment.getView(habitat));
+		} else {
+			System.out.println("\n" + this.getName() + " had a good time there.");
+		}
 	}
 
 	//ポケモンを探す
@@ -501,6 +515,7 @@ class User {
 
 	//ポケモンセンターに行く
 	public void visitPokemonCenter() {
+		this.setLocation("Pokemon Center");
 		System.out.println("\n" + this.getName() + " visited the pokemon center.");
 		//ポケモンの数を数える
 		int count = 0;
