@@ -9,7 +9,8 @@ import java.util.Set;
 public class Environment{
 	//クラス変数	
     //生息地名リスト
-    public static final String ARRAY_HABITATS[] = { "grassland", "river", "sea", "rocky mountain", "snowy mountain" , "sand dune"};
+	public static final String ARRAY_HABITATS[] = { "grassland", "river" };
+    // public static final String ARRAY_HABITATS[] = { "grassland", "river", "sea", "rocky mountain", "snowy mountain" , "sand dune"};
     public static final List<String> list = Arrays.asList(ARRAY_HABITATS);
 	//生息地マップ
 	public static final Map<String, Set<Pokemon>> map = new HashMap<String, Set<Pokemon>>();
