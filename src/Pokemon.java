@@ -382,10 +382,10 @@ public abstract class Pokemon {
 			} else if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[2])){
 				//変化技の場合
 				// (作成中)
-				for(Move m : enemy.getMoves()){
-					if(m!=null){
-						//威力を2割下げる
-						m.setAccuracy(m.getAccuracy() * 80 / 100);
+				for(int i = 0; i<enemy.getMoves().length; i++){
+					if(enemy.getMoves(i)!=null){
+						//命中率を2割下げる
+						enemy.getMoves(i).setAccuracy(enemy.getMoves(i).getAccuracy() * 80 / 100);
 					}
 				}
 				System.out.println(enemy.getName() + "\'s power was low.");

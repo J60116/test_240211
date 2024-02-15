@@ -1,6 +1,6 @@
-public class Growl extends Move {
+public class Sandattack extends Move {
 
-    public Growl(){
+    public Sandattack(){
         super();
         this.setName("Growl");
         this.setType(Pokemon.ARRAY_TYPE[0]);//NOrmal
