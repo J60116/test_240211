@@ -1,4 +1,8 @@
-class Eevee extends Pokemon {
+package game.pokemon;
+import game.moves.*;
+import game.player.User;
+
+public class Eevee extends Pokemon {
 	//イーブイの情報
 	static final String NAME = "Eievui";
 	static final String[] ARRAY_ABILITY = { "Nigeashi", "Tekiouryoku" };
@@ -19,7 +23,7 @@ class Eevee extends Pokemon {
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65, 65 };
 
 	public Eevee() {
-		this(null, User.ARRAY_BALL[0][0]);
+		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Eevee(String owner, String ball) {

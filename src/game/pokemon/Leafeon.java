@@ -1,9 +1,13 @@
-final class Leafeon extends Eevee{ 
+package game.pokemon;
+import game.moves.*;
+import game.player.User;
+
+public final class Leafeon extends Eevee{ 
 	//リーフィア
 	static final String NAME = "Leafia";
 
 	public Leafeon(){
-		this(null, User.ARRAY_BALL[0][0]);
+		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Leafeon(String owner, String ball){ 

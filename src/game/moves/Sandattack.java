@@ -1,9 +1,12 @@
+package game.moves;
+import game.pokemon.Pokemon;
+
 public class Sandattack extends Move {
 
     public Sandattack(){
         super();
         this.setName("Sand attack");
-        this.setType(Pokemon.ARRAY_TYPE[0]);//NOrmal
+        this.setType(Pokemon.getArrayType()[0]);//NOrmal
         this.setMP_max(15);
         this.setMP(this.getMP_max());
         this.setMoveType(ARRAY_MOVE_TYPE[2]);

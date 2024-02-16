@@ -1,3 +1,7 @@
+package game.main;
+
+import game.player.User;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -19,7 +23,7 @@ public class Main {
 		user.visitPokemonCenter();
 
 		//1番目のポケモンに「みずのいし」を渡す
-		user.giveItem(0 , "Leaf Stone");
+		user.giveItem(0 , "Water Stone");
 		
 		//所持しているポケモンの確認
 		user.viewCurrentParty();

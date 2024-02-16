@@ -1,9 +1,13 @@
-final class Vaporeon extends Eevee{ 
+package game.pokemon;
+import game.moves.Hydropump;
+import game.player.User;
+
+public final class Vaporeon extends Eevee{ 
 	//シャワーズ
 	static final String NAME = "Showers";
 
 	public Vaporeon(){
-		this(null, User.ARRAY_BALL[0][0]);
+		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Vaporeon(String owner, String ball){

@@ -1,4 +1,7 @@
+package game.player;
 import java.util.*;
+
+import game.pokemon.*;
 
 public class User {
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
@@ -26,6 +29,10 @@ public class User {
 		this.sc = new Scanner(System.in);
 		this.battle = false;
 		System.out.println(this.getName() + ", welcome to new world!\nLet's go on an adventure with " + pokemon.getName() + ".");
+	}
+
+	public static String[][] getArrayBall() {
+		return ARRAY_BALL;
 	}
 
 	public String getName() {
@@ -84,8 +91,8 @@ public class User {
 		this.battle = true;
 		//先頭にいるポケモンの戦闘状態をIn Battleにする
 		for (Pokemon p : this.getPocket()) {
-			if (p != null && !p.getStatus().equals(Pokemon.ARRAY_STATUS[0])) {
-				p.setStatus(Pokemon.ARRAY_STATUS[1]);
+			if (p != null && !p.getStatus().equals(Pokemon.getArrayStatus()[0])) {
+				p.setStatus(Pokemon.getArrayStatus()[1]);
 				break;
 			}
 		}
@@ -95,8 +102,8 @@ public class User {
 		this.battle = false;
 		//In battleのポケモンをCan battleに変更
 		for (Pokemon p : this.getPocket()) {
-			if (p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[1])) {
-				p.setStatus(Pokemon.ARRAY_STATUS[2]);
+			if (p != null && p.getStatus().equals(Pokemon.getArrayStatus()[1])) {
+				p.setStatus(Pokemon.getArrayStatus()[2]);
 			}
 		}
 	}
@@ -272,11 +279,11 @@ public class User {
 						break;
 					}
 					//入れ替え前にCan Battleに戻しておく
-					friend.setStatus(Pokemon.ARRAY_STATUS[2]);
+					friend.setStatus(Pokemon.getArrayStatus()[2]);
 					//入れ替え
 					friend = substitute;
 					//入れ替えたポケモンをIn Battleに変更
-					friend.setStatus(Pokemon.ARRAY_STATUS[1]);
+					friend.setStatus(Pokemon.getArrayStatus()[1]);
 					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					//敵の攻撃を受ける
 					System.out.println("\nEnemy -> Friend");
@@ -398,7 +405,7 @@ public class User {
 	public Pokemon getInBattlePokemon(){
 		Pokemon pokemon = null;
 		for(Pokemon p : this.getPocket()){
-			if(p.getStatus().equals(Pokemon.ARRAY_STATUS[1])){
+			if(p.getStatus().equals(Pokemon.getArrayStatus()[1])){
 				pokemon = p;
 				break;
 			}
@@ -421,7 +428,7 @@ public class User {
 	public int countCanBattlePokemon(){
 		int count = 0;
 		for(Pokemon p : this.getPocket()){
-			if(p != null && p.getStatus().equals(Pokemon.ARRAY_STATUS[2])){
+			if(p != null && p.getStatus().equals(Pokemon.getArrayStatus()[2])){
 				count++;
 			}
 		}
@@ -447,7 +454,7 @@ public class User {
 					System.out.println("ERROR >> Please input nickname except \"" + pokemon.getName()+"\"");
 					continue;
 				}
-				if(str.matches(Pokemon.FMT_NAME)){
+				if(str.matches(Pokemon.getFmtName())){
 					break;
 				}
 			}

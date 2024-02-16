@@ -1,4 +1,8 @@
+package game.pokemon;
 import java.util.Random;
+
+import game.moves.Move;
+import game.player.User;
 
 public abstract class Pokemon {
 	//タイプ
@@ -34,7 +38,7 @@ public abstract class Pokemon {
 
 	//コンストラクタ
 	public Pokemon() {
-		this(null, User.ARRAY_BALL[0][0]);
+		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Pokemon(String owner, String ball) {
@@ -58,6 +62,18 @@ public abstract class Pokemon {
 	}
 
 	//アクセサ
+	public static String[] getArrayType() {
+		return ARRAY_TYPE;
+	}
+
+	public static String[] getArrayStatus() {
+		return ARRAY_STATUS;
+	}
+
+	public static String getFmtName() {
+		return FMT_NAME;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -132,10 +148,10 @@ public abstract class Pokemon {
 
 	public void setBall(String ball) {
 		String imgBall = "";
-		for (int i = 0; i < User.ARRAY_BALL.length; i++) {
-			if (ball.equals(User.ARRAY_BALL[i][0])) {
+		for (int i = 0; i < User.getArrayBall().length; i++) {
+			if (ball.equals(User.getArrayBall()[i][0])) {
 				//ボールの名前が正しければ代入する
-				imgBall = User.ARRAY_BALL[i][1];
+				imgBall = User.getArrayBall()[i][1];
 			}
 		}
 		if (imgBall.isEmpty()) {
@@ -375,11 +391,11 @@ public abstract class Pokemon {
 		int per = this.getRand().nextInt(101);
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
 			//物理技の場合
-			if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[0])){
+			if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[0])){
 				//技の威力
 				int damage = this.getMoves(num - 1).getPower();
 				opponent.getDamage(damage);
-			} else if(this.getMoves(num - 1).getMoveType().equals(Move.ARRAY_MOVE_TYPE[2])){
+			} else if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[2])){
 				//変化技の場合
 				// (作成中：命中率を下げる技)
 				for(int i = 0; i < opponent.getMoves().length; i++){
