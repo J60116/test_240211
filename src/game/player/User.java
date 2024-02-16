@@ -254,9 +254,11 @@ public class User {
 					System.out.println("\nFriend -> Enemy");
 					this.giveInstructions(friend, num_f, enemy);
 					//敵の攻撃
-					System.out.println("\nEnemy -> Friend");
-					int num_e = enemy.getRand().nextInt(4) + 1;
-					enemy.useMove(num_e, friend);
+					if(!enemy.getFainted()){
+						System.out.println("\nEnemy -> Friend");
+						int num_e1 = enemy.getRand().nextInt(4) + 1;
+						enemy.useMove(num_e1, friend);
+					}
 					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
 					this.judgeBattle(friend, enemy);
 					break;
@@ -287,9 +289,9 @@ public class User {
 					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					//敵の攻撃を受ける
 					System.out.println("\nEnemy -> Friend");
-					num_e = enemy.getRand().nextInt(4) + 1;
-					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
-					enemy.useMove(num_e, friend);
+					int num_e2 = enemy.getRand().nextInt(4) + 1;
+					System.out.println(enemy.getName() + " is about to use Move[" + num_e2 +"].");
+					enemy.useMove(num_e2, friend);
 					//判定
 					this.judgeBattle(friend, enemy);
 					break;
@@ -308,12 +310,18 @@ public class User {
 					//判定
 					if(enemy.getBall() != ARRAY_BALL[0][1]){
 						this.falseBattle();;
+					} else {
+					//敵の攻撃を受ける
+						System.out.println("\nEnemy -> Friend");
+						int num_e3 = enemy.getRand().nextInt(4) + 1;
+						System.out.println(enemy.getName() + " is about to use Move[" + num_e3 +"].");
+						enemy.useMove(num_e3, friend);
 					}
 					break;
 				case 4:
 					//Run
-					num_e = enemy.getRand().nextInt(4) + 1;
-					if(num_e != 1){
+					int num_e4 = enemy.getRand().nextInt(4) + 1;
+					if(num_e4 != 1){
 						//75%の確率で逃げる
 						this.run();
 						this.falseBattle();
@@ -321,7 +329,7 @@ public class User {
 						//25%の確率で攻撃を受ける(1番目の技)
 						System.out.println(this.name + " could not run away!");
 						System.out.println("\nEnemy -> Friend");
-						enemy.useMove(num_e, friend);
+						enemy.useMove(num_e4, friend);
 					}
 					break;
 			}
