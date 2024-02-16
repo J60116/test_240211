@@ -196,7 +196,10 @@ public abstract class Pokemon {
 	//オーバーロード
 	public void setLevel() {
 		this.level++;
-		System.out.println(this.getNickname() + " < Level UP♪");
+		System.out.println("\n " + this.getNickname());
+		System.out.println(" ---^--------");
+		System.out.println("| LEVEL UP ♪ |");
+		System.out.println(" ------------");
 	}
 
 	public int getHP() {
