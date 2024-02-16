@@ -1,7 +1,6 @@
 import java.util.*;
-import java.lang.Exception;
 
-public class User extends Exception {
+public class User {
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
 			{ "Hyper Ball", "(h)" }, { "Master Ball", "(m)" } };
@@ -186,9 +185,6 @@ public class User extends Exception {
 
 	//数値入力画面の表示
 	public int inputInt(int min, int max, String message){
-		if(min >= max){
-			// throw new illegalArgumentException("Wrong position: " + min + " is larger than " + max);
-		}
 		//入力範囲の文字列を作成
 		String str = " between " + min + " and " + max;
 		if(max - min == 1){
@@ -256,6 +252,12 @@ public class User extends Exception {
 					enemy.useMove(num_e, friend);
 					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
 					this.judgeBattle(friend, enemy);
+					//手持ちのポケモンが全滅した場合
+					if(this.countCanBattlePokemon() == 0){
+						System.out.println("\n" + this.name + " is out of usable Pokemon.");
+						System.out.println(this.name + " blacked out...");
+						this.visitPokemonCenter();
+					}
 					break;
 				case 2:
 					//Pokemon
@@ -288,7 +290,13 @@ public class User extends Exception {
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
 					enemy.useMove(num_e, friend);
 					//判定
-					this.judgeBattle(friend, enemy);
+					this.judgeBattle(friend, enemy);		
+					//手持ちのポケモンが全滅した場合
+					if(this.countCanBattlePokemon() == 0){
+						System.out.println("\n" + this.name + " is out of usable Pokemon.");
+						System.out.println(this.name + " blacked out...");
+						this.visitPokemonCenter();
+					}
 					break;
 				case 3:
 					//対戦相手が野生のポケモンではない場合
@@ -348,11 +356,7 @@ public class User extends Exception {
 			// System.out.print("[1]Switch Pokemon [2]Run : ");
 		}
 		//手持ちのポケモンが全滅した場合
-		if(this.countCanBattlePokemon() == 0){
-			System.out.println("\n" + this.name + " is out of usable Pokemon.");
-			System.out.println(this.name + " blacked out...");
-			this.visitPokemonCenter();
-		}
+
 	}
 
 	//ポケモンを選ぶ
