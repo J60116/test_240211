@@ -252,12 +252,6 @@ public class User {
 					enemy.useMove(num_e, friend);
 					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
 					this.judgeBattle(friend, enemy);
-					//手持ちのポケモンが全滅した場合
-					if(this.countCanBattlePokemon() == 0){
-						System.out.println("\n" + this.name + " is out of usable Pokemon.");
-						System.out.println(this.name + " blacked out...");
-						this.visitPokemonCenter();
-					}
 					break;
 				case 2:
 					//Pokemon
@@ -290,13 +284,7 @@ public class User {
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e +"].");
 					enemy.useMove(num_e, friend);
 					//判定
-					this.judgeBattle(friend, enemy);		
-					//手持ちのポケモンが全滅した場合
-					if(this.countCanBattlePokemon() == 0){
-						System.out.println("\n" + this.name + " is out of usable Pokemon.");
-						System.out.println(this.name + " blacked out...");
-						this.visitPokemonCenter();
-					}
+					this.judgeBattle(friend, enemy);
 					break;
 				case 3:
 					//対戦相手が野生のポケモンではない場合
@@ -330,6 +318,12 @@ public class User {
 					}
 					break;
 			}
+		}
+		//手持ちのポケモンが全滅した場合
+		if(this.countCanBattlePokemon() == 0){
+			System.out.println("\n" + this.name + " is out of usable Pokemon.");
+			System.out.println(this.name + " blacked out...");
+			this.visitPokemonCenter();
 		}
 	}
 
