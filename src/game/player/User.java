@@ -365,11 +365,23 @@ public class User {
 			//味方が気絶した場合
 			System.out.println(this.getName() + " lose the game...");
 			this.falseBattle();
-			/*ポケモンを入れ替える*/
-			// System.out.println("Will you switch your Pokemon?");
-			// System.out.print("[1]Switch Pokemon [2]Run : ");
+			/*
+			ポケモンを入れ替える 
+			// if(this.countCanBattlePokemon()>=1){
+			// 	System.out.println("Will you switch your Pokemon?");
+			// 	System.out.print("");
+			// 	String msg = "[1]Switch Pokemon [2]Run : ";
+			// 	int num = this.inputInt(1,2,msg);
+			// 	if(num==1){
+					//??
+			// 	} else if(num==2){
+			// 		this.run();
+			// 		this.falseBattle();
+			// 	}
+			// }
+
+			*/
 		}
-		//手持ちのポケモンが全滅した場合
 
 	}
 
