@@ -352,14 +352,14 @@ public class User {
 		if(enemy.getFainted()){
 			//敵が気絶した場合
 			System.out.println(this.getName() + " won the game!");
-			int point = 5;
 			//経験値
+			int point = 5;
+			System.out.println(this.getName() + "'s Party gained Exp. points.");
 			for(int i = 0; i < this.getPocket().length; i++){
 				if(getPocket()[i]!=null){
 					getPocket()[i].setExp(point, point * 1 / 2);
 				}
 			}
-			System.out.println(this.getName() + "'s Party gained Exp. points.");
 			this.falseBattle();
 		} else if(friend.getFainted()){
 			//味方が気絶した場合
