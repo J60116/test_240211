@@ -8,7 +8,7 @@ public class Main {
 		user.viewCurrentParty();
 		
 		//冒険に出かける
-		user.goTo("sea");
+		user.goTo("grassland");
 		user.goTo("flower garden");
 		user.goTo("river");
 
