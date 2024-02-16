@@ -581,7 +581,7 @@ public class User {
 		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
 				p.checkStatus();
-				System.out.println("--------------------------");
+				System.out.println("--------------------------\n");
 			}
 		}
 	}
