@@ -259,8 +259,6 @@ public class User {
 						int num_e1 = enemy.getRand().nextInt(4) + 1;
 						enemy.useMove(num_e1, friend);
 					}
-					//判定（どちらかが瀕死状態になれはバトルを終わらせる）
-					this.judgeBattle(friend, enemy);
 					break;
 				case 2:
 					//Pokemon
@@ -292,8 +290,6 @@ public class User {
 					int num_e2 = enemy.getRand().nextInt(4) + 1;
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e2 +"].");
 					enemy.useMove(num_e2, friend);
-					//判定
-					this.judgeBattle(friend, enemy);
 					break;
 				case 3:
 					//対戦相手が野生のポケモンではない場合
@@ -307,11 +303,12 @@ public class User {
 					//モンスターボールの名前を取得
 					String input = sc.nextLine();
 					this.throwPokeBall(enemy, input);
-					//判定
 					if(enemy.getBall() != ARRAY_BALL[0][1]){
+						//ポケモンをゲットできた場合
 						this.falseBattle();;
 					} else {
-					//敵の攻撃を受ける
+						//ポケモンをゲットできなかった場合
+						//敵の攻撃を受ける
 						System.out.println("\nEnemy -> Friend");
 						int num_e3 = enemy.getRand().nextInt(4) + 1;
 						System.out.println(enemy.getName() + " is about to use Move[" + num_e3 +"].");
@@ -333,11 +330,14 @@ public class User {
 					}
 					break;
 			}
+			//判定（どちらかが瀕死状態になれはバトルを終わらせる）
+			this.judgeBattle(friend, enemy);
 		}
 		//手持ちのポケモンが全滅した場合
 		if(this.countCanBattlePokemon() == 0){
 			System.out.println("\n" + this.name + " is out of usable Pokemon.");
 			System.out.println(this.name + " blacked out...");
+			//ポケモンセンターで回復する
 			this.visitPokemonCenter();
 		}
 	}
