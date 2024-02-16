@@ -166,7 +166,7 @@ public class User {
 						break;
 					}
 				}
-				System.out.println(pokemon.getName() + " was not there.");
+				System.out.println(this.getName() + " could not find Pokemon there.");
 			}
 		}
 		//バトルを開始する
@@ -352,9 +352,14 @@ public class User {
 		if(enemy.getFainted()){
 			//敵が気絶した場合
 			System.out.println(this.getName() + " won the game!");
-			//In Battleのポケモンの経験値を５つ増やす
-			System.out.println(this.getName() + " gained 5 Exp. points.");
-			friend.setExp(friend.getExp() + 5);
+			int point = 5;
+			//経験値
+			for(int i = 0; i < this.getPocket().length; i++){
+				if(getPocket()[i]!=null){
+					getPocket()[i].setExp(point, point * 1 / 2);
+				}
+			}
+			System.out.println(this.getName() + "'s Party gained Exp. points.");
 			this.falseBattle();
 		} else if(friend.getFainted()){
 			//味方が気絶した場合

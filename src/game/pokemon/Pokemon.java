@@ -224,14 +224,21 @@ public abstract class Pokemon {
 	}
 
 	public void setExp(int exp) {
-		//In Battleの場合
-		if (this.getStatus().equals(ARRAY_STATUS[1])) {
-			this.exp = exp;
-			//経験値がたまった場合
-			if (this.getExp_max() - this.exp <= 0) {
-				this.exp = Math.abs(this.getExp_max() - this.exp);
-				this.setLevel();
-			}
+		this.exp = exp;
+	}
+	//オーバーロード
+	public void setExp(int exp_inBattle, int exp_canBattle){
+		if(this.getStatus().equals(ARRAY_STATUS[1])){
+			//In Battleの場合
+			this.exp += exp_inBattle;
+		} else if (this.getStatus().equals(ARRAY_STATUS[2])){
+			//Can Battleの場合
+			this.exp += exp_canBattle;
+		}
+		//Can't Battle以外かつ経験値がたまった場合
+		if (!this.getStatus().equals(ARRAY_STATUS[0]) && this.getExp_max() - this.exp <= 0) {
+			this.exp = Math.abs(this.getExp_max() - this.exp);
+			this.setLevel();
 		}
 	}
 
