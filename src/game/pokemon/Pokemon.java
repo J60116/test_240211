@@ -307,9 +307,13 @@ public abstract class Pokemon {
 		} else {
 			type = this.types[0] + "・" + this.types[1];
 		}
+		String hp = this.hp + "/" + this.hp_max ;
+		if(this.getFainted()){
+			hp = hp + " (FAINTED)";
+		}
 		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
 				+ "\nType: " + type
-				+ "\nHP: " + this.hp + "/" + this.hp_max
+				+ "\nHP: " + hp
 				+ "\nExp.Points: " + this.exp
 				+ "\nTo Next Lv.: " + (this.exp_max - this.exp);
 		return str;
