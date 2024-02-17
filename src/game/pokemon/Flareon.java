@@ -4,15 +4,16 @@ import game.player.User;
 
 public final class Flareon extends Eevee {
 	//ブースター
-	static final String NAME = ARRAY_EVOLVED_NAME[2];
-
+	static final int NUM_EVOLVED = 2;
+	static final String NAME = ARRAY_EVOLVED_NAME[NUM_EVOLVED];
+    
 	public Flareon(){
 		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Flareon(String owner, String ball){ 
 		super(owner, ball);
-		super.setEvolvedConstructor(1);
+		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
 		// this.setMoves(1,);
 	}

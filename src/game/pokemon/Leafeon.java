@@ -4,8 +4,9 @@ import game.player.User;
 
 public final class Leafeon extends Eevee{ 
 	//リーフィア
-	static final String NAME = "Leafia";
-
+	static final int NUM_EVOLVED = 3;
+	static final String NAME = ARRAY_EVOLVED_NAME[NUM_EVOLVED];
+    
 	public Leafeon(){
 		this(null, User.getArrayBall()[0][0]);
 	}

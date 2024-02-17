@@ -4,15 +4,16 @@ import game.player.User;
 
 public final class Jolteon extends Eevee {
 	//サンダース
-	static final String NAME = ARRAY_EVOLVED_NAME[1];
-
+    static final int NUM_EVOLVED = 1;
+	static final String NAME = ARRAY_EVOLVED_NAME[NUM_EVOLVED];
+    
 	public Jolteon(){
 		this(null, User.getArrayBall()[0][0]);
 	}
 
 	public Jolteon(String owner, String ball){ 
 		super(owner, ball);
-		super.setEvolvedConstructor(1);
+		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
 		// this.setMoves(1,);
 	}

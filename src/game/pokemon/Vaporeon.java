@@ -4,7 +4,8 @@ import game.player.User;
 
 public final class Vaporeon extends Eevee{ 
 	//シャワーズ
-	static final String NAME = "Showers";
+	static final int NUM_EVOLVED = 0;
+	static final String NAME = ARRAY_EVOLVED_NAME[NUM_EVOLVED];
 
 	public Vaporeon(){
 		this(null, User.getArrayBall()[0][0]);
@@ -12,7 +13,7 @@ public final class Vaporeon extends Eevee{
 
 	public Vaporeon(String owner, String ball){
 		super(owner, ball);
-		super.setEvolvedConstructor(0);
+		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
 		this.setMoves(1, new Hydropump());
 	}
