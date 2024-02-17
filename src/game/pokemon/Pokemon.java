@@ -17,7 +17,7 @@ public abstract class Pokemon {
 	//名前の条件
 	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
 	//技の効果
-	final static String[] ARRAY_EFFECTIVE = {  "〇Effective", "×Has no effect", "△Not very effective", "◎Super effective" };
+	final static String[] ARRAY_EFFECTIVE = {  "〇 Effective", "× Has no effect", "△ Not very effective", "◎ Super effective" };
 	//技の攻撃倍率
 	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
 	//技の効果メッセージ
@@ -352,9 +352,9 @@ public abstract class Pokemon {
 	// 	return false;
 	// } 
 
-	//引数の生息地に住むポケモンをランダムで取得し、nameが一致するか判定する
+	//引数の生息地に住むポケモンの名前が一致するか判定する
 	public boolean liveIn(String habitat){
-		if(this.getName().equals(Environment.getPokemon(habitat).getName())){
+		if(Environment.getPokemon(habitat).contains(this.getName())){
 			return true;
 		}
 		return false;
@@ -467,7 +467,7 @@ public abstract class Pokemon {
 						opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
 					}
 				}
-				System.out.println(opponent.getName() + "\'s accuracy was low.");
+				System.out.println(opponent.getName() + "\'s accuracy was low.\n");
 			} 
 			/*
 			 * 技のタイプ
