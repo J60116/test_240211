@@ -199,7 +199,7 @@ public class User {
 	//数値入力画面の表示
 	public int inputInt(int min, int max, String message){
 		//入力範囲の文字列を作成
-		String str = " between " + min + " and " + max;
+		String str = "between " + min + " and " + max;
 		if(max - min == 1){
 			str = min + " or " + max;
 		} else if (max == min){
@@ -536,9 +536,26 @@ public class User {
 				return;
 			}
 		}
+		System.out.println("\n" + this.name + " threw " + ball + "!");
+		//捕獲率
+		int capture = 0;
+		if(ball.equals(ARRAY_BALL[1][0])){
+			//モンスターボール
+			capture = pokemon.getRand().nextInt(256);
+		} else if(ball.equals(ARRAY_BALL[2][0])){
+			//スーパーボール
+			capture = pokemon.getRand().nextInt(201);
+		} else if(ball.equals(ARRAY_BALL[3][0])){
+			//ハイパーボール
+			capture = pokemon.getRand().nextInt(151);
+		}
+		if(capture > 100){
+			System.out.println("It's too bad, " + this.getName() + " could catch " + pokemon.getName() + ".");
+			return;
+		}
 		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
-		System.out.println(this.getName() + " caught " + pokemon.getName() + "!");
+		System.out.println("Congratulation! " + this.getName() + " caught " + pokemon.getName() + ".");
 		this.giveNickname(pokemon);		
 		//ポケットに空きがある場合
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
