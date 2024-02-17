@@ -61,42 +61,43 @@ public class Environment{
 			view[i][a] = "(" + (2 * i - 1) + ")";
 			view[i][b] = "(" + (2 * i) + ")";
 		}
-		if(habitat.equals(ARRAY_HABITATS[0])){
-			//Grassland
-			//それ以外の場所にはwwwを代入
-			for(int i = 0; i < view.length; i++){	
-				for(int j = 0; j < view[i].length; j++){
-					if(view[i][j] == null){
-						view[i][j] = "www";
-					}
-				}
-			}
-		} else if(habitat.equals(ARRAY_HABITATS[1])){
-			//River
-			for(int i = 0; i < view.length; i++){	
-				for(int j = 0; j < view[i].length; j++){
-					if(i==0){
-						view[i][j] = "///";
-					}
-					if(view[i][j] == null){
-						view[i][j] = "~~~";
-					}
-				}
-			}
-		} else if(habitat.equals(ARRAY_HABITATS[2])){
-			//hill
-			//それ以外の場所にはwwwを代入
-			for(int i = 0; i < view.length; i++){	
-				for(int j = 0; j < view[i].length; j++){
-					if(view[i][j] == null){
-						if((i!=0||i!=4)&&j%2==0){
-							view[i][j] = "^^^";
-						} else {
-							view[i][j] = "   ";
+		switch(habitat){
+			case "grassland" -> {
+				for(int i = 0; i < view.length; i++){	
+					for(int j = 0; j < view[i].length; j++){
+						if(view[i][j] == null){
+							view[i][j] = "www";
 						}
 					}
 				}
 			}
+			case "river" -> {
+				for(int i = 0; i < view.length; i++){	
+					for(int j = 0; j < view[i].length; j++){
+						if(i==0){
+							view[i][j] = "///";
+						}
+						if(view[i][j] == null){
+							view[i][j] = "~~~";
+						}
+					}
+				}
+			} 
+			case "hill" ->{
+				//それ以外の場所にはwwwを代入
+				for(int i = 0; i < view.length; i++){	
+					for(int j = 0; j < view[i].length; j++){
+						if(view[i][j] == null){
+							if((i!=0||i!=4)&&j%2==0){
+								view[i][j] = "^^^";
+							} else {
+								view[i][j] = "   ";
+							}
+						}
+					}
+				}
+			}
+			default -> {}
 		}
 		return view;
 	}
