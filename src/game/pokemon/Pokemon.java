@@ -52,8 +52,8 @@ public abstract class Pokemon {
 		this.setItem("None");
 		this.setStatus(ARRAY_STATUS[2]);
 		this.setDexNo(0);
-		this.setLevel(0);
-		this.setHP_max(0);
+		this.setLevel(1);
+		this.setHP_max(10);
 		this.setHP(this.getHP_max());
 		this.setExp(0);
 		this.setExp_max(10);
@@ -208,7 +208,7 @@ public abstract class Pokemon {
 
 	public void setHP(int hp) {
 		this.hp = hp;
-		if (this.hp < 0) {
+		if (this.hp <= 0) {
 			this.hp = 0;
 			this.trueFainted();
 		}
