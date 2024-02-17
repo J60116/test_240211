@@ -43,6 +43,14 @@ public abstract class Move {
 		return ARRAY_MOVE_TYPE;
 	}
 
+	public int getNum_type() {
+		return this.num_type;
+	}
+	
+	public void setNum_type(int num_type) {
+		this.num_type = num_type;
+	}
+
     public String getName() {
 		return this.name;
 	}

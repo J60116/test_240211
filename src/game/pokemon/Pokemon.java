@@ -377,17 +377,17 @@ public abstract class Pokemon {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
 			String effect = "";
-			if(this.getMoves(i) != null){
+			if(this.getMoves(i) != null && this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[0])){
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
-						if(t == this.num_type && o == opponent.num_type){
+						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
 							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
 							effect = ARRAY_EFFECTIVE[n];
 						}
 					}
 				}
 			}
-			System.out.println("[" + (i + 1) + "] " + getMoves(i) + " " + effect);
+			System.out.println("[" + (i + 1) + "] " + getMoves(i) + "  " + effect);
 		}
 		// for (Moves m : this.getMoves()) {
 		// 	if (m != null) {
@@ -449,7 +449,7 @@ public abstract class Pokemon {
 				String effect = "";
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
-						if(t == this.num_type && o == opponent.num_type){
+						if(t == this.getMoves(num - 1).getNum_type() && o == opponent.num_type){
 							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
 							damage *= ARRAY_EFFECTIVE_RATE[n];
 							effect = ARRAY_EFFECTIVE_MSG[n];
