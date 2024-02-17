@@ -5,14 +5,11 @@ public abstract class Move {
 	//技の効果
 	final static String[] ARRAY_EFFECTIVE_MSG = { "×Has no effect", "△Not very effective", "〇Effective",
 			"◎Super effective" };
-	final static double[] ARRAY_EFFECTIVE_RATE = { 0.0, 0.5, 1.0, 2.0 };
 	//技のタイプ（0:物理技、1:特殊技、2:変化技）
 	final static String[] ARRAY_MOVE_TYPE = { "Physical", "Special", "Status"};
-	//タイプ
-	final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
-			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
-	//タイプ相性表
-	final double[][] ARRAY_TYPE_COMPATIBILITY = new double[ARRAY_TYPE.length][ARRAY_TYPE.length];
+	//タイプ相性表（normal~grass）
+	final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
+	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
 
     int num_type;//要素番号
     private String name;
@@ -33,22 +30,15 @@ public abstract class Move {
         this.power = 0;
         this.accuracy = 100;
 		//タイプ相性表の作成（Normal~Grass）
-		this.ARRAY_TYPE_COMPATIBILITY[2][1] = 2.0;
-		this.ARRAY_TYPE_COMPATIBILITY[2][2] = 0.5;
-		this.ARRAY_TYPE_COMPATIBILITY[2][4] = 0.5;
-		this.ARRAY_TYPE_COMPATIBILITY[3][2] = 2.0;
-		this.ARRAY_TYPE_COMPATIBILITY[3][3] = 0.5;
-		this.ARRAY_TYPE_COMPATIBILITY[3][4] = 0.5;
-		this.ARRAY_TYPE_COMPATIBILITY[4][1] = 0.5;
-		this.ARRAY_TYPE_COMPATIBILITY[4][2] = 2.0;
-		this.ARRAY_TYPE_COMPATIBILITY[4][4] = 0.5;
-		for(int i=0; i<5; i++){
-			for(int j=0; j<5; j++){
-				if(this.ARRAY_TYPE_COMPATIBILITY[i][j]==0.0){
-					this.ARRAY_TYPE_COMPATIBILITY[i][j] = 1.0;
-				}
-			}
-		}
+		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
+		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
+		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
 	}
 
 	public static String[] getArrayMoveType() {
