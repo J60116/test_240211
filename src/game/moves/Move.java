@@ -9,7 +9,7 @@ public abstract class Move {
 	// final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
 	// final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
 	
-    int num_type;//要素番号
+    private int num_type;//要素番号
     private String name;
     private String type; 
     private int mp;
