@@ -4,7 +4,7 @@ import java.util.*;
 import game.pokemon.*;
 
 public class User {
-	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:マスターボール)
+	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:ハイパーボール、4:マスターボール)
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
 			{ "Hyper Ball", "(h)" }, { "Master Ball", "(m)" } };
 	// ボールの捕獲補正率
@@ -305,10 +305,11 @@ public class User {
 					}
 					//Throw PokeBall
 					//ボールの種類を入力
-					System.out.print("What type of Poke Balls do you use?: ");
+					System.out.println("What type of Poke Balls do you use?: ");
+					String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
 					//モンスターボールの名前を取得
-					String input = sc.nextLine();
-					this.throwPokeBall(enemy, input);
+					int num = inputInt(1, 4, msgBall);
+					this.throwPokeBall(enemy, num);
 					if(enemy.getBall() != ARRAY_BALL[0][1]){
 						//ポケモンをゲットできた場合
 						this.falseBattle();;
@@ -520,7 +521,8 @@ public class User {
 	}
 	
 	//ポケモンにボールを投げる
-	private void throwPokeBall(Pokemon pokemon, String ball) {
+	private void throwPokeBall(Pokemon pokemon, int num) {
+		String ball = ARRAY_BALL[num][0];
 		if(this.booleanBall(ball) == false){
 			return;
 		}
