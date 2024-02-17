@@ -449,6 +449,18 @@ public class User {
 		return count;
 	}
 
+	//対戦時に送り出すポケモン
+	public Pokemon getCanBattlePokemon(){
+		Pokemon pokemon = null;
+		for(Pokemon p : this.getPocket()){
+			if(p != null && p.getStatus().equals(Pokemon.getArrayStatus()[2])){
+				pokemon = p;
+				break;
+			}
+		}
+		return pokemon;
+	}
+
 	//CanBattleなポケモンの数を数える
 	public int countCanBattlePokemon(){
 		int count = 0;
