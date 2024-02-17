@@ -606,16 +606,16 @@ public class User {
 
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
-		if(this.getPocket()[num].getFainted()){
+		if (this.getPocket()[num] == null) {
+			System.out.println("Miss! There is no Pokemon in the pocket[" + num + "].");
+			return;
+		}
+		if (this.getPocket()[num].getFainted()){
 			System.out.println("Miss! " + this.getName() + " could not give " + item + " because " + this.getPocket()[num].getNickname() + " fainted.");
 			return;
 		}
-		if (this.getPocket()[num] == null) {
-			System.out.println("Miss! There is no Pokemon in the pocket[" + num + "].");
-		} else {
-			System.out.println("\n" + this.getName() + " gave " + this.getPocket()[num].getNickname() + " " + item + ".");
-			this.getPocket()[num].setItem(item);
-		}
+		System.out.println("\n" + this.getName() + " gave " + this.getPocket()[num].getNickname() + " " + item + ".");
+		this.getPocket()[num].setItem(item);
 	}
 
 }
