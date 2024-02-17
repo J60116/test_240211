@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Environment{
 	//クラス変数	
     //生息地名リスト
-	public static final String ARRAY_HABITATS[] = { "grassland", "river" };
+	public static final String ARRAY_HABITATS[] = { "grassland", "river", "hill" };
     // public static final String ARRAY_HABITATS[] = { "grassland", "river", "sea", "rocky mountain", "snowy mountain" , "sand dune"};
 	public static final List<String> LIST_HABITATS = Arrays.asList(ARRAY_HABITATS);
     //各生息地に住むポケモン
@@ -21,6 +21,8 @@ public class Environment{
 	public static final Pokemon POKEMON_GRASSLAND[] = { new Eevee(), new Leafeon() };
 	public static final Set<Pokemon> SET_1 = new HashSet<>();//river
 	public static final Pokemon POKEMON_RIVER[] = { new Vaporeon() };
+	public static final Set<Pokemon> SET_2 = new HashSet<>();//hill
+	public static final Pokemon POKEMON_HILL[] = { new Jolteon(), new Flareon() };
 	//生息地マップ
 	public static final Map<String, Set<Pokemon>> MAP_HABITATS = new HashMap<String, Set<Pokemon>>();
     
@@ -30,10 +32,12 @@ public class Environment{
 		//配列からセットを作成
 		Collections.addAll(SET_0, POKEMON_GRASSLAND);   
 		Collections.addAll(SET_1, POKEMON_RIVER);   
+		Collections.addAll(SET_2, POKEMON_HILL);   
         
         //生息マップの作成
         MAP_HABITATS.put(ARRAY_HABITATS[0], SET_0);
         MAP_HABITATS.put(ARRAY_HABITATS[1], SET_1);
+        MAP_HABITATS.put(ARRAY_HABITATS[2], SET_2);
 
 		//戻り値用
 		Pokemon pokemon = null;
@@ -51,16 +55,16 @@ public class Environment{
 		//乱数用
 		Random rand = new Random();
 		//生息地別に配列viewを作成
+		for(int i = 1; i <= 3; i++){
+			//ポケモンが隠れている可能性がある場所を保存
+			int a = rand.nextInt(2) + 1;
+			int b = a + rand.nextInt(3) + 2;
+			//1~6の数値を代入
+			view[i][a] = "(" + (2 * i - 1) + ")";
+			view[i][b] = "(" + (2 * i) + ")";
+		}
 		if(habitat.equals(ARRAY_HABITATS[0])){
 			//Grassland
-			for(int i = 1; i <= 3; i++){
-				//ポケモンが隠れている可能性がある場所を保存
-				int a = rand.nextInt(2) + 1;
-				int b = a + rand.nextInt(3) + 2;
-				//1~6の数値を代入
-				view[i][a] = "(" + (2 * i - 1) + ")";
-				view[i][b] = "(" + (2 * i) + ")";
-			}
 			//それ以外の場所にはwwwを代入
 			for(int i = 0; i < view.length; i++){	
 				for(int j = 0; j < view[i].length; j++){
@@ -71,12 +75,6 @@ public class Environment{
 			}
 		} else if(habitat.equals(ARRAY_HABITATS[1])){
 			//River
-			for(int i = 1; i <= 3; i++){
-				int a = rand.nextInt(2) + 1;
-				int b = a + rand.nextInt(3) + 2;
-				view[i][a] = "(" + (2 * i - 1) + ")";
-				view[i][b] = "(" + (2 * i) + ")";
-			}
 			for(int i = 0; i < view.length; i++){	
 				for(int j = 0; j < view[i].length; j++){
 					if(i==0){
@@ -84,6 +82,20 @@ public class Environment{
 					}
 					if(view[i][j] == null){
 						view[i][j] = "~~~";
+					}
+				}
+			}
+		} else if(habitat.equals(ARRAY_HABITATS[2])){
+			//hill
+			//それ以外の場所にはwwwを代入
+			for(int i = 0; i < view.length; i++){	
+				for(int j = 0; j < view[i].length; j++){
+					if(view[i][j] == null){
+						if((i!=0||i!=4)&&j%2==0){
+							view[i][j] = "^^^";
+						} else {
+							view[i][j] = "   ";
+						}
 					}
 				}
 			}

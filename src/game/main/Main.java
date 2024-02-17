@@ -13,11 +13,13 @@ public class Main {
 		Eevee eevee = new Eevee();
 		Leafeon leafeon = new Leafeon();
 		Vaporeon vaporeon = new Vaporeon();
+		Jolteon j = new Jolteon();
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
 		
 		//冒険に出かける
+		user.goTo("hill", j);
 		user.goTo("flower garden", eevee);
 		user.goTo("grassland", eevee);
 		user.goTo("grassland", leafeon);
@@ -31,7 +33,7 @@ public class Main {
 
 		//1番目のポケモンに「みずのいし」を渡す
 		user.giveItem(0 , "Water Stone");
-		
+
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
 

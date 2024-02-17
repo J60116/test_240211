@@ -164,7 +164,7 @@ public class User {
 							//探す場所を見つける
 							find = true;
 							//数値を非表示にする
-							view[i][j] = view[1][0];
+							view[i][j] = view[4][7];
 							break;
 						}
 					}
