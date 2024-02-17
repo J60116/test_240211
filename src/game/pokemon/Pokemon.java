@@ -15,7 +15,7 @@ public abstract class Pokemon {
 	//ボールの画像(0:ひんし状態 1:戦闘可能）
 	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
-	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
+	final static String FMT_NAME = "[A-Z][A-Za-z]{1,10}";
 	//技の効果
 	final static String[] ARRAY_EFFECTIVE = {  "〇 Effective", "× Has no effect", "△ Not very effective", "◎ Super effective" };
 	//技の攻撃倍率
@@ -324,17 +324,19 @@ public abstract class Pokemon {
 		if (this.types[1] == null) {
 			type = this.types[0];
 		} else {
-			type = this.types[0] + "・" + this.types[1];
+			type = this.types[0] + "][" + this.types[1];
 		}
-		String hp = this.hp + "/" + this.hp_max ;
+		String hp = String.format("HP: %3d/%3d",this.hp,this.hp_max);
 		if(this.getFainted()){
 			hp = hp + " (FAINTED)";
 		}
+		String now = String.format("Exp. Points: %3d",this.exp);
+		String next = String.format("To Next Lv.: %3d",(this.exp_max - this.exp));
 		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ "\nType: " + type
-				+ "\nHP: " + hp
-				+ "\nExp.Points: " + this.exp
-				+ "\nTo Next Lv.: " + (this.exp_max - this.exp);
+				+ "\nType: " + type + "]"
+				+ "\n" + hp
+				+ "\n" + now
+				+ "\n" + next;
 		return str;
 	}
 
