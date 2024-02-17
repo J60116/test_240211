@@ -24,7 +24,7 @@ public class Main {
 		user.goTo("grassland", leafeon);
 		user.goTo("river", vaporeon);
 		user.goTo("hill", jolteon);
-		user.goTo("observatory", flareon);
+		user.goTo("hill", flareon);
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
