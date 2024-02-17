@@ -333,7 +333,7 @@ public abstract class Pokemon {
 		String now = String.format("Exp. Points: %3d",this.exp);
 		String next = String.format("To Next Lv.: %3d",(this.exp_max - this.exp));
 		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ "\nType: " + type + "]"
+				+ "\nType: [" + type + "]"
 				+ "\n" + hp
 				+ "\n" + now
 				+ "\n" + next;
@@ -378,24 +378,21 @@ public abstract class Pokemon {
 	public void checkMoves(Pokemon opponent) {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
+			//effect: タイプ相性
 			String effect = "";
 			if(this.getMoves(i) != null && this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[0])){
+				//Normal~Grassの範囲
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
 						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
-							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
-							effect = ARRAY_EFFECTIVE[n];
+							int num = this.ARRAY_EFFECTIVE_NUM[t][o];
+							effect = ARRAY_EFFECTIVE[num];
 						}
 					}
 				}
 			}
 			System.out.println("[" + (i + 1) + "] " + getMoves(i) + "  " + effect);
 		}
-		// for (Moves m : this.getMoves()) {
-		// 	if (m != null) {
-		// 		System.out.println(m);
-		// 	}
-		// }
 	}
 
 	//技が使えるかの確認
