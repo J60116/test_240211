@@ -5,8 +5,9 @@ public class Hydropump extends Move{
 
     public Hydropump(){
         super();
+        this.num_type = 2;
         this.setName("Hydro pump");
-        this.setType(Pokemon.getArrayType()[2]);//Water
+        this.setType(Pokemon.getArrayType()[num_type]);//Water
         this.setMP_max(5);
         this.setMP(this.getMP_max());
         this.setMoveType(ARRAY_MOVE_TYPE[0]);

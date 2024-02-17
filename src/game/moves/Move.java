@@ -14,6 +14,7 @@ public abstract class Move {
 	//タイプ相性表
 	final double[][] ARRAY_TYPE_COMPATIBILITY = new double[ARRAY_TYPE.length][ARRAY_TYPE.length];
 
+    int num_type;//要素番号
     private String name;
     private String type; 
     private int mp;
@@ -23,8 +24,9 @@ public abstract class Move {
     private int accuracy; //命中率
 
     public Move(){
+		this.num_type = 0;
         this.name = null;
-        this.type = Pokemon.getArrayType()[0];//Normal
+        this.type = Pokemon.getArrayType()[num_type];//Normal
         this.mp_max = 0;
         this.mp = this.mp_max;
 		this.moveType = ARRAY_MOVE_TYPE[0];//Physical
