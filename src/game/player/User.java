@@ -113,7 +113,7 @@ public class User {
 		this.setLocation(habitat);
 		System.out.println("\n" + this.getName() + " went to the " + habitat + ".");
 		//行き先がポケモンの生息地かどうかの判定
-		if(Environment.list.contains(habitat)){
+		if(Environment.LIST_HABITATS.contains(habitat)){
 			this.lookFor(Environment.getPokemon(habitat), Environment.getView(habitat));
 		} else {
 			System.out.println(this.getName() + " had a good time there.");

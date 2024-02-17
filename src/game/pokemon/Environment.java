@@ -1,4 +1,5 @@
 package game.pokemon;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,35 +7,46 @@ import java.util.Map;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Collections;
+
 
 public class Environment{
 	//クラス変数	
     //生息地名リスト
 	public static final String ARRAY_HABITATS[] = { "grassland", "river" };
     // public static final String ARRAY_HABITATS[] = { "grassland", "river", "sea", "rocky mountain", "snowy mountain" , "sand dune"};
-    public static final List<String> list = Arrays.asList(ARRAY_HABITATS);
+	public static final List<String> LIST_HABITATS = Arrays.asList(ARRAY_HABITATS);
+    //各生息地に住むポケモン
+	public static final Set<Pokemon> SET_0 = new HashSet<>();//grassland
+	public static final Pokemon POKEMON_GRASSLAND[] = { new Eevee(), new Leafeon() };
+	public static final Set<Pokemon> SET_1 = new HashSet<>();//river
+	public static final Pokemon POKEMON_RIVER[] = { new Vaporeon() };
 	//生息地マップ
-	public static final Map<String, Set<Pokemon>> map = new HashMap<String, Set<Pokemon>>();
+	public static final Map<String, Set<Pokemon>> MAP_HABITATS = new HashMap<String, Set<Pokemon>>();
     
 	//クラスメゾット
 	//生息地のポケモンをランダムに１種類取得する
-    public static Pokemon getPokemon(String habitat){    
-        //草原のポケモン
-        Set<Pokemon> grassland = new HashSet<>();
-        grassland.add(new Eevee());
-		grassland.add(new Leafeon());
+    public static Pokemon getPokemon(String habitat){ 
+		//配列からセットを作成
+		Collections.addAll(SET_0, POKEMON_GRASSLAND);   
+		Collections.addAll(SET_1, POKEMON_RIVER);   
+
+        // //草原のポケモン
+        // Set<Pokemon> grassland = new HashSet<>();
+        // grassland.add(new Eevee());
+		// grassland.add(new Leafeon());
         
-        //川のポケモン
-        Set<Pokemon> river = new HashSet<>();
-        river.add(new Vaporeon());
+        // //川のポケモン
+        // Set<Pokemon> river = new HashSet<>();
+        // river.add(new Vaporeon());
         
         //生息マップの作成
-        map.put(ARRAY_HABITATS[0], grassland);
-        map.put(ARRAY_HABITATS[1], river);
+        MAP_HABITATS.put(ARRAY_HABITATS[0], SET_0);
+        MAP_HABITATS.put(ARRAY_HABITATS[1], SET_1);
 
 		//戻り値用
 		Pokemon pokemon = null;
-		for(Pokemon p : map.get(habitat)){
+		for(Pokemon p : MAP_HABITATS.get(habitat)){
 			pokemon = p;
 			break;
 		}
@@ -45,7 +57,9 @@ public class Environment{
 	public static String[][] getView(String habitat) {
 		//戻り値用
 		String[][] view = new String[5][8];
+		//乱数用
 		Random rand = new Random();
+		//生息地別に配列viewを作成
 		if(habitat.equals(ARRAY_HABITATS[0])){
 			//Grassland
 			for(int i = 1; i <= 3; i++){
