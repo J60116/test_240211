@@ -130,9 +130,9 @@ public class User {
 			}
 		}
 		//ポケモンが実際に隠れている場所を保存
-		int random = pokemon.getRand().nextInt(6) + 1;
+		int hide = pokemon.getRand().nextInt(6) + 1;
 		int input = -1;
-		while(input != random){
+		while(input != hide){
 			//風景の表示
 			System.out.println();
 			Environment.dispView(view);
@@ -146,24 +146,24 @@ public class User {
 				sc.nextLine();
 				continue;
 			}
-			if(input == random){
-				//randomと一致したらループを抜ける
+			if(input == hide){
+				//選択した場所にポケモンが隠れていたらループ抜ける
 				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
 				System.out.println(this.name + " could not find (" + input + ")");
-				System.out.println(this.name + " gave up looking for " + pokemon.getName() + "...");
+				System.out.println(this.name + " gave up looking for Pokemon...");
 				sc.nextLine();
 				return;
 			} else {
-				//randomと不一致の場合
-				boolean find = false;
+				//選択した場所にポケモンが隠れていなかった場合
+				boolean check = false;
 				for(int i = 1; i < view.length - 1; i++){	
 					for(int j = 0; j < view[i].length; j++){
 						if(view[i][j].equals("(" + input + ")")){
-							//探す場所を見つける
-							find = true;
+							//選択した場所にたどりついた時
+							check = true;
 							//数値を非表示にする
 							view[i][j] = view[4][7];
 							break;
