@@ -13,6 +13,7 @@ public final class Leafeon extends Eevee{
 
 	public Leafeon(String owner, String ball){ 
 		super(owner, ball);
+		this.num_type = 4;
 		super.setEvolvedConstructor(3);
 		this.setHP(this.getHP_max());
 		this.setMoves(2, new Leafblade());

@@ -13,6 +13,7 @@ public final class Jolteon extends Eevee {
 
 	public Jolteon(String owner, String ball){ 
 		super(owner, ball);
+		this.num_type = 3;
 		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
 		this.setMoves(2, new Thunderbolt());

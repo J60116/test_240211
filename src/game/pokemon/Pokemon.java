@@ -16,7 +16,14 @@ public abstract class Pokemon {
 	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
 	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
+	//技の攻撃倍率
+	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
+	//技の効果メッセージ
+	final static String[] ARRAY_EFFECTIVE_MSG = { "", "It's not effective...", "It's not very effective.", "It's super effective!" };
+	//タイプ相性表（normal~grass）
+	final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
 
+	int num_type; 
 	private String name; //名前
 	private String nickname; //ニックネーム
 	private String owner; //トレーナー
@@ -42,6 +49,7 @@ public abstract class Pokemon {
 	}
 
 	public Pokemon(String owner, String ball) {
+		this.num_type = 0;
 		this.setName("None");
 		this.setNickname(this.getName());
 		this.setOwner(owner);
@@ -59,6 +67,15 @@ public abstract class Pokemon {
 		this.setExp_max(10);
 		this.setRand(new Random());
 		this.setMoves(new Move[4]);
+		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
+		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
+		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
 	}
 
 	//アクセサ
@@ -416,7 +433,18 @@ public abstract class Pokemon {
 			if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[0])){
 				//技の威力
 				int damage = this.getMoves(num - 1).getPower();
+				String effect = "";
+				for(int t=0; t<5; t++){
+					for(int o=0; o<5; o++){
+						if(t == this.num_type && o == opponent.num_type){
+							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
+							damage *= ARRAY_EFFECTIVE_RATE[n];
+							effect = ARRAY_EFFECTIVE_MSG[n];
+						}
+					}
+				}					
 				opponent.getDamage(damage);
+				System.out.println(effect);
 			} else if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[2])){
 				//変化技の場合
 				// (作成中：命中率を下げる技)

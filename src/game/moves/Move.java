@@ -8,9 +8,9 @@ public abstract class Move {
 	//技のタイプ（0:物理技、1:特殊技、2:変化技）
 	final static String[] ARRAY_MOVE_TYPE = { "Physical", "Special", "Status"};
 	//タイプ相性表（normal~grass）
-	final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
-	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
-
+	// final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
+	// final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
+	
     int num_type;//要素番号
     private String name;
     private String type; 
@@ -30,15 +30,15 @@ public abstract class Move {
         this.power = 0;
         this.accuracy = 100;
 		//タイプ相性表の作成（Normal~Grass）
-		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
-		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
-		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
+		// this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
+		// this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
+		// this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
+		// this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
 	}
 
 	public static String[] getArrayMoveType() {
