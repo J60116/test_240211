@@ -89,15 +89,16 @@ public class User {
 	
 	public void trueBattle() {
 		this.battle = true;
-		//先頭にいるポケモンの戦闘状態をIn Battleにする
-		for (Pokemon p : this.getPocket()) {
-			if (p != null && !p.getStatus().equals(Pokemon.getArrayStatus()[0])) {
-				p.setStatus(Pokemon.getArrayStatus()[1]);
-				break;
-			}
-		}
+		//先頭側にいるCan BattleのポケモンをIn Battleにする
+		this.getCanBattlePokemon().setStatus(Pokemon.getArrayStatus()[1]);
+		// for (Pokemon p : this.getPocket()) {
+		// 	if (p != null && !p.getStatus().equals(Pokemon.getArrayStatus()[0])) {
+		// 		p.setStatus(Pokemon.getArrayStatus()[1]);
+		// 		break;
+		// 	}
+		// }
 	}
-	
+
 	public void falseBattle() {
 		this.battle = false;
 		//In battleのポケモンをCan battleに変更
@@ -246,6 +247,29 @@ public class User {
 		System.out.println("Go! " + friend.getNickname() + "!");
 		//バトルが終わるまで繰り返す
 		while(this.getBattle()){
+			if(friend.getFainted()){
+				System.out.println("Will you switch your Pokemon?");
+				System.out.print("");
+				String msg = "[1]Switch Pokemon [2]Run : ";
+				int num = this.inputInt(1,2,msg);
+				if(num == 1){
+					// ポケモンを入れ替える
+					Pokemon substitute = this.selectPokemon();
+					if(!this.booleanSwitch(friend, substitute)){
+						//入れ替えに失敗した場合は敵が逃げる
+						enemy.run();
+						this.falseBattle();
+						break;
+					}
+					friend = substitute;
+					friend.setStatus(Pokemon.getArrayStatus()[1]);
+					System.out.println("Go!" + friend.getNickname() + "!");
+				} else {
+					this.run();
+					this.falseBattle();
+					break;
+				}
+			}
 			this.dispBattleScreen(enemy, friend);
 			String msgMenu = "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ";
 			int menu = this.inputInt(1,4,msgMenu);		
@@ -372,29 +396,11 @@ public class User {
 			}
 			this.falseBattle();
 		} else if(friend.getFainted()){
-			//味方が気絶した場合
-			// System.out.println(this.getName() + " lose the game...");
-			//敵は逃げる
-			enemy.run();
-			this.falseBattle();
-			/*
-			ポケモンを入れ替える 
-			// if(this.countCanBattlePokemon()>=1){
-			// 	System.out.println("Will you switch your Pokemon?");
-			// 	System.out.print("");
-			// 	String msg = "[1]Switch Pokemon [2]Run : ";
-			// 	int num = this.inputInt(1,2,msg);
-			// 	if(num==1){
-					//??
-			// 	} else if(num==2){
-			// 		this.run();
-			// 		this.falseBattle();
-			// 	}
-			// }
-
-			*/
+			//戦闘可能なポケモンを持っていない場合
+			if(countCanBattlePokemon()==0){
+				this.falseBattle();
+			}
 		}
-
 	}
 
 	//ポケモンを選ぶ
@@ -427,7 +433,7 @@ public class User {
 		}
 		if(substitute.getFainted()){
 			//ひんし状態のポケモンを選択した場合
-			System.out.println("MISS! " + this.getName() + " is in fainted.");
+			System.out.println("MISS! " + substitute.getName() + " fainted.");
 			return false;
 		}
 		if(substitute.equals(friend)){
