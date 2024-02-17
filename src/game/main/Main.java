@@ -1,6 +1,7 @@
 package game.main;
 
 import game.player.User;
+import game.pokemon.*;
 
 public class Main {
 
@@ -8,14 +9,19 @@ public class Main {
 		//ポケモントレーナーの生成
 		User user = new User();
 
+		//野生ポケモンの生成
+		Eevee eevee = new Eevee();
+		Leafeon leafeon = new Leafeon();
+		Vaporeon vaporeon = new Vaporeon();
+
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
 		
 		//冒険に出かける
-		user.goTo("flower garden");
-		user.goTo("grassland");
-		user.goTo("grassland");
-		user.goTo("river");
+		user.goTo("flower garden", eevee);
+		user.goTo("grassland", eevee);
+		user.goTo("grassland", leafeon);
+		user.goTo("river", vaporeon);
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();

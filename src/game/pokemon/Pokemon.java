@@ -329,6 +329,14 @@ public abstract class Pokemon {
 	// 	return false;
 	// } 
 
+	//引数の生息地に住むポケモンをランダムで取得し、nameが一致するか判定する
+	public boolean liveIn(String habitat){
+		if(this.getName().equals(Environment.getPokemon(habitat).getName())){
+			return true;
+		}
+		return false;
+	}
+
 	//ステータスを確認する
 	public void checkStatus() {
 		System.out.println(this.toString());

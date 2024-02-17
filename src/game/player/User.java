@@ -109,12 +109,12 @@ public class User {
 	}
 	
 	//メゾット
-	public void goTo(String habitat){
+	public void goTo(String habitat, Pokemon pokemon){
 		this.setLocation(habitat);
 		System.out.println("\n" + this.getName() + " went to the " + habitat + ".");
-		//行き先がポケモンの生息地かどうかの判定
-		if(Environment.LIST_HABITATS.contains(habitat)){
-			this.lookFor(Environment.getPokemon(habitat), Environment.getView(habitat));
+		//行き先がポケモンの生息地かどうか(生息地であってもポケモンに会えるとは限らない)
+		if(Environment.LIST_HABITATS.contains(habitat) && pokemon.liveIn(habitat)){
+			this.lookFor(pokemon, Environment.getView(habitat));
 		} else {
 			System.out.println(this.getName() + " had a good time there.");
 		}
@@ -122,6 +122,12 @@ public class User {
 
 	//ポケモンを探す
 	private void lookFor(Pokemon pokemon, String[][] view) {
+		if(pokemon.getOwner() != null){
+			if(pokemon.getOwner().equals(this.name)){
+				System.out.println("MISS! " + this.getName() + " already get " + pokemon.getName());
+				return;
+			}
+		}
 		//ポケモンが実際に隠れている場所を保存
 		int random = pokemon.getRand().nextInt(6) + 1;
 		int input = -1;
