@@ -261,7 +261,7 @@ public class User {
 					this.giveInstructions(friend, num_f, enemy);
 					//敵の攻撃
 					if(!enemy.getFainted()){
-						System.out.println("Enemy -> Friend");
+						System.out.println("\nEnemy -> Friend");
 						int num_e1 = enemy.getRand().nextInt(4) + 1;
 						enemy.useMove(num_e1, friend);
 					}
@@ -369,7 +369,9 @@ public class User {
 			this.falseBattle();
 		} else if(friend.getFainted()){
 			//味方が気絶した場合
-			System.out.println(this.getName() + " lose the game...");
+			// System.out.println(this.getName() + " lose the game...");
+			//敵は逃げる
+			enemy.run();
 			this.falseBattle();
 			/*
 			ポケモンを入れ替える 

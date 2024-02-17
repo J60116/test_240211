@@ -456,8 +456,8 @@ public abstract class Pokemon {
 						}
 					}
 				}					
-				opponent.getDamage(damage);
 				System.out.println(effect);
+				opponent.getDamage(damage);
 			} else if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[2])){
 				//変化技の場合
 				// (作成中：命中率を下げる技)
@@ -467,7 +467,7 @@ public abstract class Pokemon {
 						opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
 					}
 				}
-				System.out.println(opponent.getName() + "\'s accuracy was low.\n");
+				System.out.println(opponent.getName() + "\'s accuracy was low.");
 			} 
 			/*
 			 * 技のタイプ
@@ -491,6 +491,9 @@ public abstract class Pokemon {
 
 	//逃げる
 	public void run() {
+		if(this.getBall().equals(User.getArrayBall()[0][1])){
+			System.out.print("\nA wild ");
+		}
 		System.out.println(this.nickname + " run away.");
 	}
 
