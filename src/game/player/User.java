@@ -233,13 +233,13 @@ public class User {
 	private void startBattle(Pokemon enemy){
 		//対戦相手がひんし状態の場合
 		if(enemy.getFainted()){
-			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
+			System.out.println("MISS! " + this.getName() + " cannot start battle because Enemy fainted.");
 			return;
 		}
 		// ポケットの中でCanBattleのポケモンを指定する
 		Pokemon friend = this.getCanBattlePokemon();
-		if(friend.getFainted()){
-			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + " fainted.");
+		if(friend == null){
+			System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
 			return;
 		}
 		this.trueBattle();
@@ -337,8 +337,11 @@ public class User {
 					}
 					break;
 			}
-			//判定（どちらかが瀕死状態になれはバトルを終わらせる）
-			this.judgeBattle(friend, enemy);
+			//バトルが継続している場合
+			if(this.getBattle()){
+				//判定（どちらかが瀕死状態になれはバトルを終わらせる）
+				this.judgeBattle(friend, enemy);
+			}
 		}
 		//手持ちのポケモンが全滅した場合
 		if(this.countCanBattlePokemon() == 0){
