@@ -15,7 +15,7 @@ public final class Jolteon extends Eevee {
 		super(owner, ball);
 		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
-		// this.setMoves(1,);
+		this.setMoves(2, new Thunderbolt());
 	}
 
 	@Override

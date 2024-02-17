@@ -15,7 +15,8 @@ public final class Flareon extends Eevee {
 		super(owner, ball);
 		super.setEvolvedConstructor(NUM_EVOLVED);
 		this.setHP(this.getHP_max());
-		// this.setMoves(1,);
+        //１ターン越しに攻撃できるようになってから
+		// this.setMoves(2, new Dig());
 	}
 
 	@Override

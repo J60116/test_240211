@@ -15,7 +15,7 @@ public final class Leafeon extends Eevee{
 		super(owner, ball);
 		super.setEvolvedConstructor(3);
 		this.setHP(this.getHP_max());
-		this.setMoves(1, new Leafblade());
+		this.setMoves(2, new Leafblade());
 	}
 
 	@Override
