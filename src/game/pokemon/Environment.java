@@ -27,7 +27,7 @@ public class Environment{
     
 	//クラスメゾット
 	//生息地のポケモンをランダムに１種類取得する
-    public static Pokemon getPokemon(String habitat){ 
+    public static Set getPokemon(String habitat){ 
 		//配列からセットを作成
 		Collections.addAll(SET_0, POKEMON_GRASSLAND);   
 		Collections.addAll(SET_1, POKEMON_RIVER);   
@@ -39,12 +39,11 @@ public class Environment{
         MAP_HABITATS.put(ARRAY_HABITATS[2], SET_2);
 
 		//戻り値用
-		Pokemon pokemon = null;
+		Set<String> set = new HashSet<>();
 		for(Pokemon p : MAP_HABITATS.get(habitat)){
-			pokemon = p;
-			break;
+			set.add(p.getName());
 		}
-		return pokemon;		
+		return set;		
     }
 	
 	//生息地の風景を取得する
