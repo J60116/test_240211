@@ -30,15 +30,6 @@ public class Environment{
 		//配列からセットを作成
 		Collections.addAll(SET_0, POKEMON_GRASSLAND);   
 		Collections.addAll(SET_1, POKEMON_RIVER);   
-
-        // //草原のポケモン
-        // Set<Pokemon> grassland = new HashSet<>();
-        // grassland.add(new Eevee());
-		// grassland.add(new Leafeon());
-        
-        // //川のポケモン
-        // Set<Pokemon> river = new HashSet<>();
-        // river.add(new Vaporeon());
         
         //生息マップの作成
         MAP_HABITATS.put(ARRAY_HABITATS[0], SET_0);
