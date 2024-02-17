@@ -261,7 +261,7 @@ public class User {
 					this.giveInstructions(friend, num_f, enemy);
 					//敵の攻撃
 					if(!enemy.getFainted()){
-						System.out.println("Enemy -> Friend");
+						System.out.println("\nEnemy -> Friend");
 						int num_e1 = enemy.getRand().nextInt(4) + 1;
 						enemy.useMove(num_e1, friend);
 					}
