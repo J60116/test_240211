@@ -230,8 +230,8 @@ public class User {
 			System.out.println(this.getName() + " cannot start battle because Enemy fainted.");
 			return;
 		}
-		// 1番目のポケモンを指定する
-		Pokemon friend = this.getPocket()[0];
+		// ポケットの中でCanBattleのポケモンを指定する
+		Pokemon friend = this.getCanBattlePokemon();
 		if(friend.getFainted()){
 			System.out.println(this.getName() + " cannot start battle because " + friend.getNickname() + " fainted.");
 			return;
@@ -589,13 +589,13 @@ public class User {
 	public void viewCurrentParty() {
 		System.out.println("\n--------------------------");
 		System.out.println("POKEMON STATUS SUMMARY");
-		System.out.println("--------------------------");
 		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
+				System.out.println("--------------------------");
 				p.checkStatus();
-				System.out.println("--------------------------\n");
 			}
 		}
+		System.out.println("--------------------------\n");
 	}
 
 	//ポケモンにアイテムを持たせる
