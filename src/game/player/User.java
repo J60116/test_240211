@@ -253,7 +253,7 @@ public class User {
 				case 1:
 					//Battle
 					//味方の技の選択
-					friend.checkMoves();
+					friend.checkMoves(enemy);
 					String msgMove = "What number of Move do you use?: ";
 					int num_f = this.inputInt(1,4,msgMove);
 					//味方の攻撃

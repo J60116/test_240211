@@ -16,6 +16,8 @@ public abstract class Pokemon {
 	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
 	final static String FMT_NAME = "[A-Z][A-Za-z]{1,14}";
+	//技の効果
+	final static String[] ARRAY_EFFECTIVE = {  "〇Effective", "×Has no effect", "△Not very effective", "◎Super effective" };
 	//技の攻撃倍率
 	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
 	//技の効果メッセージ
@@ -371,10 +373,21 @@ public abstract class Pokemon {
 	}
 
 	//技を確認する
-	public void checkMoves() {
+	public void checkMoves(Pokemon opponent) {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
-			System.out.println("[" + (i + 1) + "] " + getMoves(i));
+			String effect = "";
+			if(this.getMoves(i) != null){
+				for(int t=0; t<5; t++){
+					for(int o=0; o<5; o++){
+						if(t == this.num_type && o == opponent.num_type){
+							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
+							effect = ARRAY_EFFECTIVE[n];
+						}
+					}
+				}
+			}
+			System.out.println("[" + (i + 1) + "] " + getMoves(i) + " " + effect);
 		}
 		// for (Moves m : this.getMoves()) {
 		// 	if (m != null) {

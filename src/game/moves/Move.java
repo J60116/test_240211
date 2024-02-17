@@ -2,9 +2,7 @@ package game.moves;
 import game.pokemon.Pokemon;
 
 public abstract class Move {
-	//技の効果
-	final static String[] ARRAY_EFFECTIVE_MSG = { "×Has no effect", "△Not very effective", "〇Effective",
-			"◎Super effective" };
+	
 	//技のタイプ（0:物理技、1:特殊技、2:変化技）
 	final static String[] ARRAY_MOVE_TYPE = { "Physical", "Special", "Status"};
 	//タイプ相性表（normal~grass）
@@ -110,7 +108,7 @@ public abstract class Move {
 
     @Override
 	public String toString() {
-        String str = this.name + " " + "(" + this.type + ") MP:" + this.mp + "/" + this.mp_max 
+        String str = String.format("%-13s MP:%2d/%2d", this.name, this.mp, this.mp_max); 
         // + "\nPower:" + this.power + " Accuracy:" + this.accuracy
         ;
         return str;
