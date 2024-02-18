@@ -326,17 +326,14 @@ public abstract class Pokemon {
 		} else {
 			type = this.types[0] + "][" + this.types[1];
 		}
-		String hp = String.format("HP: %3d/%3d",this.hp,this.hp_max);
+		String hp = String.format("%3d/%3d",this.hp,this.hp_max);
 		if(this.getFainted()){
 			hp = hp + " (FAINTED)";
 		}
-		String now = String.format("Exp. Points: %3d",this.exp);
-		String next = String.format("To Next Lv.: %3d",(this.exp_max - this.exp));
-		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ "\nType: [" + type + "]"
-				+ "\n" + hp
-				+ "\n" + now
-				+ "\n" + next;
+		String str = String.format
+			("%s%s /%s Lv.%2d %s\n   Type: [%s]\n   HP:  %s\n   Ability: %s\n   Exp. Points: %3d\n   To Next Lv.: %3d",
+				this.ball, this.nickname, this.name, + this.level, this.gender
+					, type , hp , this.ability, this.exp , (this.exp_max - this.exp));
 		return str;
 	}
 

@@ -581,7 +581,7 @@ public class User {
 		}
 		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
-		System.out.println("Congratulation! " + this.getName() + " caught " + pokemon.getName() + ".");
+		System.out.println("Congratulations! " + this.getName() + " caught " + pokemon.getName() + ".");
 		this.giveNickname(pokemon);		
 		//ポケットに空きがある場合
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
@@ -640,15 +640,15 @@ public class User {
 
 	//所持しているポケモンのステータスを見る
 	public void viewCurrentParty() {
-		System.out.println("\n--------------------------");
+		System.out.println("\n------------------------------");
 		System.out.println("POKEMON STATUS SUMMARY");
 		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
-				System.out.println("--------------------------");
+				System.out.println("------------------------------");
 				p.checkStatus();
 			}
 		}
-		System.out.println("--------------------------\n");
+		System.out.println("------------------------------\n");
 	}
 
 	//ポケモンにアイテムを持たせる
