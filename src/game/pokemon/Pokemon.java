@@ -311,6 +311,7 @@ public abstract class Pokemon {
 
 	public void trueFainted() {
 		this.fainted = true;
+		//Can't Battleに変更
 		this.setStatus(ARRAY_STATUS[0]);
 		//拘束の効果を無くす
 		this.falseStuck();
@@ -319,6 +320,7 @@ public abstract class Pokemon {
 
 	public void falseFainted() {
 		this.fainted = false;
+		//Can Battleに変更
 		this.setStatus(ARRAY_STATUS[2]);
 	}
 
@@ -338,12 +340,14 @@ public abstract class Pokemon {
 	@Override
 	public String toString() {
 		String type = "";
+		//タイプが複数ある場合
 		if (this.types[1] == null) {
 			type = this.types[0];
 		} else {
 			type = this.types[0] + "][" + this.types[1];
 		}
-		String hp = String.format("%3d/%3d",this.hp,this.hp_max);
+		String hp = String.format("%3d/%3d", this.hp, this.hp_max);
+		//ひんし状態の場合
 		if(this.getFainted()){
 			hp = hp + " (FAINTED)";
 		}
@@ -381,7 +385,8 @@ public abstract class Pokemon {
 			//effect: タイプ相性
 			String effect = "";
 			if(this.getMoves(i) != null && !this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[2])){
-				//Normal~Grassの範囲
+				//（作成中）
+				//0:Normal～5:Grass
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
 						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
@@ -529,7 +534,7 @@ public abstract class Pokemon {
 		}
 		this.falseFainted();
 	}
-	
+
 	//タイプ相性表の作成
 	public void makeTypeStrengthChart(){
 		this.ARRAY_EFFECTIVE_NUM[1][1] = 2;
