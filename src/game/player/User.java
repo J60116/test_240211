@@ -559,7 +559,7 @@ public class User {
 			capture = pokemon.getRand().nextInt(151);
 		}
 		if(capture > 100){
-			System.out.println("It's too bad, " + this.getName() + " could catch " + pokemon.getName() + ".");
+			System.out.println("It's too bad, " + this.getName() + " failed to catch " + pokemon.getName() + ".");
 			return;
 		}
 		pokemon.setOwner(this.getName());
