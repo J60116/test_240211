@@ -169,7 +169,7 @@ public class User {
 							break;
 						}
 					}
-					if(find){
+					if(check){
 						break;
 					}
 				}
