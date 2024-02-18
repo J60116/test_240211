@@ -44,7 +44,8 @@ public abstract class Pokemon {
 	private Random rand; //乱数用
 	private Move[] moves; //技
 	private boolean fainted = false; //ひんし状態
-
+	private boolean stuck; //特殊技による拘束
+	
 	//コンストラクタ
 	public Pokemon() {
 		this(null, User.getArrayBall()[0][0]);
@@ -69,15 +70,8 @@ public abstract class Pokemon {
 		this.setExp_max(10);
 		this.setRand(new Random());
 		this.setMoves(new Move[4]);
-		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
-		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
-		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
+		//タイプ相性表の作成
+		this.makeTypeStrengthChart();
 	}
 
 	//アクセサ
@@ -194,6 +188,15 @@ public abstract class Pokemon {
 
 	public void setStatus(String status) {
 		this.status = status;
+		//Can Battleの場合
+		if(this.getMoves() != null && this.status.equals(ARRAY_STATUS[2])){
+			for(int i = 0; i < this.getMoves().length; i++){
+				if(this.getMoves(i) != null){
+					//命中率を元に戻す
+					this.getMoves(i).setAccuracy(this.getMoves(i).getAccuracy_max());
+				}
+			}
+		}
 	}
 
 	public int getDexNo() {
@@ -308,25 +311,43 @@ public abstract class Pokemon {
 
 	public void trueFainted() {
 		this.fainted = true;
+		//Can't Battleに変更
 		this.setStatus(ARRAY_STATUS[0]);
+		//拘束の効果を無くす
+		this.falseStuck();
 		System.out.println(this.getNickname() + " fainted.");
 	}
 
 	public void falseFainted() {
 		this.fainted = false;
+		//Can Battleに変更
 		this.setStatus(ARRAY_STATUS[2]);
+	}
+
+	public boolean getStuck() {
+		return this.stuck;
+	}
+
+	public void trueStuck() {
+		this.stuck = true;
+	}
+
+	public void falseStuck() {
+		this.stuck = false;
 	}
 
 	//メゾット
 	@Override
 	public String toString() {
 		String type = "";
+		//タイプが複数ある場合
 		if (this.types[1] == null) {
 			type = this.types[0];
 		} else {
 			type = this.types[0] + "][" + this.types[1];
 		}
-		String hp = String.format("%3d/%3d",this.hp,this.hp_max);
+		String hp = String.format("%3d/%3d", this.hp, this.hp_max);
+		//ひんし状態の場合
 		if(this.getFainted()){
 			hp = hp + " (FAINTED)";
 		}
@@ -336,20 +357,6 @@ public abstract class Pokemon {
 					, type , hp , this.ability, this.exp , (this.exp_max - this.exp));
 		return str;
 	}
-
-	// @Override
-	// public boolean equals(Object object){
-	// 	if(object instanceof Pokemon){
-	// 		Pokemon pokemon = (Pokemon)object;
-	// 		if(this.name == pokemon.getName() && this.nickname == pokemon.getNickname() 
-	// 			&& this.level == pokemon.getLevel() && this.gender == pokemon.getGender()
-	// 			&& this.hp == pokemon.getHP() && this.hp_max == pokemon.getHP_max()
-	// 			&& this.getMoves() == pokemon.getMoves()){
-	// 			return true;
-	// 		}
-	// 	}
-	// 	return false;
-	// } 
 
 	//引数の生息地に住むポケモンの名前が一致するか判定する
 	public boolean liveIn(String habitat){
@@ -377,8 +384,9 @@ public abstract class Pokemon {
 		for (int i = 0; i < this.getMoves().length; i++) {
 			//effect: タイプ相性
 			String effect = "";
-			if(this.getMoves(i) != null && this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[0])){
-				//Normal~Grassの範囲
+			if(this.getMoves(i) != null && !this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[2])){
+				//（作成中）
+				//0:Normal～5:Grass
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
 						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
@@ -398,14 +406,14 @@ public abstract class Pokemon {
 		if (this.getFainted()) {
 			return false;
 		}
-		//技が選択できない場合
-		if (!(num - 1 >= 0 && num - 1 < 4) || this.getMoves(num - 1) == null) {
-			System.out.println("MISS! " + "Moves[" + num + "] is null.");
+		//nullの場合
+		if (this.getMoves(num) == null) {
+			System.out.println("MISS! " + "Moves[" + (num + 1) + "] is null.");
 			return false;
 		}
 		//MPが0の場合
-		if (this.getMoves(num - 1).getMP() == 0) {
-			System.out.println("MISS! " + "Moves[" + num + "] 's MP is zero.");
+		if (this.getMoves(num).getMP() == 0) {
+			System.out.println("MISS! " + "Moves[" + (num + 1) + "] 's MP is zero.");
 			return false;
 		}
 		return true;
@@ -413,15 +421,7 @@ public abstract class Pokemon {
 
 	//自分自身に対する技
 	public void useMove(int num) {
-		if (!this.booleanMove(num)) {
-			return;
-		}
-		this.getMoves(num - 1).setMP();
-		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
-		/*
-		 * 技の内容
-		 * 
-		 */
+
 	}
 
 	//相手に対する技
@@ -433,51 +433,68 @@ public abstract class Pokemon {
 			return;
 		}
 		//技のMPを1減らす
-		this.getMoves(num - 1).setMP();
-		if(this.getBall().equals(User.getArrayBall()[0][1])){
-			System.out.println("A wild " + this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
-		} else {
-			System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		this.getMoves(num).setMP();
+		if(this.isWild()){
+			System.out.print("A wild ");
 		}
-		//技の命中率
+		System.out.println(this.getNickname() + " used " + this.getMoves(num).getName() + "!");
+		//0~100までの乱数を生成
 		int per = this.getRand().nextInt(101);
-		if (per <= this.getMoves(num - 1).getAccuracy()) {
-			//物理技の場合
-			if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[0])){
-				//技の威力
-				int damage = this.getMoves(num - 1).getPower();
-				String effect = "";
-				for(int t=0; t<5; t++){
-					for(int o=0; o<5; o++){
-						if(t == this.getMoves(num - 1).getNum_type() && o == opponent.num_type){
+		//技の命中率よりも小さい値であれば攻撃が当たる
+		if (per <= this.getMoves(num).getAccuracy()) {
+			switch(getMoves(num).getMoveType()){
+				case "Special" :
+				//特殊技（作成中）
+				// Fire spin:攻撃を与え続ける技
+					if(opponent.getStuck()){
+						//相手が既に特殊技を受けている場合
+						System.out.println("But it's failed because " + opponent.getNickname() + " is already stuck.");
+						break;
+					} else {
+						opponent.trueStuck();
+					}
+					//物理技に続けるためbreak;は省略
+				case "Physical" :
+				//物理技
+					//damage: 技の威力
+					int damage = this.getMoves(num).getPower();
+					//effect: 技の効果
+					String effect = "";
+					//t: 技のタイプ
+					int t = this.getMoves(num).getNum_type();
+					for(int o = 0; o < 5; o++){
+						//o: 技を受けるポケモンのタイプ
+						if(o == opponent.num_type){
+							//タイプ相性表
 							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
 							damage *= ARRAY_EFFECTIVE_RATE[n];
 							effect = ARRAY_EFFECTIVE_MSG[n];
+							break;
 						}
 					}
-				}					
-				System.out.println(effect);
-				opponent.getDamage(damage);
-			} else if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[2])){
-				//変化技の場合
-				// (作成中：命中率を下げる技)
-				for(int i = 0; i < opponent.getMoves().length; i++){
-					if(opponent.getMoves(i)!=null){
-						//命中率を2割下げる
-						opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
+					if(!effect.isEmpty()){
+						System.out.println(effect);
 					}
-				}
-				System.out.println(opponent.getName() + "\'s accuracy was low.");
-			} 
-			/*
-			 * 技のタイプ
-			 * 
-			 */
+					opponent.getDamage(damage);
+					break;
+				case "Status" :
+				//変化技（作成中）
+				// Sand attack:命中率を下げる技
+					for(int i = 0; i < opponent.getMoves().length; i++){
+						if(opponent.getMoves(i)!=null){
+							//命中率を2割下げる
+							opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
+						}
+					}
+					System.out.println(opponent.getName() + "\'s accuracy was low.");
+					break;
+			}
 		} else {
 			System.out.println("But it's failed!");
 		}
 	}
 
+	//野生ポケモンかどうか
 	public boolean isWild(){
 		if(this.getBall().equals(" W ")){
 			return true;
@@ -517,6 +534,22 @@ public abstract class Pokemon {
 		}
 		this.falseFainted();
 	}
+
+	//タイプ相性表の作成
+	public void makeTypeStrengthChart(){
+		this.ARRAY_EFFECTIVE_NUM[1][1] = 2;
+		this.ARRAY_EFFECTIVE_NUM[1][2] = 2;
+		this.ARRAY_EFFECTIVE_NUM[1][4] = 3;
+		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
+		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
+		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
+		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
+		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
+		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
+	} 
 
 	//抽象メゾット
 	//進化

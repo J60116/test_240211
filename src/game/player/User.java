@@ -105,6 +105,8 @@ public class User {
 		for (Pokemon p : this.getPocket()) {
 			if (p != null && p.getStatus().equals(Pokemon.getArrayStatus()[1])) {
 				p.setStatus(Pokemon.getArrayStatus()[2]);
+				//拘束の効果を消す
+				p.falseStuck();
 			}
 		}
 	}
@@ -113,7 +115,7 @@ public class User {
 	public void goTo(String habitat, Pokemon pokemon){
 		this.setLocation(habitat);
 		System.out.println("\n" + this.getName() + " went to the " + habitat + ".");
-		//行き先がポケモンの生息地かどうか(生息地であってもポケモンに会えるとは限らない)
+		//行き先がポケモンの生息地かどうか
 		if(Environment.LIST_HABITATS.contains(habitat) && pokemon.liveIn(habitat)){
 			this.lookFor(pokemon, Environment.getView(habitat));
 		} else {
@@ -190,11 +192,6 @@ public class User {
 	
 	//バトル画面の表示
 	private void dispBattleScreen(Pokemon enemy, Pokemon friend) {
-		if(this.getName()!=null){
-			String name = this.getName();
-		} else {
-			String name = "Unknown";
-		}
 		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<< Enemy");
 		System.out.println(enemy.getBattleStatus());
 		System.out.println("============================");
@@ -260,11 +257,12 @@ public class User {
 		//バトルが終わるまで繰り返す
 		while(this.getBattle()){
 			if(friend.getFainted()){
+				//ポケモンを入れ替えるか確認
 				System.out.println("Will you switch your Pokemon?");
 				String msg = "[1]Switch Pokemon [2]Run : ";
 				int num = this.inputInt(1,2,msg);
 				if(num == 1){
-					// ポケモンを入れ替える
+					//入れ替え予定のポケモンを宣言
 					Pokemon substitute = this.selectPokemon();
 					if(!this.booleanSwitch(friend, substitute)){
 						//入れ替えに失敗した場合は敵が逃げる
@@ -272,21 +270,24 @@ public class User {
 						this.falseBattle();
 						break;
 					}
+					System.out.println("\nCome back, " + friend.getNickname() + "!");
 					friend = substitute;
 					friend.setStatus(Pokemon.getArrayStatus()[1]);
-					System.out.println("Go!" + friend.getNickname() + "!");
+					System.out.println("Go! " + friend.getNickname() + "!");
 				} else {
 					this.run();
 					this.falseBattle();
 					break;
 				}
 			}
+			//バトル画面の表示
 			this.dispBattleScreen(enemy, friend);
+			//メニュー選択
 			String msgMenu = "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ";
 			int menu = this.inputInt(1,4,msgMenu);		
 			switch(menu){
 				case 1:
-					//Battle
+				//Battle
 					//味方の技の選択
 					friend.checkMoves(enemy);
 					String msgMove = "What number of Move do you use?: ";
@@ -297,12 +298,12 @@ public class User {
 					//敵の攻撃
 					if(!enemy.getFainted()){
 						System.out.println("\nEnemy -> Friend");
-						int num_e1 = enemy.getRand().nextInt(4) + 1;
+						int num_e1 = enemy.getRand().nextInt(4);
 						enemy.useMove(num_e1, friend);
 					}
 					break;
 				case 2:
-					//Pokemon
+				//Pokemon
 					if(this.countPokemon() <= 1){
 						//ポケモンの数が不足している場合
 						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
@@ -311,6 +312,10 @@ public class User {
 					if(this.countCanBattlePokemon() == 0){
 						//Can Battleのポケモンがいない場合
 						System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
+						break;
+					}
+					if (friend.getStuck()){
+						System.out.println(this.getName() + " cannot switch Pokemon because " + friend.getName() + " is stuck in special move!");
 						break;
 					}
 					//入れ替え予定のポケモンを宣言
@@ -328,7 +333,7 @@ public class User {
 					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
 					//敵の攻撃を受ける
 					System.out.println("\nEnemy -> Friend");
-					int num_e2 = enemy.getRand().nextInt(4) + 1;
+					int num_e2 = enemy.getRand().nextInt(4);
 					if(enemy.isWild()){
 						System.out.print("A wild ");
 					}
@@ -336,12 +341,12 @@ public class User {
 					enemy.useMove(num_e2, friend);
 					break;
 				case 3:
+				//Throw PokeBall
 					//対戦相手が野生のポケモンではない場合
 					if(!enemy.isWild()){
 						System.out.println("MISS! Enemy's owner is " + enemy.getOwner());
 						break;
 					}
-					//Throw PokeBall
 					//ボールの種類を入力
 					System.out.println("What type of Poke Balls do you use?: ");
 					String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
@@ -355,7 +360,7 @@ public class User {
 						//ポケモンをゲットできなかった場合
 						//敵の攻撃を受ける
 						System.out.println("\nEnemy -> Friend");
-						int num_e3 = enemy.getRand().nextInt(4) + 1;
+						int num_e3 = enemy.getRand().nextInt(4);
 						if(enemy.isWild()){
 							System.out.print("A wild ");
 						}
@@ -364,8 +369,8 @@ public class User {
 					}
 					break;
 				case 4:
-					//Run
-					int num_e4 = enemy.getRand().nextInt(4) + 1;
+				//Run
+					int num_e4 = enemy.getRand().nextInt(4);
 					if(num_e4 != 1){
 						//75%の確率で逃げる
 						this.run();
@@ -377,6 +382,19 @@ public class User {
 						enemy.useMove(num_e4, friend);
 					}
 					break;
+			}
+			System.out.println();
+			//特殊技を受けている場合
+			if(!enemy.getFainted()&&enemy.getStuck()){
+				if(enemy.isWild()){
+					System.out.print("A wild ");
+				}
+				System.out.println(enemy.getNickname() + " was stuck in special move.");
+				enemy.getDamage(10);
+			}
+			if(!friend.getFainted()&&friend.getStuck()){
+				System.out.println(friend.getNickname() + " was stuck in special move.");
+				friend.getDamage(10);
 			}
 			//バトルが継続している場合
 			if(this.getBattle()){
@@ -394,8 +412,8 @@ public class User {
 	}
 
 	//ポケモンに技の指示を出す
-	public void giveInstructions(Pokemon pokemon, int num, Pokemon enemy){
-		pokemon.useMove(num, enemy);
+	public void giveInstructions(Pokemon pokemon, int num_input, Pokemon enemy){
+		pokemon.useMove(num_input - 1, enemy);
 	}
 	
 	//バトル結果の判定
@@ -414,7 +432,7 @@ public class User {
 			this.falseBattle();
 		} else if(friend.getFainted()){
 			//戦闘可能なポケモンを持っていない場合
-			if(countCanBattlePokemon()==0){
+			if(this.countCanBattlePokemon() == 0){
 				this.falseBattle();
 			}
 		}
@@ -428,7 +446,10 @@ public class User {
 		System.out.println("Current Party: ");
 		for(int i = 0; i < this.getPocket().length; i++){
 			if(this.getPocket()[i] != null){
-				System.out.println("[" + (i + 1) + "] " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
+				String name = this.getPocket()[i].getNickname() + " / " + this.getPocket()[i].getName();
+				String str = String.format("[%d] %-18s( %s )",
+					i + 1, name , this.getPocket()[i].getStatus());
+				System.out.println(str);
 			} else {
 				System.out.println("[" + (i + 1) + "] null");
 			}
