@@ -1,3 +1,24 @@
+## Pokemon Battle Game: ポケモンバトルゲーム 
+　目的：オブジェクト指向の練習
+
+## How To Play: ルール説明
+* 最初の手持ちポケモンはイーブイ1匹のみ
+* 冒険の行き先がポケモンの生息地の場合、生息地の風景が表示される
+* 風景の中にある数字を選択し、ポケモンを発見できたらバトルが始まる
+* メニュー選択肢は4つ (1)戦う (2)ポケモンを入れ替える (3)ボールを投げる (4)逃げる
+* バトルに勝利したら経験値を最大5ポイント取得する
+* バトル中に手持ちのポケモンが全て瀕死状態になった場合、ポケモンセンターに向かう
+* 特定のアイテムをポケモンに持たせると、進化する
+
+## Production Period: 製作期間
+2024年2月~
+
+(今後の予定: アルゴリズムの修正、タイプ相性表の完成など)
+
+## Development Environment: 開発環境
+* Language: Java
+* Editor: Visual Studio Code (1.86.2)
+
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
