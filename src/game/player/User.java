@@ -195,11 +195,11 @@ public class User {
 		} else {
 			String name = "Unknown";
 		}
-		System.out.println("\n                        <<<<<<< Enemy");
-		System.out.println(enemy.getBattleStatus(name));
-		System.out.println("=====================================");
-		System.out.println(friend.getBattleStatus(name));
-		System.out.println("Friend >>>>>>>\n");
+		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<< Enemy");
+		System.out.println(enemy.getBattleStatus());
+		System.out.println("============================");
+		System.out.println(friend.getBattleStatus());
+		System.out.println("Friend >>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	//数値入力画面の表示

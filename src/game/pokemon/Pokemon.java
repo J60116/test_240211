@@ -365,17 +365,9 @@ public abstract class Pokemon {
 	}
 
 	//ステータスを確認する(バトル画面用)
-	public String getBattleStatus(String owner) {
-		String str = "";
-		if(this.getOwner() != null && this.getOwner().equals(owner)){
-			//Friend
-			str = String.format(" %8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
-				this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
-		} else {
-			//Enemy
-			str = String.format("         %8s/ %-8s Lv.%2d %s\n                         HP:%3d/%3d", 
-				this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
-		}
+	public String getBattleStatus() {
+		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
+			this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
 		return str;
 	}
 
