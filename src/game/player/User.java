@@ -192,11 +192,6 @@ public class User {
 	
 	//バトル画面の表示
 	private void dispBattleScreen(Pokemon enemy, Pokemon friend) {
-		if(this.getName()!=null){
-			String name = this.getName();
-		} else {
-			String name = "Unknown";
-		}
 		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<< Enemy");
 		System.out.println(enemy.getBattleStatus());
 		System.out.println("============================");
