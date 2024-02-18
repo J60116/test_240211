@@ -195,11 +195,11 @@ public class User {
 		} else {
 			String name = "Unknown";
 		}
-		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<<<<< Enemy");
+		System.out.println("\n                        <<<<<<< Enemy");
 		System.out.println(enemy.getBattleStatus(name));
-		System.out.println();
+		System.out.println("=====================================");
 		System.out.println(friend.getBattleStatus(name));
-		System.out.println("Friend >>>>>>>>>>>>>>>>>>>>>>>\n");
+		System.out.println("Friend >>>>>>>\n");
 	}
 
 	//数値入力画面の表示
@@ -329,12 +329,15 @@ public class User {
 					//敵の攻撃を受ける
 					System.out.println("\nEnemy -> Friend");
 					int num_e2 = enemy.getRand().nextInt(4) + 1;
+					if(enemy.isWild()){
+						System.out.print("A wild ");
+					}
 					System.out.println(enemy.getName() + " is about to use Move[" + num_e2 +"].");
 					enemy.useMove(num_e2, friend);
 					break;
 				case 3:
 					//対戦相手が野生のポケモンではない場合
-					if(!enemy.getBall().equals(ARRAY_BALL[0][1])){
+					if(!enemy.isWild()){
 						System.out.println("MISS! Enemy's owner is " + enemy.getOwner());
 						break;
 					}
@@ -345,7 +348,7 @@ public class User {
 					//モンスターボールの名前を取得
 					int num = inputInt(1, 4, msgBall);
 					this.throwPokeBall(enemy, num);
-					if(enemy.getBall() != ARRAY_BALL[0][1]){
+					if(!enemy.isWild()){
 						//ポケモンをゲットできた場合
 						this.falseBattle();;
 					} else {
@@ -353,6 +356,9 @@ public class User {
 						//敵の攻撃を受ける
 						System.out.println("\nEnemy -> Friend");
 						int num_e3 = enemy.getRand().nextInt(4) + 1;
+						if(enemy.isWild()){
+							System.out.print("A wild ");
+						}
 						System.out.println(enemy.getName() + " is about to use Move[" + num_e3 +"].");
 						enemy.useMove(num_e3, friend);
 					}

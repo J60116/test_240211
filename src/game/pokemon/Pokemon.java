@@ -371,10 +371,12 @@ public abstract class Pokemon {
 	public String getBattleStatus(String owner) {
 		String str = "";
 		if(this.getOwner() != null && this.getOwner().equals(owner)){
-			str = String.format("%8s / %s Lv.%d %s\n   HP:%3d/%3d", 
+			//Friend
+			str = String.format(" %8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
 				this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
 		} else {
-			str = String.format("     %8s / %s Lv.%d %s\n                   HP:%3d/%3d", 
+			//Enemy
+			str = String.format("         %8s/ %-8s Lv.%2d %s\n                         HP:%3d/%3d", 
 				this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
 		}
 		return str;
@@ -443,7 +445,11 @@ public abstract class Pokemon {
 		}
 		//技のMPを1減らす
 		this.getMoves(num - 1).setMP();
-		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		if(this.getBall().equals(User.getArrayBall()[0][1])){
+			System.out.println("A wild " + this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		} else {
+			System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		}
 		//技の命中率
 		int per = this.getRand().nextInt(101);
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
@@ -483,6 +489,13 @@ public abstract class Pokemon {
 		}
 	}
 
+	public boolean isWild(){
+		if(this.getBall().equals(" W ")){
+			return true;
+		}
+		return false;
+	}
+
 	//HPを下げる
 	public void getDamage(int num) {
 		this.setHP(this.getHP() - num);
@@ -496,7 +509,7 @@ public abstract class Pokemon {
 
 	//逃げる
 	public void run() {
-		if(this.getBall().equals(User.getArrayBall()[0][1])){
+		if(this.isWild()){
 			System.out.print("\nA wild ");
 		}
 		System.out.println(this.nickname + " run away.");
