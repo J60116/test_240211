@@ -15,7 +15,7 @@ public abstract class Pokemon {
 	//ボールの画像(0:ひんし状態 1:戦闘可能）
 	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
-	final static String FMT_NAME = "[A-Z][A-Za-z]{1,10}";
+	final static String FMT_NAME = "[A-Z][A-Za-z]{1,7}";
 	//技の効果
 	final static String[] ARRAY_EFFECTIVE = {  "〇 Effective", "× Has no effect", "△ Not very effective", "◎ Super effective" };
 	//技の攻撃倍率
@@ -326,17 +326,14 @@ public abstract class Pokemon {
 		} else {
 			type = this.types[0] + "][" + this.types[1];
 		}
-		String hp = String.format("HP: %3d/%3d",this.hp,this.hp_max);
+		String hp = String.format("%3d/%3d",this.hp,this.hp_max);
 		if(this.getFainted()){
 			hp = hp + " (FAINTED)";
 		}
-		String now = String.format("Exp. Points: %3d",this.exp);
-		String next = String.format("To Next Lv.: %3d",(this.exp_max - this.exp));
-		String str = this.ball + this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ "\nType: " + type + "]"
-				+ "\n" + hp
-				+ "\n" + now
-				+ "\n" + next;
+		String str = String.format
+			("%s%s /%s Lv.%2d %s\n   Type: [%s]\n   HP:  %s\n   Ability: %s\n   Exp. Points: %3d\n   To Next Lv.: %3d",
+				this.ball, this.nickname, this.name, + this.level, this.gender
+					, type , hp , this.ability, this.exp , (this.exp_max - this.exp));
 		return str;
 	}
 
@@ -368,34 +365,31 @@ public abstract class Pokemon {
 	}
 
 	//ステータスを確認する(バトル画面用)
-	public void checkBattleStatus() {
-		String str = this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ " HP:" + this.hp + "/" + this.hp_max;
-		System.out.println(str);
+	public String getBattleStatus() {
+		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
+			this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
+		return str;
 	}
 
 	//技を確認する
 	public void checkMoves(Pokemon opponent) {
 		System.out.println("Current Moves:");
 		for (int i = 0; i < this.getMoves().length; i++) {
+			//effect: タイプ相性
 			String effect = "";
 			if(this.getMoves(i) != null && this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[0])){
+				//Normal~Grassの範囲
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
 						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
-							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
-							effect = ARRAY_EFFECTIVE[n];
+							int num = this.ARRAY_EFFECTIVE_NUM[t][o];
+							effect = ARRAY_EFFECTIVE[num];
 						}
 					}
 				}
 			}
 			System.out.println("[" + (i + 1) + "] " + getMoves(i) + "  " + effect);
 		}
-		// for (Moves m : this.getMoves()) {
-		// 	if (m != null) {
-		// 		System.out.println(m);
-		// 	}
-		// }
 	}
 
 	//技が使えるかの確認
@@ -440,7 +434,11 @@ public abstract class Pokemon {
 		}
 		//技のMPを1減らす
 		this.getMoves(num - 1).setMP();
-		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		if(this.getBall().equals(User.getArrayBall()[0][1])){
+			System.out.println("A wild " + this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		} else {
+			System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		}
 		//技の命中率
 		int per = this.getRand().nextInt(101);
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
@@ -480,6 +478,13 @@ public abstract class Pokemon {
 		}
 	}
 
+	public boolean isWild(){
+		if(this.getBall().equals(" W ")){
+			return true;
+		}
+		return false;
+	}
+
 	//HPを下げる
 	public void getDamage(int num) {
 		this.setHP(this.getHP() - num);
@@ -493,7 +498,7 @@ public abstract class Pokemon {
 
 	//逃げる
 	public void run() {
-		if(this.getBall().equals(User.getArrayBall()[0][1])){
+		if(this.isWild()){
 			System.out.print("\nA wild ");
 		}
 		System.out.println(this.nickname + " run away.");
