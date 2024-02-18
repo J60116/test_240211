@@ -194,6 +194,15 @@ public abstract class Pokemon {
 
 	public void setStatus(String status) {
 		this.status = status;
+		//Can Battleの場合
+		if(this.status.equals(ARRAY_STATUS[2])){
+			for(int i = 0; i < this.getMoves().length; i++){
+				if(this.getMoves(i) != null){
+					//命中率を元に戻す
+					this.getMoves(i).setAccuracy(this.getMoves(i).getAccuracy_max());
+				}
+			}
+		}
 	}
 
 	public int getDexNo() {
@@ -439,45 +448,55 @@ public abstract class Pokemon {
 		} else {
 			System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
 		}
-		//技の命中率
+		//0~100までの乱数を生成
 		int per = this.getRand().nextInt(101);
+		//出したい技の命中率よりも小さい値であれば攻撃が当たる
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
-			//物理技の場合
-			if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[0])){
-				//技の威力
-				int damage = this.getMoves(num - 1).getPower();
-				String effect = "";
-				for(int t=0; t<5; t++){
-					for(int o=0; o<5; o++){
-						if(t == this.getMoves(num - 1).getNum_type() && o == opponent.num_type){
-							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
-							damage *= ARRAY_EFFECTIVE_RATE[n];
-							effect = ARRAY_EFFECTIVE_MSG[n];
+			switch(getMoves(num - 1).getMoveType()){
+				//物理技
+				case "Physical" ->{
+					//技の威力
+					int damage = this.getMoves(num - 1).getPower();
+					//技の効果メッセージ
+					String effect = "";
+					//タイプ相性
+					for(int t=0; t<5; t++){
+						for(int o=0; o<5; o++){
+							if(t == this.getMoves(num - 1).getNum_type() && o == opponent.num_type){
+								int n = this.ARRAY_EFFECTIVE_NUM[t][o];
+								damage *= ARRAY_EFFECTIVE_RATE[n];
+								effect = ARRAY_EFFECTIVE_MSG[n];
+							}
+						}
+					}					
+					System.out.println(effect);
+					opponent.getDamage(damage);
+				}
+				//特殊技
+				case "Special" ->{
+
+					// 作成中
+					
+				}
+				//変化技
+				case "Status" ->{
+					// 作成中
+					// Sand attack:命中率を下げる技
+					for(int i = 0; i < opponent.getMoves().length; i++){
+						if(opponent.getMoves(i)!=null){
+							//命中率を2割下げる
+							opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
 						}
 					}
-				}					
-				System.out.println(effect);
-				opponent.getDamage(damage);
-			} else if(this.getMoves(num - 1).getMoveType().equals(Move.getArrayMoveType()[2])){
-				//変化技の場合
-				// (作成中：命中率を下げる技)
-				for(int i = 0; i < opponent.getMoves().length; i++){
-					if(opponent.getMoves(i)!=null){
-						//命中率を2割下げる
-						opponent.getMoves(i).setAccuracy(opponent.getMoves(i).getAccuracy() * 80 / 100);
-					}
+					System.out.println(opponent.getName() + "\'s accuracy was low.");
 				}
-				System.out.println(opponent.getName() + "\'s accuracy was low.");
-			} 
-			/*
-			 * 技のタイプ
-			 * 
-			 */
+			}
 		} else {
 			System.out.println("But it's failed!");
 		}
 	}
 
+	//野生ポケモンかどうか
 	public boolean isWild(){
 		if(this.getBall().equals(" W ")){
 			return true;

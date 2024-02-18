@@ -5,10 +5,7 @@ public abstract class Move {
 	
 	//技のタイプ（0:物理技、1:特殊技、2:変化技）
 	final static String[] ARRAY_MOVE_TYPE = { "Physical", "Special", "Status"};
-	//タイプ相性表（normal~grass）
-	// final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
-	// final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
-	
+
     private int num_type;//要素番号
     private String name;
     private String type; 
@@ -17,6 +14,7 @@ public abstract class Move {
     private String moveType; 
     private int power; //威力
     private int accuracy; //命中率
+	private int accuracy_max; //命中率保存用
 
     public Move(){
 		this.num_type = 0;
@@ -27,6 +25,7 @@ public abstract class Move {
 		this.moveType = ARRAY_MOVE_TYPE[0];//Physical
         this.power = 0;
         this.accuracy = 100;
+		this.accuracy_max = this.accuracy;
 		//タイプ相性表の作成（Normal~Grass）
 		// this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
 		// this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
@@ -113,6 +112,13 @@ public abstract class Move {
 		this.accuracy = accuracy;
 	}
     
+	public int getAccuracy_max() {
+		return this.accuracy_max;
+	}
+
+	public void setAccuracy_max(int accuracy_max) {
+		this.accuracy_max = accuracy_max;
+	}
 
     @Override
 	public String toString() {
