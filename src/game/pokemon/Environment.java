@@ -55,11 +55,11 @@ public class Environment{
 		//生息地別に配列viewを作成
 		for(int i = 1; i <= 3; i++){
 			//乱数を２つ用意（ポケモンが隠れている可能性のある場所）
-			int a = rand.nextInt(2);
-			int b = a + rand.nextInt(2) + 1;
+			int a = rand.nextInt(2) + 1;
+			int b = a + rand.nextInt(2) + i;
 			//1~6の数値を代入
-			view[i][a+i] = "(" + (2 * i - 1) + ")";
-			view[i][b+i] = "(" + (2 * i) + ")";
+			view[i][a] = "(" + (2 * i - 1) + ")";
+			view[i][b] = "(" + (2 * i) + ")";
 		}
 		for(int i = 0; i < view.length; i++){	
 			for(int j = 0; j < view[i].length; j++){
