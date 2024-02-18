@@ -13,6 +13,7 @@ public class User {
 	private String location; //今いる場所
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	private Pokemon[] box; //ポケモンを格納するボックス
+	private int[] pokeball; //ボールの所持数
 	Scanner sc; //文字入力用
 	private boolean battle; //バトル中かどうか
 	
@@ -26,6 +27,7 @@ public class User {
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon); 
 		this.box = new Pokemon[30];
+		this.pokeball = new int[]{10,5,2,0};
 		this.sc = new Scanner(System.in);
 		this.battle = false;
 		System.out.println(this.getName() + ", welcome to new world!\nLet's go on an adventure with " + pokemon.getName() + ".");
