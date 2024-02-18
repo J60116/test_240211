@@ -190,11 +190,16 @@ public class User {
 	
 	//バトル画面の表示
 	private void dispBattleScreen(Pokemon enemy, Pokemon friend) {
-		System.out.println("\n<<<<<<< Enemy");
-		enemy.checkBattleStatus();
-		System.out.println("=======");
-		friend.checkBattleStatus();
-		System.out.println(">>>>>>> Friend\n");
+		if(this.getName()!=null){
+			String name = this.getName();
+		} else {
+			String name = "Unknown";
+		}
+		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<<<<< Enemy");
+		System.out.println(enemy.getBattleStatus(name));
+		System.out.println();
+		System.out.println(friend.getBattleStatus(name));
+		System.out.println("Friend >>>>>>>>>>>>>>>>>>>>>>>\n");
 	}
 
 	//数値入力画面の表示
@@ -240,7 +245,7 @@ public class User {
 		// ポケットの中でCanBattleのポケモンを指定する
 		Pokemon friend = this.getCanBattlePokemon();
 		if(friend == null){
-			System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
+			System.out.println("MISS! " + this.getName() + " cannot start battle because don't have Pokemon that can battle.");
 			return;
 		}
 		this.trueBattle();
@@ -249,7 +254,6 @@ public class User {
 		while(this.getBattle()){
 			if(friend.getFainted()){
 				System.out.println("Will you switch your Pokemon?");
-				System.out.print("");
 				String msg = "[1]Switch Pokemon [2]Run : ";
 				int num = this.inputInt(1,2,msg);
 				if(num == 1){
@@ -433,7 +437,7 @@ public class User {
 		}
 		if(substitute.getFainted()){
 			//ひんし状態のポケモンを選択した場合
-			System.out.println("MISS! " + substitute.getName() + " fainted.");
+			System.out.println("MISS! " + substitute.getName() + " can't battle.");
 			return false;
 		}
 		if(substitute.equals(friend)){
