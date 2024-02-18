@@ -15,7 +15,7 @@ public abstract class Pokemon {
 	//ボールの画像(0:ひんし状態 1:戦闘可能）
 	final static String[] ARRAY_IMG_BALL = { "●", "○" };
 	//名前の条件
-	final static String FMT_NAME = "[A-Z][A-Za-z]{1,10}";
+	final static String FMT_NAME = "[A-Z][A-Za-z]{1,7}";
 	//技の効果
 	final static String[] ARRAY_EFFECTIVE = {  "〇 Effective", "× Has no effect", "△ Not very effective", "◎ Super effective" };
 	//技の攻撃倍率
@@ -369,8 +369,8 @@ public abstract class Pokemon {
 
 	//ステータスを確認する(バトル画面用)
 	public void checkBattleStatus() {
-		String str = this.nickname + "/" + this.name + " Lv." + this.level + " " + this.gender
-				+ " HP:" + this.hp + "/" + this.hp_max;
+		String str = String.format("%10s / %s\n    Lv.%d %s  HP:%3d/%3d", 
+			this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
 		System.out.println(str);
 	}
 
