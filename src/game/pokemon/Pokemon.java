@@ -427,13 +427,13 @@ public abstract class Pokemon {
 			return false;
 		}
 		//技が選択できない場合
-		if (!(num - 1 >= 0 && num - 1 < 4) || this.getMoves(num - 1) == null) {
-			System.out.println("MISS! " + "Moves[" + num + "] is null.");
+		if (!(num >= 0 && num < 4) || this.getMoves(num) == null) {
+			System.out.println("MISS! " + "Moves[" + (num + 1) + "] is null.");
 			return false;
 		}
 		//MPが0の場合
-		if (this.getMoves(num - 1).getMP() == 0) {
-			System.out.println("MISS! " + "Moves[" + num + "] 's MP is zero.");
+		if (this.getMoves(num).getMP() == 0) {
+			System.out.println("MISS! " + "Moves[" + (num + 1) + "] 's MP is zero.");
 			return false;
 		}
 		return true;
@@ -441,15 +441,7 @@ public abstract class Pokemon {
 
 	//自分自身に対する技
 	public void useMove(int num) {
-		if (!this.booleanMove(num)) {
-			return;
-		}
-		this.getMoves(num - 1).setMP();
-		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
-		/*
-		 * 技の内容
-		 * 
-		 */
+
 	}
 
 	//相手に対する技
@@ -461,36 +453,37 @@ public abstract class Pokemon {
 			return;
 		}
 		//技のMPを1減らす
-		this.getMoves(num - 1).setMP();
+		this.getMoves(num).setMP();
 		if(this.isWild()){
 			System.out.print("A wild ");
 		}
-		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		System.out.println(this.getNickname() + " used " + this.getMoves(num).getName() + "!");
 		//0~100までの乱数を生成
 		int per = this.getRand().nextInt(101);
 		//出したい技の命中率よりも小さい値であれば攻撃が当たる
-		if (per <= this.getMoves(num - 1).getAccuracy()) {
-			switch(getMoves(num - 1).getMoveType()){
+		if (per <= this.getMoves(num).getAccuracy()) {
+			switch(getMoves(num).getMoveType()){
 				//特殊技
 				case "Special" :
 					// 作成中
 					// Fire spin:攻撃を与え続ける技
 					if(opponent.getStuck()){
+						//相手が既に特殊技を受けている場合
 						System.out.println("But it's failed because " + opponent.getNickname() + " is already stuck.");
 						break;
 					} else {
 						opponent.trueStuck();
 					}
-					//物理技に続けるためbreak;は書かない
+					//物理技に続けるためbreak;は省略
 				//物理技
 				case "Physical" :
 					//damage: 技の威力
-					int damage = this.getMoves(num - 1).getPower();
+					int damage = this.getMoves(num).getPower();
 					//effect: 技の効果
 					String effect = "";
 					//t: 技のタイプ
-					int t = this.getMoves(num - 1).getNum_type();
-					for(int o=0; o<5; o++){
+					int t = this.getMoves(num).getNum_type();
+					for(int o = 0; o < 5; o++){
 						//o: 技を受けるポケモンのタイプ
 						if(o == opponent.num_type){
 							//タイプ相性表
