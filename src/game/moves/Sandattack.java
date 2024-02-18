@@ -5,6 +5,7 @@ public class Sandattack extends Move {
 
     public Sandattack(){
         super();
+        this.setNum_type(8);//GRAND
         this.setName("Sand attack");
         this.setType(Pokemon.getArrayType()[this.getNum_type()]);//Normal
         this.setMP_max(15);
