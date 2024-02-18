@@ -105,6 +105,8 @@ public class User {
 		for (Pokemon p : this.getPocket()) {
 			if (p != null && p.getStatus().equals(Pokemon.getArrayStatus()[1])) {
 				p.setStatus(Pokemon.getArrayStatus()[2]);
+				//拘束の効果を消す
+				p.falseStuck();
 			}
 		}
 	}
@@ -272,9 +274,10 @@ public class User {
 						this.falseBattle();
 						break;
 					}
+					System.out.println("\nCome back, " + friend.getNickname() + "!");
 					friend = substitute;
 					friend.setStatus(Pokemon.getArrayStatus()[1]);
-					System.out.println("Go!" + friend.getNickname() + "!");
+					System.out.println("Go! " + friend.getNickname() + "!");
 				} else {
 					this.run();
 					this.falseBattle();
@@ -311,6 +314,10 @@ public class User {
 					if(this.countCanBattlePokemon() == 0){
 						//Can Battleのポケモンがいない場合
 						System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
+						break;
+					}
+					if (friend.getStuck()){
+						System.out.println("You cannot switch Pokemon because " + friend.getName() + " is stuck in special move.");
 						break;
 					}
 					//入れ替え予定のポケモンを宣言
@@ -377,6 +384,19 @@ public class User {
 						enemy.useMove(num_e4, friend);
 					}
 					break;
+			}
+			System.out.println();
+			//特殊技を受けている場合
+			if(!enemy.getFainted()&&enemy.getStuck()){
+				if(enemy.isWild()){
+					System.out.print("A wild ");
+				}
+				System.out.println(enemy.getNickname() + " was stuck in special move.");
+				enemy.getDamage(10);
+			}
+			if(!friend.getFainted()&&friend.getStuck()){
+				System.out.println(friend.getNickname() + " was stuck in special move.");
+				friend.getDamage(10);
 			}
 			//バトルが継続している場合
 			if(this.getBattle()){

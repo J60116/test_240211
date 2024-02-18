@@ -44,7 +44,8 @@ public abstract class Pokemon {
 	private Random rand; //乱数用
 	private Move[] moves; //技
 	private boolean fainted = false; //ひんし状態
-
+	private boolean stuck; //特殊技による拘束
+	
 	//コンストラクタ
 	public Pokemon() {
 		this(null, User.getArrayBall()[0][0]);
@@ -69,6 +70,10 @@ public abstract class Pokemon {
 		this.setExp_max(10);
 		this.setRand(new Random());
 		this.setMoves(new Move[4]);
+		//タイプ相性表の作成
+		this.ARRAY_EFFECTIVE_NUM[1][1] = 2;
+		this.ARRAY_EFFECTIVE_NUM[1][2] = 2;
+		this.ARRAY_EFFECTIVE_NUM[1][4] = 3;
 		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
 		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
 		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
@@ -195,7 +200,7 @@ public abstract class Pokemon {
 	public void setStatus(String status) {
 		this.status = status;
 		//Can Battleの場合
-		if(this.status.equals(ARRAY_STATUS[2])){
+		if(this.getMoves() != null && this.status.equals(ARRAY_STATUS[2])){
 			for(int i = 0; i < this.getMoves().length; i++){
 				if(this.getMoves(i) != null){
 					//命中率を元に戻す
@@ -318,12 +323,26 @@ public abstract class Pokemon {
 	public void trueFainted() {
 		this.fainted = true;
 		this.setStatus(ARRAY_STATUS[0]);
+		//拘束の効果を無くす
+		this.falseStuck();
 		System.out.println(this.getNickname() + " fainted.");
 	}
 
 	public void falseFainted() {
 		this.fainted = false;
 		this.setStatus(ARRAY_STATUS[2]);
+	}
+
+	public boolean getStuck() {
+		return this.stuck;
+	}
+
+	public void trueStuck() {
+		this.stuck = true;
+	}
+
+	public void falseStuck() {
+		this.stuck = false;
 	}
 
 	//メゾット
@@ -386,7 +405,7 @@ public abstract class Pokemon {
 		for (int i = 0; i < this.getMoves().length; i++) {
 			//effect: タイプ相性
 			String effect = "";
-			if(this.getMoves(i) != null && this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[0])){
+			if(this.getMoves(i) != null && !this.getMoves(i).getMoveType().equals(Move.getArrayMoveType()[2])){
 				//Normal~Grassの範囲
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
@@ -443,43 +462,51 @@ public abstract class Pokemon {
 		}
 		//技のMPを1減らす
 		this.getMoves(num - 1).setMP();
-		if(this.getBall().equals(User.getArrayBall()[0][1])){
-			System.out.println("A wild " + this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
-		} else {
-			System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
+		if(this.isWild()){
+			System.out.print("A wild ");
 		}
+		System.out.println(this.getNickname() + " used " + this.getMoves(num - 1).getName() + "!");
 		//0~100までの乱数を生成
 		int per = this.getRand().nextInt(101);
 		//出したい技の命中率よりも小さい値であれば攻撃が当たる
 		if (per <= this.getMoves(num - 1).getAccuracy()) {
 			switch(getMoves(num - 1).getMoveType()){
-				//物理技
-				case "Physical" ->{
-					//技の威力
-					int damage = this.getMoves(num - 1).getPower();
-					//技の効果メッセージ
-					String effect = "";
-					//タイプ相性
-					for(int t=0; t<5; t++){
-						for(int o=0; o<5; o++){
-							if(t == this.getMoves(num - 1).getNum_type() && o == opponent.num_type){
-								int n = this.ARRAY_EFFECTIVE_NUM[t][o];
-								damage *= ARRAY_EFFECTIVE_RATE[n];
-								effect = ARRAY_EFFECTIVE_MSG[n];
-							}
-						}
-					}					
-					System.out.println(effect);
-					opponent.getDamage(damage);
-				}
 				//特殊技
-				case "Special" ->{
-
+				case "Special" :
 					// 作成中
-					
-				}
+					// Fire spin:攻撃を与え続ける技
+					if(opponent.getStuck()){
+						System.out.println("But it's failed because " + opponent.getNickname() + " is already stuck.");
+						break;
+					} else {
+						opponent.trueStuck();
+					}
+					//物理技に続けるためbreak;は書かない
+				//物理技
+				case "Physical" :
+					//damage: 技の威力
+					int damage = this.getMoves(num - 1).getPower();
+					//effect: 技の効果
+					String effect = "";
+					//t: 技のタイプ
+					int t = this.getMoves(num - 1).getNum_type();
+					for(int o=0; o<5; o++){
+						//o: 技を受けるポケモンのタイプ
+						if(o == opponent.num_type){
+							//タイプ相性表
+							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
+							damage *= ARRAY_EFFECTIVE_RATE[n];
+							effect = ARRAY_EFFECTIVE_MSG[n];
+							break;
+						}
+					}
+					if(!effect.isEmpty()){
+						System.out.println(effect);
+					}
+					opponent.getDamage(damage);
+					break;
 				//変化技
-				case "Status" ->{
+				case "Status" :
 					// 作成中
 					// Sand attack:命中率を下げる技
 					for(int i = 0; i < opponent.getMoves().length; i++){
@@ -489,7 +516,7 @@ public abstract class Pokemon {
 						}
 					}
 					System.out.println(opponent.getName() + "\'s accuracy was low.");
-				}
+					break;
 			}
 		} else {
 			System.out.println("But it's failed!");
