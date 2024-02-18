@@ -204,12 +204,19 @@ public class User {
 
 	//数値入力画面の表示
 	public int inputInt(int min, int max, String message){
+		//引数のチェック
+		if(min >= max){
+			throw new IllegalArgumentException
+			("第2引数は第1引数よりも大きい数値を指定してください");
+		}
+		if(min < 0){
+			throw new IllegalArgumentException
+			("第1引数は0以上の数値を指定してください");
+		}
 		//入力範囲の文字列を作成
 		String str = "between " + min + " and " + max;
 		if(max - min == 1){
 			str = min + " or " + max;
-		} else if (max == min){
-			str = String.valueOf(min);
 		}
 		//戻り値の初期値は-1とする
 		int num = -1;
