@@ -262,7 +262,7 @@ public class User {
 				String msg = "[1]Switch Pokemon [2]Run : ";
 				int num = this.inputInt(1,2,msg);
 				if(num == 1){
-					// ポケモンを入れ替える
+					//入れ替え予定のポケモンを宣言
 					Pokemon substitute = this.selectPokemon();
 					if(!this.booleanSwitch(friend, substitute)){
 						//入れ替えに失敗した場合は敵が逃げる
@@ -446,7 +446,10 @@ public class User {
 		System.out.println("Current Party: ");
 		for(int i = 0; i < this.getPocket().length; i++){
 			if(this.getPocket()[i] != null){
-				System.out.println("[" + (i + 1) + "] " + this.getPocket()[i].getNickname() + "/" + this.getPocket()[i].getName() + " (" + this.getPocket()[i].getStatus() + ")");
+				String name = this.getPocket()[i].getNickname() + " / " + this.getPocket()[i].getName();
+				String str = String.format("[%d] %-18s( %s )",
+					i + 1, name , this.getPocket()[i].getStatus());
+				System.out.println(str);
 			} else {
 				System.out.println("[" + (i + 1) + "] null");
 			}
