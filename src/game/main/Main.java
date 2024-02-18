@@ -23,8 +23,8 @@ public class Main {
 		user.goTo("flower garden", eevee);
 		user.goTo("grassland", leafeon);
 		user.goTo("river", vaporeon);
-		user.goTo("hill", jolteon);
 		user.goTo("hill", flareon);
+		user.goTo("hill", jolteon);
 
 		//所持しているポケモンの確認
 		user.viewCurrentParty();
