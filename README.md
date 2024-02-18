@@ -1,4 +1,4 @@
-## Pokemon Battle Game: ポケモンバトルゲーム 
+# Pokemon Battle Game: ポケモンバトルゲーム 
 　目的：オブジェクト指向の練習
 
 ## How To Play: ルール説明
