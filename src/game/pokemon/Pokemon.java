@@ -23,7 +23,7 @@ public abstract class Pokemon {
 	//技の効果メッセージ
 	final static String[] ARRAY_EFFECTIVE_MSG = { "", "It's not effective...", "It's not very effective.", "It's super effective!" };
 	//タイプ相性表（normal~grass）
-	final int[][] ARRAY_EFFECTIVE_NUM = new int[5][5];
+	final int[][] TYPE_CHART = new int[5][5];
 
 	int num_type; 
 	private String name; //名前
@@ -71,7 +71,7 @@ public abstract class Pokemon {
 		this.setRand(new Random());
 		this.setMoves(new Move[4]);
 		//タイプ相性表の作成
-		this.makeTypeStrengthChart();
+		this.makeTypeChart();
 	}
 
 	//アクセサ
@@ -396,7 +396,7 @@ public abstract class Pokemon {
 				for(int t=0; t<5; t++){
 					for(int o=0; o<5; o++){
 						if(t == this.getMoves(i).getNum_type() && o == opponent.num_type){
-							int num = this.ARRAY_EFFECTIVE_NUM[t][o];
+							int num = this.TYPE_CHART[t][o];
 							effect = ARRAY_EFFECTIVE[num];
 						}
 					}
@@ -472,7 +472,7 @@ public abstract class Pokemon {
 						//o: 技を受けるポケモンのタイプ
 						if(o == opponent.num_type){
 							//タイプ相性表
-							int n = this.ARRAY_EFFECTIVE_NUM[t][o];
+							int n = this.TYPE_CHART[t][o];
 							damage *= ARRAY_EFFECTIVE_RATE[n];
 							effect = ARRAY_EFFECTIVE_MSG[n];
 							break;
@@ -542,19 +542,19 @@ public abstract class Pokemon {
 	}
 
 	//タイプ相性表の作成
-	public void makeTypeStrengthChart(){
-		this.ARRAY_EFFECTIVE_NUM[1][1] = 2;
-		this.ARRAY_EFFECTIVE_NUM[1][2] = 2;
-		this.ARRAY_EFFECTIVE_NUM[1][4] = 3;
-		this.ARRAY_EFFECTIVE_NUM[2][1] = 3;
-		this.ARRAY_EFFECTIVE_NUM[2][2] = 2;
-		this.ARRAY_EFFECTIVE_NUM[2][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[3][3] = 2;
-		this.ARRAY_EFFECTIVE_NUM[3][4] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][1] = 2;
-		this.ARRAY_EFFECTIVE_NUM[4][2] = 3;
-		this.ARRAY_EFFECTIVE_NUM[4][4] = 2;
+	public void makeTypeChart(){
+		this.TYPE_CHART[1][1] = 2;
+		this.TYPE_CHART[1][2] = 2;
+		this.TYPE_CHART[1][4] = 3;
+		this.TYPE_CHART[2][1] = 3;
+		this.TYPE_CHART[2][2] = 2;
+		this.TYPE_CHART[2][4] = 2;
+		this.TYPE_CHART[3][2] = 3;
+		this.TYPE_CHART[3][3] = 2;
+		this.TYPE_CHART[3][4] = 2;
+		this.TYPE_CHART[4][1] = 2;
+		this.TYPE_CHART[4][2] = 3;
+		this.TYPE_CHART[4][4] = 2;
 	} 
 
 	//抽象メゾット
