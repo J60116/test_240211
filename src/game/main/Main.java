@@ -16,6 +16,9 @@ public class Main {
 		Jolteon jolteon = new Jolteon();
 		Flareon flareon = new Flareon();
 		
+		//所持しているポケモンの確認
+		user.viewCurrentParty();
+		
 		//冒険に出かける
 		user.goTo("flower garden", eevee);
 		user.goTo("grassland", leafeon);
