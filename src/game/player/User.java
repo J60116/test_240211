@@ -431,7 +431,13 @@ public class User {
 				case 4:
 				//Run
 					int num_e4 = enemy.getRand().nextInt(4);
-					if(!friend.getStuck() && num_e4 != 1){
+					if(enemy.isWild() && friend.getAbility().equals("Run Away")){
+						//特性「にげあし」の場合は必ず逃げられる
+						this.run();
+						this.falseBattle();
+						break;
+					}
+					if (!friend.getStuck() && num_e4 != 1){
 						//75%の確率で逃げる(stuckの場合は逃げられない)
 						this.run();
 						this.falseBattle();
@@ -444,15 +450,15 @@ public class User {
 					break;
 			}
 			System.out.println();
-			//特殊技を受けている場合
-			if(!enemy.getFainted()&&enemy.getStuck()){
+			//特殊技を受けている場合、ダメージ10を受ける
+			if(!enemy.getFainted() && enemy.getStuck()){
 				if(enemy.isWild()){
 					System.out.print("A wild ");
 				}
 				System.out.println(enemy.getNickname() + " was stuck in special move.");
 				enemy.getDamage(10);
 			}
-			if(!friend.getFainted()&&friend.getStuck()){
+			if(!friend.getFainted() && friend.getStuck()){
 				System.out.println(friend.getNickname() + " was stuck in special move.");
 				friend.getDamage(10);
 			}

@@ -5,7 +5,8 @@ import game.player.User;
 public class Eevee extends Pokemon {
 	//イーブイの情報
 	static final String NAME = "Eievui";
-	static final String[] ARRAY_ABILITY = { "Nigeashi", "Tekiouryoku" };
+	//特性（0:にげあし（戦闘から必ず逃げられる）1:てきおうりょく）
+	static final String[] ARRAY_ABILITY = { "Run Away", "Adaptability" };
 	//Object[] EEVEE = { 133, "Eievui", ARRAY_TYPE[0], "Nigeashi", 0.3, 6.5, 55 };
 	//進化の石
 	static final String[] ARRAY_EVOLUTIONARY_STONE = { "Water Stone", "Thunder Stone", "Fire Stone" , "Leaf Stone"};
