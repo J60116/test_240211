@@ -205,7 +205,7 @@ public class User {
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
-				System.out.println(this.name + " could not find (" + input + ")");
+				System.out.println("(" + input + ") is not there.");
 				System.out.println(this.name + " gave up looking for Pokemon...");
 				sc.nextLine();
 				return;
