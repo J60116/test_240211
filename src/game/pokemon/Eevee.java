@@ -88,17 +88,31 @@ public class Eevee extends Pokemon {
 
 	//進化
 	@Override
-	public void evolve(int i) {
-		System.out.println("What? "+ this.getName() + " is evolving...");
-		System.out.println("Congratulations! Your " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
-		this.setDexNo(ARRAY_EVOLVED_DEXNO[i]);
-		this.setName(ARRAY_EVOLVED_NAME[i]);
+	public void evolve(int num) {
+		System.out.println("What?");
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		System.out.print(this.getName() + " is evolving");
+		try {
+			for(int i = 0; i < 3; i++){
+				System.out.print(".");
+				Thread.sleep(1000);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		System.out.println("\nCongratulations!\nYour " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[num] + "!");
+		this.setDexNo(ARRAY_EVOLVED_DEXNO[num]);
+		this.setName(ARRAY_EVOLVED_NAME[num]);
 		if(this.getNickname().equals(NAME)) {
 			this.setNickname(this.getName());
 		}
-		this.setTypes(0, ARRAY_EVOLVED_TYPE[i]);
-		this.setAbility(ARRAY_EVOLVED_ABILITY[i]);
-		this.setHP_max(ARRAY_EVOLVED_MAXHP[i]);
+		this.setTypes(0, ARRAY_EVOLVED_TYPE[num]);
+		this.setAbility(ARRAY_EVOLVED_ABILITY[num]);
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[num]);
     }
 	
 }

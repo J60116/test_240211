@@ -219,9 +219,15 @@ public abstract class Pokemon {
 	public void setLevel() {
 		this.level++;
 		System.out.println("\n " + this.getNickname());
-		System.out.println(" ---^--------");
-		System.out.println("| LEVEL UP ♪ |");
-		System.out.println(" ------------");
+		try {
+			Thread.sleep(1000);
+			System.out.println(" ---^--------");
+			System.out.println("| LEVEL UP ♪ |");
+			System.out.println(" ------------");
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	public int getHP() {
@@ -413,7 +419,7 @@ public abstract class Pokemon {
 		}
 		//MPが0の場合
 		if (this.getMoves(num).getMP() == 0) {
-			System.out.println("MISS! " + "Moves[" + (num + 1) + "] 's MP is zero.");
+			System.out.println("MISS! " + "Moves[" + (num + 1) + "]'s MP is zero.");
 			return false;
 		}
 		return true;
