@@ -4,6 +4,8 @@ import java.util.*;
 import game.pokemon.*;
 
 public class User {
+	//名前のルール
+	final static String FMT_USER_NAME = "[A-Z][A-Za-z]{1,9}";
 	//ボールの種類(0:野生、1:モンスターボール、2:スーパーボール、3:ハイパーボール、4:マスターボール)
 	final static String[][] ARRAY_BALL = { { "Wild", " W " }, { "Poke Ball", "(p)" }, { "Super Ball", "(s)" },
 			{ "Hyper Ball", "(h)" }, { "Master Ball", "(m)" } };
@@ -21,9 +23,13 @@ public class User {
 		this("Satoshi", new Eevee("Satoshi", "Poke Ball"));
 	}
 
+	public User(String name) {
+		this(name, new Eevee(name, "Poke Ball"));
+	}
+
 	public User(String name, Pokemon pokemon) {
-		this.name = name;
-		this.location = "Masara Town";
+		this.setName(name);
+		this.setLocation("Masara Town");
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon); 
 		this.box = new Pokemon[30];
@@ -42,7 +48,13 @@ public class User {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		//先頭文字を大文字に変換
+		String str = name.substring(0,1).toUpperCase() + name.substring(1);
+		if (!str.matches(FMT_USER_NAME)) {
+			System.out.println("MISS! " + str + " is not acceptable.");
+			return;
+		}
+		this.name = str;
 	}
 
 	public String getLocation() {
