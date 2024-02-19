@@ -238,26 +238,31 @@ public class User {
 		}
 		//ポケモン遭遇イベント
 		try {
-			for (int i = 0; i < 4; i++) {
-				char[] event = new char[30];
-				for(int j = 0; j < event.length; j++){
-					if(i%2==0){
-						event[j] = '>';
-					} else {
-						event[event.length - j - 1] = '<';
-					}
-				}
-				for(char c : event){
-					Thread.sleep(10);
-					System.out.print(c);
+			String[] event = new String[]{"        ","        ","        ","        "};
+			for (int i = 0; i < 2; i++) {
+				for(String s : event){
+					System.out.print(s);
 				}
 				System.out.println();
+				Thread.sleep(200);
+				for(int j = 0; j < event.length; j++){
+					if(i % 2 == 0){
+						event[j] = ">>>>>>>>";
+					} else {
+						event[j] = "        ";
+					}
+					for(String s : event){
+						System.out.print(s);
+					}
+					System.out.println();
+					Thread.sleep(200);
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		//ポケモンが出現
-		System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
+		System.out.println("A wild " + pokemon.getName() + " has appeared!");
 		//バトルを開始する
 		startBattle(pokemon);
 	}
