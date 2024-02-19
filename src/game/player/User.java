@@ -201,7 +201,6 @@ public class User {
 			}
 			if(input == hide){
 				//選択した場所にポケモンが隠れていたらループ抜ける
-				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
@@ -237,6 +236,33 @@ public class User {
 				}
 			}
 		}
+		//ポケモン遭遇イベント
+		try {
+			String[] event = new String[]{"        ","        ","        ","        "};
+			for (int i = 0; i < 2; i++) {
+				for(String s : event){
+					System.out.print(s);
+				}
+				System.out.println();
+				Thread.sleep(200);
+				for(int j = 0; j < event.length; j++){
+					if(i % 2 == 0){
+						event[j] = ">>>>>>>>";
+					} else {
+						event[j] = "        ";
+					}
+					for(String s : event){
+						System.out.print(s);
+					}
+					System.out.println();
+					Thread.sleep(200);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//ポケモンが出現
+		System.out.println("A wild " + pokemon.getName() + " has appeared!");
 		//バトルを開始する
 		startBattle(pokemon);
 	}
@@ -431,8 +457,14 @@ public class User {
 				case 4:
 				//Run
 					int num_e4 = enemy.getRand().nextInt(4);
-					if(num_e4 != 1){
-						//75%の確率で逃げる
+					if(enemy.isWild() && friend.getAbility().equals("Run Away")){
+						//特性「にげあし」の場合は必ず逃げられる
+						this.run();
+						this.falseBattle();
+						break;
+					}
+					if (!friend.getStuck() && num_e4 != 1){
+						//75%の確率で逃げる(stuckの場合は逃げられない)
 						this.run();
 						this.falseBattle();
 					} else {
@@ -444,15 +476,15 @@ public class User {
 					break;
 			}
 			System.out.println();
-			//特殊技を受けている場合
-			if(!enemy.getFainted()&&enemy.getStuck()){
+			//特殊技を受けている場合、ダメージ10を受ける
+			if(!enemy.getFainted() && enemy.getStuck()){
 				if(enemy.isWild()){
 					System.out.print("A wild ");
 				}
 				System.out.println(enemy.getNickname() + " was stuck in special move.");
 				enemy.getDamage(10);
 			}
-			if(!friend.getFainted()&&friend.getStuck()){
+			if(!friend.getFainted() && friend.getStuck()){
 				System.out.println(friend.getNickname() + " was stuck in special move.");
 				friend.getDamage(10);
 			}
@@ -621,7 +653,7 @@ public class User {
 
 	//ニックネームをつける
 	public void giveNickname(Pokemon pokemon) {
-		System.out.println("Do you give " + pokemon.getName() + " a nickname?");
+		System.out.println("\nDo you give " + pokemon.getName() + " a nickname?");
 		int num = this.inputInt(0, 1, "【1】YES 【0】NO : ");
 		String input = pokemon.getNickname();
 		if (num == 1) {
@@ -655,12 +687,10 @@ public class User {
 	
 	//ポケモンにボールを投げる
 	private void throwPokeBall(Pokemon pokemon, int num) {
+		//ボールの数値情報を文字列に変換
 		String ball = ARRAY_BALL[num][0];
-		if(this.booleanBall(ball) == false){
-			return;
-		}
 		//既に捕まえられている場合
-		if(!pokemon.getBall().equals(ARRAY_BALL[0][1])) {
+		if(!pokemon.isWild()) {
 			if(pokemon.getOwner().equals(this.getName())) {
 				System.out.println("MISS! " + this.getName() + " has already caught " + pokemon.getName() + ".");
 				return;
@@ -690,13 +720,28 @@ public class User {
 			//ハイパーボール
 			capture = pokemon.getRand().nextInt(151);
 		}
-		if(capture > 100){
-			System.out.println("It's too bad, " + this.getName() + " failed to catch " + pokemon.getName() + ".");
-			return;
+		try {
+			System.out.println("                             [" + pokemon.getNickname() + "]");
+			System.out.print("  " + ARRAY_BALL[num][1]);
+			for(int i = 0; i < 3; i++){
+				System.out.print("   >>>");
+				Thread.sleep(1000);
+			}
+			if(capture > 100){
+				System.out.print("    MISS!");
+				System.out.println("\nIt's too bad, " + this.getName() + " failed to catch " + pokemon.getName() + ".");
+				Thread.sleep(2000);
+				return;
+			} else{
+				System.out.print("    SUCCESS!");
+				Thread.sleep(1000);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
-		System.out.println("Congratulations! " + this.getName() + " caught " + pokemon.getName() + ".");
+		System.out.println("\nCongratulations! " + this.getName() + " caught " + pokemon.getName() + ".");
 		this.giveNickname(pokemon);		
 		//ポケットに空きがある場合
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
