@@ -201,7 +201,6 @@ public class User {
 			}
 			if(input == hide){
 				//選択した場所にポケモンが隠れていたらループ抜ける
-				System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 				break;
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
@@ -237,6 +236,28 @@ public class User {
 				}
 			}
 		}
+		//ポケモン遭遇イベント
+		try {
+			for (int i = 0; i < 4; i++) {
+				char[] event = new char[30];
+				for(int j = 0; j < event.length; j++){
+					if(i%2==0){
+						event[j] = '>';
+					} else {
+						event[event.length - j - 1] = '<';
+					}
+				}
+				for(char c : event){
+					Thread.sleep(10);
+					System.out.print(c);
+				}
+				System.out.println();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//ポケモンが出現
+		System.out.println("\nA wild " + pokemon.getName() + " has appeared!");
 		//バトルを開始する
 		startBattle(pokemon);
 	}
