@@ -39,7 +39,13 @@ public class User {
 		this.setHyperball(1);
 		this.sc = new Scanner(System.in);
 		this.battle = false;
-		System.out.println(this.getName() + ", welcome to new world!\nLet's go on an adventure with " + pokemon.getName() + ".");
+		this.dispGreet(this.getName(), pokemon);
+	}
+
+	private void dispGreet(String name, Pokemon pokemon){
+		System.out.println("\n／");
+		System.out.println(" " + name + ", welcome to new world!\n Let's go on an adventure with " + pokemon.getName() + ".");
+		System.out.println("＼");
 	}
 
 	public static String[][] getArrayBall() {
