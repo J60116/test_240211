@@ -174,14 +174,15 @@ public class User {
 		}
 		//ポケモンが実際に隠れている場所を保存
 		int hide = pokemon.getRand().nextInt(6) + 1;
+		//マスターボールが隠れている場所を保存
 		int masterBall = new java.util.Random().nextInt(6) + 1;
+		//マスターボールを見つけたかどうか
+		boolean lucky = false;
 		int input = -1;
 		while(input != hide){
 			//風景の表示
 			System.out.println();
 			Environment.dispView(view);
-			//マスターボールを見つけたかどうか
-			boolean lucky = false;
 			//探す場所を数字にて選択
 			System.out.print("\nSelect number: ");
 			try{
@@ -220,7 +221,9 @@ public class User {
 					}
 				}
 				if(!lucky && hide != masterBall && input == masterBall){
-					System.out.println("So lucky! " + this.getName() + " find Master Ball!");
+					System.out.println("\n／");
+					System.out.println("  You did it!\n  " + this.getName() + " find Master Ball!");
+					System.out.println("＼");
 					this.setMasterball();
 					lucky = true;
 				} else {
@@ -456,9 +459,22 @@ public class User {
 		//手持ちのポケモンが全滅した場合
 		if(this.countCanBattlePokemon() == 0){
 			System.out.println("\n" + this.name + " is out of usable Pokemon.");
-			System.out.println(this.name + " blacked out...");
+			System.out.println(this.name + " blacked out...\n");
+			try {
+				for (int i = 0; i < 3; i++) {
+				  Thread.sleep(1000);
+				  System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			//ポケモンセンターで回復する
 			this.visitPokemonCenter();
+			try {
+				Thread.sleep(3000);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		}
 	}
 
