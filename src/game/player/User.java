@@ -15,7 +15,7 @@ public class User {
 	private String location; //今いる場所
 	private Pokemon[] pocket; //ポケモンを格納するポケット
 	private Pokemon[] box; //ポケモンを格納するボックス
-	private int[] pokeball; //ボールの所持数
+	private int[] ball; //ボールの所持数
 	Scanner sc; //文字入力用
 	private boolean battle; //バトル中かどうか
 	
@@ -33,7 +33,10 @@ public class User {
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon); 
 		this.box = new Pokemon[30];
-		this.pokeball = new int[]{10,5,2,0};
+		this.ball = new int[4];
+		this.setPokeball(10);
+		this.setSuperball(3);
+		this.setHyperball(1);
 		this.sc = new Scanner(System.in);
 		this.battle = false;
 		System.out.println(this.getName() + ", welcome to new world!\nLet's go on an adventure with " + pokemon.getName() + ".");
@@ -96,6 +99,30 @@ public class User {
 		// }
 		this.pocket[num] = pokemon;
 	}
+
+	public int[] getBall() {
+		return this.ball;
+	}
+
+	public void setPokeball(int quantity) {
+		this.ball[0] = quantity;
+	}
+
+	public void setSuperball(int quantity) {
+		this.ball[1] = quantity;
+	}
+
+	public void setHyperball(int quantity) {
+		this.ball[2] = quantity;
+	}
+
+	private void setMasterball() {
+		this.ball[3] += 1;
+	}
+
+	private void useBall(int num){
+		this.ball[num] -= 1;
+	}
 	
 	public boolean getBattle() {
 		return this.battle;
@@ -147,11 +174,14 @@ public class User {
 		}
 		//ポケモンが実際に隠れている場所を保存
 		int hide = pokemon.getRand().nextInt(6) + 1;
+		int masterBall = new java.util.Random().nextInt(6) + 1;
 		int input = -1;
 		while(input != hide){
 			//風景の表示
 			System.out.println();
 			Environment.dispView(view);
+			//マスターボールを見つけたかどうか
+			boolean lucky = false;
 			//探す場所を数字にて選択
 			System.out.print("\nSelect number: ");
 			try{
@@ -189,7 +219,13 @@ public class User {
 						break;
 					}
 				}
-				System.out.println(this.getName() + " could not find Pokemon there.");
+				if(!lucky && hide != masterBall && input == masterBall){
+					System.out.println("So lucky! " + this.getName() + " find Master Ball!");
+					this.setMasterball();
+					lucky = true;
+				} else {
+					System.out.println(this.getName() + " could not find Pokemon there.");
+				}
 			}
 		}
 		//バトルを開始する
@@ -362,8 +398,9 @@ public class User {
 						break;
 					}
 					//ボールの種類を入力
-					System.out.println("What type of Poke Balls do you use?: ");
-					String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
+					// String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
+					this.dispBallQuantity();
+					String msgBall = "What type of Poke Balls do you use?: ";
 					//モンスターボールの名前を取得
 					int num = inputInt(1, 4, msgBall);
 					this.throwPokeBall(enemy, num);
@@ -496,6 +533,19 @@ public class User {
 		return true;
 	}
 
+	//各ポケモンボールの所持数
+	public void dispBallQuantity(){
+		System.out.println("Poke Balls:");
+		String str = "";
+		for(int i = 0; i < 4; i++){
+			if(i == 3 && this.getBall()[3] == 0){
+				break;
+			}
+			str += "[" + (i + 1) + "]" + ARRAY_BALL[i + 1][0] + "(x" + this.getBall()[i] + ") ";
+		}	
+		System.out.println(str);
+	}
+
 	//戦闘中のポケモンを調べる
 	public Pokemon getInBattlePokemon(){
 		Pokemon pokemon = null;
@@ -597,6 +647,14 @@ public class User {
 				return;
 			}
 		}
+		int quantity = this.getBall()[0] + this.getBall()[1] + this.getBall()[2] + this.getBall()[3];
+		//ボールの所持数が0の場合
+		if(quantity == 0 || this.getBall()[num - 1] == 0){
+			System.out.println("MISS! " + this.getName() + " doesn't have enough ball.");
+			return;
+		}
+		//ボールの所持数を１つ減らす
+		this.useBall(num - 1);
 		System.out.println("\n" + this.name + " threw " + ball + "!");
 		//捕獲率
 		int capture = 0;
