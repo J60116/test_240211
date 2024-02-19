@@ -431,8 +431,8 @@ public class User {
 				case 4:
 				//Run
 					int num_e4 = enemy.getRand().nextInt(4);
-					if(num_e4 != 1){
-						//75%の確率で逃げる
+					if(!friend.getStuck() && num_e4 != 1){
+						//75%の確率で逃げる(stuckの場合は逃げられない)
 						this.run();
 						this.falseBattle();
 					} else {
