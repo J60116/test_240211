@@ -20,7 +20,7 @@ public class Main {
 		user.viewCurrentParty();
 		
 		//冒険に出かける
-		user.goTo("flower garden", eevee);
+		user.goTo("grassland", eevee);
 		user.goTo("grassland", leafeon);
 		user.goTo("river", vaporeon);
 		user.goTo("hill", flareon);
