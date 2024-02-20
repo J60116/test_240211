@@ -19,6 +19,7 @@ public class User {
 	Scanner sc; //文字入力用
 	private boolean battle; //バトル中かどうか
 	
+	//コンストラクタ
 	public User() {
 		this("Satoshi", new Eevee("Satoshi", ARRAY_BALL[1][0]));
 	}
@@ -42,12 +43,7 @@ public class User {
 		this.dispGreet(this.getName(), pokemon);
 	}
 
-	private void dispGreet(String name, Pokemon pokemon){
-		System.out.println("\n／");
-		System.out.println(" " + name + ", welcome to new world!\n Let's go on an adventure with " + pokemon.getName() + ".");
-		System.out.println("＼");
-	}
-
+	//アクセサ
 	public static String[][] getArrayBall() {
 		return ARRAY_BALL;
 	}
@@ -159,6 +155,14 @@ public class User {
 	}
 	
 	//メゾット
+	//インスタンス生成時のあいさつ（コンストラクタ用）
+	private void dispGreet(String name, Pokemon pokemon){
+		System.out.println("\n／");
+		System.out.println(" " + name + ", welcome to new world!\n Let's go on an adventure with " + pokemon.getName() + ".");
+		System.out.println("＼");
+	}
+
+	//冒険に出かける
 	public void goTo(String habitat, Pokemon pokemon){
 		this.setLocation(habitat);
 		System.out.println("\n" + this.getName() + " went to the " + habitat + ".");
@@ -352,6 +356,7 @@ public class User {
 					if(!this.booleanSwitch(friend, substitute)){
 						//入れ替えに失敗した場合は敵が逃げる
 						enemy.run();
+						//対戦をやめる
 						this.falseBattle();
 						break;
 					}
@@ -361,7 +366,6 @@ public class User {
 					System.out.println("Go! " + friend.getNickname() + "!");
 				} else {
 					this.run();
-					this.falseBattle();
 					break;
 				}
 			}
@@ -460,13 +464,11 @@ public class User {
 					if(enemy.isWild() && friend.getAbility().equals("Run Away")){
 						//特性「にげあし」の場合は必ず逃げられる
 						this.run();
-						this.falseBattle();
 						break;
 					}
 					if (!friend.getStuck() && num_e4 != 1){
 						//75%の確率で逃げる(stuckの場合は逃げられない)
 						this.run();
-						this.falseBattle();
 					} else {
 						//25%の確率で攻撃を受ける(1番目の技)
 						System.out.println(this.getName() + " could not run away!");
@@ -600,29 +602,6 @@ public class User {
 		System.out.println(str);
 	}
 
-	//戦闘中のポケモンを調べる
-	public Pokemon getInBattlePokemon(){
-		Pokemon pokemon = null;
-		for(Pokemon p : this.getPocket()){
-			if(p.getStatus().equals(Pokemon.getArrayStatus()[1])){
-				pokemon = p;
-				break;
-			}
-		}
-		return pokemon;
-	}
-
-	//所持しているポケモンの数を数える
-	public int countPokemon(){
-		int count = 0;
-		for(Pokemon p : this.getPocket()){
-			if(p != null){
-				count++;
-			}
-		}
-		return count;
-	}
-
 	//対戦時に送り出すポケモン
 	public Pokemon getCanBattlePokemon(){
 		Pokemon pokemon = null;
@@ -633,6 +612,17 @@ public class User {
 			}
 		}
 		return pokemon;
+	}
+	
+	//所持しているポケモンの数を数える
+	public int countPokemon(){
+		int count = 0;
+		for(Pokemon p : this.getPocket()){
+			if(p != null){
+				count++;
+			}
+		}
+		return count;
 	}
 
 	//CanBattleなポケモンの数を数える
@@ -648,6 +638,7 @@ public class User {
 
 	//逃げる
 	public void run() {
+		this.falseBattle();
 		System.out.println(this.getName() + " could run away smoothly!");
 	}
 
@@ -739,6 +730,7 @@ public class User {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		//所有者とボール情報の追加
 		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
 		System.out.println("\nCongratulations! " + this.getName() + " caught " + pokemon.getName() + ".");
