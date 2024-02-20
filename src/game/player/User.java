@@ -20,11 +20,11 @@ public class User {
 	private boolean battle; //バトル中かどうか
 	
 	public User() {
-		this("Satoshi", new Eevee("Satoshi", "Poke Ball"));
+		this("Satoshi", new Eevee("Satoshi", ARRAY_BALL[1][0]));
 	}
 
 	public User(String name) {
-		this(name, new Eevee(name, "Poke Ball"));
+		this(name, new Eevee(name, ARRAY_BALL[1][0]));
 	}
 
 	public User(String name, Pokemon pokemon) {
@@ -85,7 +85,7 @@ public class User {
 			return;
 		}
 		//ポケモンがボールに入っていない場合
-		if (pokemon.getBall().equals(ARRAY_BALL[0][1])) {
+		if (pokemon.isWild()) {
 			System.out.println("Please catch " + pokemon.getName() + " using any of PokeBall.");
 			return;
 		}
@@ -173,7 +173,7 @@ public class User {
 	//ポケモンを探す
 	private void lookFor(Pokemon pokemon, String[][] view) {
 		if(pokemon.getOwner() != null){
-			if(pokemon.getOwner().equals(this.name)){
+			if(pokemon.getOwner().equals(this.getName())){
 				System.out.println("MISS! " + this.getName() + " already get " + pokemon.getName());
 				return;
 			}
@@ -205,7 +205,7 @@ public class User {
 			} else if (input < 1 || input > 6){
 				//1～6以外が入力された場合はメゾットを中断する
 				System.out.println("(" + input + ") is not there.");
-				System.out.println(this.name + " gave up looking for Pokemon...");
+				System.out.println(this.getName() + " gave up looking for Pokemon...");
 				sc.nextLine();
 				return;
 			} else {
@@ -469,7 +469,7 @@ public class User {
 						this.falseBattle();
 					} else {
 						//25%の確率で攻撃を受ける(1番目の技)
-						System.out.println(this.name + " could not run away!");
+						System.out.println(this.getName() + " could not run away!");
 						System.out.println("\nEnemy -> Friend");
 						enemy.useMove(num_e4, friend);
 					}
@@ -707,7 +707,7 @@ public class User {
 		}
 		//ボールの所持数を１つ減らす
 		this.useBall(num - 1);
-		System.out.println("\n" + this.name + " threw " + ball + "!");
+		System.out.println("\n" + this.getName() + " threw " + ball + "!");
 		//捕獲率
 		int capture = 0;
 		if(ball.equals(ARRAY_BALL[1][0])){
@@ -742,9 +742,11 @@ public class User {
 		pokemon.setOwner(this.getName());
 		pokemon.setBall(ball);
 		System.out.println("\nCongratulations! " + this.getName() + " caught " + pokemon.getName() + ".");
-		this.giveNickname(pokemon);		
-		//ポケットに空きがある場合
+		//ニックネームをつける
+		this.giveNickname(pokemon);	
+		//ポケットまたはボックスにポケモンをいれる	
 		if(this.getPocket()[this.getPocket().length - 1] == null) {
+			//ポケットに空きがある場合
 			for (int i = 0; i < this.getPocket().length; i++) {
 				if (this.getPocket()[i] == null) {
 					this.setPocket(i, pokemon);
