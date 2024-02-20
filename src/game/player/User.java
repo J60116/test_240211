@@ -711,6 +711,10 @@ public class User {
 			//ハイパーボール
 			capture = pokemon.getRand().nextInt(151);
 		}
+		//現在のHPが最大HPの1/3以下の場合、捕獲率を上げる
+		if(pokemon.getHP() <= pokemon.getHP_max() / 3){
+			capture -= 30;
+		}
 		try {
 			System.out.println("                             [" + pokemon.getNickname() + "]");
 			System.out.print("  " + ARRAY_BALL[num][1]);
