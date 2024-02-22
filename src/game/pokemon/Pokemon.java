@@ -6,8 +6,15 @@ import game.player.User;
 
 public abstract class Pokemon {
 	//タイプ
-	final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
-			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
+	final static String[] ARRAY_TYPE = 
+		//0:ノーマル 2:ほのお 3:みず 4:でんき 5:くさ
+		{ "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", 
+			//6:こおり 7:かくとう 8:どく 9:じめん 10:ひこう
+			"ICE", "FIGHTING", "POISON", "GROUND", "FLYING",
+			//11:エスパー 12:むし 13:いわ 14:ゴースト 15:ドラゴン
+			"PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON",
+			//16:あく 17:はがね 18:フェアリー
+			"DARK", "STEEL", "FAIRY" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
 	//戦闘状態（0:戦闘不可/ひんし状態 1:戦闘中 2:戦闘可能）
@@ -551,18 +558,54 @@ public abstract class Pokemon {
 
 	//タイプ相性表の作成
 	public void makeTypeChart(){
+		//0:ノーマル 2:ほのお 3:みず 4:でんき 5:くさ
+		// "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", 
+		//6:こおり 7:かくとう 8:どく 9:じめん 10:ひこう
+		// "ICE", "FIGHTING", "POISON", "GROUND", "FLYING",
+		//11:エスパー 12:むし 13:いわ 14:ゴースト 15:ドラゴン
+		// "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON",
+		//16:あく 17:はがね 18:フェアリー
+		// "DARK", "STEEL", "FAIRY"
+
+		//1:効果なし 2:効果はいまひとつ 3:効果ばつぐん
+		//ノーマル
+		this.TYPE_CHART[0][13] = 2;
+		this.TYPE_CHART[0][14] = 1;
+		this.TYPE_CHART[0][17] = 2;
+		//ほのお
 		this.TYPE_CHART[1][1] = 2;
 		this.TYPE_CHART[1][2] = 2;
 		this.TYPE_CHART[1][4] = 3;
+		this.TYPE_CHART[1][5] = 3;
+		this.TYPE_CHART[1][12] = 3;
+		this.TYPE_CHART[1][13] = 2;
+		this.TYPE_CHART[1][15] = 2;
+		this.TYPE_CHART[1][17] = 3;
+		//みず
 		this.TYPE_CHART[2][1] = 3;
 		this.TYPE_CHART[2][2] = 2;
 		this.TYPE_CHART[2][4] = 2;
+		this.TYPE_CHART[2][9] = 3;
+		this.TYPE_CHART[2][13] = 3;
+		this.TYPE_CHART[2][15] = 2;
+		//でんき
 		this.TYPE_CHART[3][2] = 3;
 		this.TYPE_CHART[3][3] = 2;
 		this.TYPE_CHART[3][4] = 2;
+		this.TYPE_CHART[3][9] = 1;
+		this.TYPE_CHART[3][10] = 3;
+		this.TYPE_CHART[3][15] = 2;
+		//くさ
 		this.TYPE_CHART[4][1] = 2;
 		this.TYPE_CHART[4][2] = 3;
 		this.TYPE_CHART[4][4] = 2;
+		this.TYPE_CHART[4][8] = 2;
+		this.TYPE_CHART[4][9] = 3;
+		this.TYPE_CHART[4][10] = 2;
+		this.TYPE_CHART[4][12] = 2;
+		this.TYPE_CHART[4][13] = 3;
+		this.TYPE_CHART[4][15] = 2;
+		this.TYPE_CHART[4][17] = 2;
 	} 
 
 	//抽象メゾット
