@@ -379,8 +379,16 @@ public abstract class Pokemon {
 
 	//ステータスを確認する(バトル画面用)
 	public String getBattleStatus() {
-		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
-			this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
+		String hp = String.format("%3d/%3d", this.hp, this.hp_max);
+		if(this.getStuck()){
+			//特殊技を受けている場合
+			hp = hp + " (be stuck)";
+		} else if(this.getFainted()){
+			//ひんし状態の場合
+			hp = hp + " (FAINTED)";
+		}
+		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%s", 
+			this.nickname, this.name, this.level, this.gender, hp);
 		return str;
 	}
 
