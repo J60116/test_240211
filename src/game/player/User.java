@@ -280,7 +280,7 @@ public class User {
 	}
 	
 	//バトル画面の表示
-	private void dispBattleScreen(Pokemon enemy, Pokemon friend) {
+	private void dispBattleScreen(Pokemon friend, Pokemon enemy) {
 		System.out.println("\n<<<<<<<<<<<<<<<<<<<<<< Enemy");
 		System.out.println(enemy.getBattleStatus());
 		System.out.println("============================");
@@ -343,6 +343,8 @@ public class User {
 		}
 		this.trueBattle();
 		System.out.println("Go! " + friend.getNickname() + "!");
+		//バトル画面の表示
+		this.dispBattleScreen(friend, enemy);
 		//バトルが終わるまで繰り返す
 		while(this.getBattle()){
 			if(friend.getFainted()){
@@ -364,13 +366,13 @@ public class User {
 					friend = substitute;
 					friend.setStatus(Pokemon.getArrayStatus()[1]);
 					System.out.println("Go! " + friend.getNickname() + "!");
+					//バトル画面の表示
+					this.dispBattleScreen(friend, enemy);
 				} else {
 					this.run();
 					break;
 				}
 			}
-			//バトル画面の表示
-			this.dispBattleScreen(enemy, friend);
 			//メニュー選択
 			String msgMenu = "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ";
 			int menu = this.inputInt(1,4,msgMenu);		
@@ -493,6 +495,7 @@ public class User {
 			//バトルが継続している場合
 			if(this.getBattle()){
 				//判定（どちらかが瀕死状態になれはバトルを終わらせる）
+				this.dispBattleScreen(friend, enemy);
 				this.judgeBattle(friend, enemy);
 			}
 		}
