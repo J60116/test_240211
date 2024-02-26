@@ -6,8 +6,15 @@ import game.player.User;
 
 public abstract class Pokemon {
 	//タイプ
-	final static String[] ARRAY_TYPE = { "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", "ICE", "FIGHTING",
-			"POISON", "GROUND", "FLYING", "PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON", "DARK", "STEEL", "FAIRY" };
+	final static String[] ARRAY_TYPE = 
+		//0:ノーマル 1:ほのお 2:みず 3:でんき 4:くさ
+		{ "NORMAL", "FIRE", "WATER", "ELECTRIC", "GRASS", 
+			//5:こおり 6:かくとう 7:どく 8:じめん 9:ひこう
+			"ICE", "FIGHTING", "POISON", "GROUND", "FLYING",
+			//10:エスパー 11:むし 12:いわ 13:ゴースト 14:ドラゴン
+			"PSYCHIC", "BUG", "ROCK", "GHOST", "DRAGON",
+			//15:あく 16:はがね 17:フェアリー
+			"DARK", "STEEL", "FAIRY" };
 	//性別(0:Unknown 1:Male 2:Female)
 	final static String[] ARRAY_GENDER = { "・", "♂", "♀" };
 	//戦闘状態（0:戦闘不可/ひんし状態 1:戦闘中 2:戦闘可能）
@@ -22,8 +29,8 @@ public abstract class Pokemon {
 	final static double[] ARRAY_EFFECTIVE_RATE = { 1.0, 0.0, 0.5, 2.0 };
 	//技の効果メッセージ
 	final static String[] ARRAY_EFFECTIVE_MSG = { "", "It's not effective...", "It's not very effective.", "It's super effective!" };
-	//タイプ相性表（normal~grass）
-	final int[][] TYPE_CHART = new int[5][5];
+	//タイプ相性表（行:使用する技のタイプ　列:防御側のポケモンのタイプ）
+	final int[][] TYPE_CHART = new int[18][18];
 
 	int num_type; 
 	private String name; //名前
@@ -379,8 +386,16 @@ public abstract class Pokemon {
 
 	//ステータスを確認する(バトル画面用)
 	public String getBattleStatus() {
-		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%3d/%3d", 
-			this.nickname, this.name, this.level, this.gender, this.hp, this.hp_max);
+		String hp = String.format("%3d/%3d", this.hp, this.hp_max);
+		if(this.getStuck()){
+			//特殊技を受けている場合
+			hp = hp + " (be stuck)";
+		} else if(this.getFainted()){
+			//ひんし状態の場合
+			hp = hp + " (FAINTED)";
+		}
+		String str = String.format(" %-8s/ %-8s Lv.%2d %s\n   HP:%s", 
+			this.nickname, this.name, this.level, this.gender, hp);
 		return str;
 	}
 
@@ -543,18 +558,46 @@ public abstract class Pokemon {
 
 	//タイプ相性表の作成
 	public void makeTypeChart(){
+		//1:効果なし 2:効果はいまひとつ 3:効果ばつぐん
+		//行数:技のタイプ　列数:相手のタイプ
+		//ノーマル
+		this.TYPE_CHART[0][12] = 2;
+		this.TYPE_CHART[0][13] = 1;
+		this.TYPE_CHART[0][16] = 2;
+		//ほのお
 		this.TYPE_CHART[1][1] = 2;
 		this.TYPE_CHART[1][2] = 2;
 		this.TYPE_CHART[1][4] = 3;
+		this.TYPE_CHART[1][5] = 3;
+		this.TYPE_CHART[1][11] = 3;
+		this.TYPE_CHART[1][12] = 2;
+		this.TYPE_CHART[1][14] = 2;
+		this.TYPE_CHART[1][16] = 3;
+		//みず
 		this.TYPE_CHART[2][1] = 3;
 		this.TYPE_CHART[2][2] = 2;
 		this.TYPE_CHART[2][4] = 2;
+		this.TYPE_CHART[2][8] = 3;
+		this.TYPE_CHART[2][12] = 3;
+		this.TYPE_CHART[2][14] = 2;
+		//でんき
 		this.TYPE_CHART[3][2] = 3;
 		this.TYPE_CHART[3][3] = 2;
 		this.TYPE_CHART[3][4] = 2;
+		this.TYPE_CHART[3][8] = 1;
+		this.TYPE_CHART[3][9] = 3;
+		this.TYPE_CHART[3][14] = 2;
+		//くさ
 		this.TYPE_CHART[4][1] = 2;
 		this.TYPE_CHART[4][2] = 3;
 		this.TYPE_CHART[4][4] = 2;
+		this.TYPE_CHART[4][7] = 2;
+		this.TYPE_CHART[4][8] = 3;
+		this.TYPE_CHART[4][9] = 2;
+		this.TYPE_CHART[4][11] = 2;
+		this.TYPE_CHART[4][12] = 3;
+		this.TYPE_CHART[4][14] = 2;
+		this.TYPE_CHART[4][16] = 2;
 	} 
 
 	//抽象メゾット
