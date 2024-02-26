@@ -231,7 +231,7 @@ public class User {
 				}
 				if(!lucky && hide != masterBall && input == masterBall){
 					System.out.println("\n／");
-					System.out.println("  You did it!\n  " + this.getName() + " find Master Ball!");
+					System.out.println("  You did it!\n  " + this.getName() + " found Master Ball!");
 					System.out.println("＼");
 					this.setMasterball();
 					lucky = true;
