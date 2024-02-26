@@ -559,6 +559,7 @@ public abstract class Pokemon {
 	//タイプ相性表の作成
 	public void makeTypeChart(){
 		//1:効果なし 2:効果はいまひとつ 3:効果ばつぐん
+		//行数:技のタイプ　列数:相手のタイプ
 		//ノーマル
 		this.TYPE_CHART[0][12] = 2;
 		this.TYPE_CHART[0][13] = 1;
