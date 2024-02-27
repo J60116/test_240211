@@ -43,12 +43,12 @@ public abstract class Pokemon {
 	private String item; //もちもの
 	private String status; //戦闘状態
 	private int dexNo; //ずかん番号
+	private Random rand; //乱数用
 	private int level; //レベル
 	private int hp; //体力
 	private int hp_max; //最大HP
 	private int exp; //経験値
 	private int exp_max; //レベルアップに必要な経験値
-	private Random rand; //乱数用
 	private Move[] moves; //技
 	private boolean fainted = false; //ひんし状態
 	private boolean stuck; //特殊技による拘束
@@ -70,12 +70,17 @@ public abstract class Pokemon {
 		this.setItem("None");
 		this.setStatus(ARRAY_STATUS[2]);
 		this.setDexNo(0);
-		this.setLevel(1);
-		this.setHP_max(10);
+		this.setRand(new Random());
+		if(this.isWild()){
+			int lv = getRand().nextInt(3) + 1;
+			this.setLevel(lv);
+		} else {
+			this.setLevel(1);
+		}
+		this.setHP_max(10 + (this.getLevel() - 1) * 5);
 		this.setHP(this.getHP_max());
 		this.setExp(0);
-		this.setExp_max(10);
-		this.setRand(new Random());
+		this.setExp_max(10 + (this.getLevel() - 1) * 5);
 		this.setMoves(new Move[4]);
 		//タイプ相性表の作成
 		this.makeTypeChart();
@@ -225,6 +230,8 @@ public abstract class Pokemon {
 	//オーバーロード
 	public void setLevel() {
 		this.level++;
+		this.setHP_max(this.getHP_max() + 5);
+		this.setExp_max(this.getExp_max() + 5);
 		System.out.println("\n " + this.getNickname());
 		try {
 			Thread.sleep(1000);
