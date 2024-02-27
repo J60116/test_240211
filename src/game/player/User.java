@@ -433,11 +433,17 @@ public class User {
 					if (!this.canThrowPokeBall(enemy)) {
 						break;
 					}
-					// ボールの種類を入力
-					// String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
+					// モンスターボールの選択画面の表示
 					this.dispBallQuantity();
-					// モンスターボールの名前を取得
-					int num = inputInt(1, 4, "What type of Poke Balls do you use?: ");
+					// 選択した情報の保存用
+					int num = -1;
+					if(this.getBall()[3]!=0){
+						//マスターボールを所持している場合
+						num = inputInt(1, 4, "What type of Poke Balls do you use?: ");
+					} else {
+						//マスターボールを所持していない場合
+						num= inputInt(1, 3, "What type of Poke Balls do you use?: ");
+					}
 					this.throwPokeBall(enemy, num);
 					if (!enemy.isWild()) {
 						// ポケモンをゲットできた場合
@@ -681,9 +687,7 @@ public class User {
 		String ball = ARRAY_BALL[num][0];
 		// ボールの所持数が0の場合
 		if (this.getBall()[num - 1] == 0) {
-			if (!ball.equals(User.getArrayBall()[4][0])) {
-				System.out.println("MISS! " + this.getName() + " doesn't have " + ball + ".");
-			}
+			System.out.println("MISS! " + this.getName() + " doesn't have " + ball + ".");
 			return;
 		}
 		// ボールの所持数を１つ減らす
