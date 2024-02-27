@@ -16,7 +16,7 @@ public class User {
 	private String location; // 今いる場所
 	private Pokemon[] pocket; // ポケモンを格納するポケット
 	private Pokemon[] box; // ポケモンを格納するボックス
-	private int[] ball; // ボールの所持数
+	private int[] balls; // ボールの所持数
 	Scanner sc; // 文字入力用
 	private boolean battle; // バトル中かどうか
 
@@ -35,7 +35,7 @@ public class User {
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon);
 		this.box = new Pokemon[30];
-		this.ball = new int[4];
+		this.balls = new int[4];
 		this.setPokeball(10);
 		this.setSuperball(3);
 		this.setHyperball(1);
@@ -104,27 +104,27 @@ public class User {
 	}
 
 	public int[] getBall() {
-		return this.ball;
+		return this.balls;
 	}
 
 	public void setPokeball(int quantity) {
-		this.ball[0] = quantity;
+		this.balls[0] = quantity;
 	}
 
 	public void setSuperball(int quantity) {
-		this.ball[1] = quantity;
+		this.balls[1] = quantity;
 	}
 
 	public void setHyperball(int quantity) {
-		this.ball[2] = quantity;
+		this.balls[2] = quantity;
 	}
 
 	private void setMasterball() {
-		this.ball[3] += 1;
+		this.balls[3] += 1;
 	}
 
 	private void useBall(int num) {
-		this.ball[num] -= 1;
+		this.balls[num] -= 1;
 	}
 
 	public boolean getBattle() {
