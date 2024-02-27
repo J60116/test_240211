@@ -31,8 +31,7 @@ public class Eevee extends Pokemon {
 		this.setTypes(0, ARRAY_TYPE[0]); //Normal
 		this.setAbility();
 		this.setDexNo(133);
-		this.setLevel(1);
-		this.setHP_max(55);
+		this.setHP_max(55 + (this.getLevel() - 1) * 5);
 		this.setHP(this.getHP_max());
 		this.setMoves(0, new Tackle());
 		this.setMoves(1, new Sandattack());
@@ -45,7 +44,7 @@ public class Eevee extends Pokemon {
 		this.setNickname(ARRAY_EVOLVED_NAME[num]);
 		this.setTypes(0, ARRAY_EVOLVED_TYPE[num]);
 		this.setAbility(ARRAY_EVOLVED_ABILITY[num]);
-		this.setHP_max(ARRAY_EVOLVED_MAXHP[num]);
+		this.setHP_max(ARRAY_EVOLVED_MAXHP[num] + (this.getLevel() - 1) * 5);
 	}
 
 	private void setGender() {
