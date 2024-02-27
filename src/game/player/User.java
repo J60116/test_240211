@@ -356,8 +356,7 @@ public class User {
 			if(friend.getFainted()){
 				//ポケモンを入れ替えるか確認
 				System.out.println("Will you switch your Pokemon?");
-				String msg = "[1]Switch Pokemon [2]Run : ";
-				int num = this.inputInt(1,2,msg);
+				int num = this.inputInt(1,2,"[1]Switch Pokemon [2]Run : ");
 				if(num == 1){
 					//入れ替え予定のポケモンを宣言
 					Pokemon substitute = this.selectPokemon();
@@ -381,15 +380,13 @@ public class User {
 				}
 			}
 			//メニュー選択
-			String msgMenu = "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ";
-			int menu = this.inputInt(1,4,msgMenu);		
+			int menu = this.inputInt(1, 4, "Menu:\n[1]Battle [2]Pokemon [3]Throw PokeBall [4]Run : ");		
 			switch(menu){
 				case 1:
 				//Battle
 					//味方の技の選択
 					friend.checkMoves(enemy);
-					String msgMove = "What number of Move do you use?: ";
-					int num_f = this.inputInt(1,4,msgMove);
+					int num_f = this.inputInt(1, 4, "What number of Move do you use?: ");
 					//味方の攻撃
 					System.out.println("\nFriend -> Enemy");
 					this.giveInstructions(friend, num_f, enemy);
@@ -437,9 +434,8 @@ public class User {
 					//ボールの種類を入力
 					// String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
 					this.dispBallQuantity();
-					String msgBall = "What type of Poke Balls do you use?: ";
 					//モンスターボールの名前を取得
-					int num = inputInt(1, 4, msgBall);
+					int num = inputInt(1, 4, "What type of Poke Balls do you use?: ");
 					this.throwPokeBall(enemy, num);
 					if(!enemy.isWild()){
 						//ポケモンをゲットできた場合
@@ -562,8 +558,7 @@ public class User {
 				System.out.println("[" + (i + 1) + "] null");
 			}
 		}
-		String msgSwitch = "Which Pokemon do you select?: ";
-		int num = this.inputInt(1, 6, msgSwitch);
+		int num = this.inputInt(1, 6, "Which Pokemon do you select?: ");
 		// 選択したポケモンを戻り値として返す
 		return this.getPocket()[num - 1];
 	}
