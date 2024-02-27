@@ -355,7 +355,6 @@ public class User {
 					}
 					System.out.println("\nCome back, " + friend.getNickname() + "!");
 					friend = substitute;
-					// 入れ替えたポケモンをIn Battleに変更
 					friend.setStatus(Pokemon.getArrayStatus()[1]);
 					System.out.println("Go! " + friend.getNickname() + "!");
 					// バトル画面の表示
@@ -397,18 +396,15 @@ public class User {
 					}
 					// 入れ替え前にCan Battleに戻しておく
 					friend.setStatus(Pokemon.getArrayStatus()[2]);
+					System.out.println("Come back, " + friend.getNickname() + "!");
 					// 入れ替え
 					friend = substitute;
 					// 入れ替えたポケモンをIn Battleに変更
 					friend.setStatus(Pokemon.getArrayStatus()[1]);
-					System.out.println(this.getName() + " sent out " + friend.getNickname() + "!");
+					System.out.println("Go! " + friend.getNickname() + "!");
 					// 敵の攻撃を受ける
 					System.out.println("\nEnemy -> Friend");
 					int num_e2 = enemy.getRand().nextInt(4);
-					if (enemy.isWild()) {
-						System.out.print("A wild ");
-					}
-					System.out.println(enemy.getName() + " is about to use Move[" + num_e2 + "].");
 					enemy.useMove(num_e2, friend);
 					break;
 				case 3:
@@ -432,16 +428,11 @@ public class User {
 					if (!enemy.isWild()) {
 						// ポケモンをゲットできた場合
 						this.falseBattle();
-						;
 					} else {
 						// ポケモンをゲットできなかった場合
 						// 敵の攻撃を受ける
 						System.out.println("\nEnemy -> Friend");
 						int num_e3 = enemy.getRand().nextInt(4);
-						if (enemy.isWild()) {
-							System.out.print("A wild ");
-						}
-						System.out.println(enemy.getName() + " is about to use Move[" + num_e3 + "].");
 						enemy.useMove(num_e3, friend);
 					}
 					break;
