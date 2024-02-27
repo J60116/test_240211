@@ -83,23 +83,9 @@ public class User {
 		}
 		// ポケモンがボールに入っていない場合
 		if (pokemon.isWild()) {
-			System.out.println("Please catch " + pokemon.getName() + " using any of PokeBall.");
+			System.out.println("MISS! " + pokemon.getName() + " is wild Pokemon.");
 			return;
 		}
-		// for (int i = 0; i < this.getPocket().length; i++) {
-		// if (this.getPocket()[i] != null ){
-		// //既にポケットにいるポケモンを指定した場合
-		// if (this.getPocket()[i].equals(pokemon)) {
-		// System.out.println("You already set this Pokemon in your pocket.");
-		// return;
-		// }
-		// //指定したポケットが空いていない場合
-		// if (num == i) {
-		// System.out.println("The pocket[" + num + "] is unavailable");
-		// return;
-		// }
-		// }
-		// }
 		this.pocket[num] = pokemon;
 	}
 
@@ -135,12 +121,6 @@ public class User {
 		this.battle = true;
 		// 先頭側にいるCan BattleのポケモンをIn Battleにする
 		this.getCanBattlePokemon().setStatus(Pokemon.getArrayStatus()[1]);
-		// for (Pokemon p : this.getPocket()) {
-		// if (p != null && !p.getStatus().equals(Pokemon.getArrayStatus()[0])) {
-		// p.setStatus(Pokemon.getArrayStatus()[1]);
-		// break;
-		// }
-		// }
 	}
 
 	public void falseBattle() {
@@ -178,6 +158,7 @@ public class User {
 
 	// ポケモンを探す
 	private void lookFor(Pokemon pokemon, String[][] view) {
+		//ポケモンに飼い主がいる場合
 		if (pokemon.getOwner() != null) {
 			if (pokemon.getOwner().equals(this.getName())) {
 				System.out.println("MISS! " + this.getName() + " already get " + pokemon.getName());
@@ -232,6 +213,7 @@ public class User {
 					}
 				}
 				if (!lucky && hide != masterBall && input == masterBall) {
+					//マスターボールを見つけた場合
 					System.out.println("\n／");
 					System.out.println("  You did it!\n  " + this.getName() + " found Master Ball!");
 					System.out.println("＼");
