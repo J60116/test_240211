@@ -444,7 +444,7 @@ public class User {
 						//マスターボールを所持していない場合
 						num_ball = inputInt(1, 3, "What type of Poke Balls do you use?: ");
 					}
-					this.throwPokeBall(num_ball, enemy);
+					this.throwPokeBall(num_ball - 1, enemy);
 					if (!enemy.isWild()) {
 						// ポケモンをゲットできた場合
 						this.falseBattle();
@@ -684,14 +684,14 @@ public class User {
 	// ポケモンにボールを投げる
 	private void throwPokeBall(int num, Pokemon pokemon) {
 		// ボールの数値情報を文字列に変換
-		String ball = ARRAY_BALL[num][0];
+		String ball = ARRAY_BALL[num + 1][0];
 		// ボールの所持数が0の場合
-		if (this.getBall()[num - 1] == 0) {
+		if (this.getBall()[num] == 0) {
 			System.out.println("MISS! " + this.getName() + " doesn't have " + ball + ".");
 			return;
 		}
 		// ボールの所持数を１つ減らす
-		this.useBall(num - 1);
+		this.useBall(num);
 		System.out.println("\n" + this.getName() + " threw " + ball + "!");
 		// 捕獲率
 		int capture = 0;
@@ -718,7 +718,7 @@ public class User {
 			// 捕まえたいポケモンの名前を表示
 			System.out.println("                             [" + pokemon.getNickname() + "]");
 			// 選択したポケモンボールを表示
-			System.out.print("  " + ARRAY_BALL[num][1]);
+			System.out.print("  " + ARRAY_BALL[num + 1][1]);
 			for (int i = 0; i < 3; i++) {
 				// ポケモンをめがけてボールが右へ移動する
 				System.out.print("   >>>");
@@ -822,6 +822,7 @@ public class User {
 		System.out.println("\n" + this.getName() + " visited the pokemon center.");
 		// ポケモンの数を数える
 		int count = 0;
+		// 先頭のポケモンの名前の保存用
 		String p_name = "";
 		for (Pokemon p : this.getPocket()) {
 			if (p != null) {
@@ -832,9 +833,10 @@ public class User {
 				}
 			}
 		}
+		// 回復完了メッセージの表示
 		System.out.print(p_name);
-		// ポケモンが複数いる場合
 		if (count > 1) {
+			// ポケモンが複数いる場合
 			System.out.print(" and the rest of your team");
 		}
 		System.out.println(" should be all better now!");
