@@ -436,15 +436,15 @@ public class User {
 					// モンスターボールの選択画面の表示
 					this.dispBallQuantity();
 					// 選択した情報の保存用
-					int num = -1;
+					int num_ball = -1;
 					if(this.getBall()[3]!=0){
 						//マスターボールを所持している場合
-						num = inputInt(1, 4, "What type of Poke Balls do you use?: ");
+						num_ball = inputInt(1, 4, "What type of Poke Balls do you use?: ");
 					} else {
 						//マスターボールを所持していない場合
-						num= inputInt(1, 3, "What type of Poke Balls do you use?: ");
+						num_ball = inputInt(1, 3, "What type of Poke Balls do you use?: ");
 					}
-					this.throwPokeBall(enemy, num);
+					this.throwPokeBall(num_ball, enemy);
 					if (!enemy.isWild()) {
 						// ポケモンをゲットできた場合
 						this.falseBattle();
@@ -682,7 +682,7 @@ public class User {
 	}
 
 	// ポケモンにボールを投げる
-	private void throwPokeBall(Pokemon pokemon, int num) {
+	private void throwPokeBall(int num, Pokemon pokemon) {
 		// ボールの数値情報を文字列に変換
 		String ball = ARRAY_BALL[num][0];
 		// ボールの所持数が0の場合
