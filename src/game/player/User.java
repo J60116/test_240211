@@ -438,12 +438,12 @@ public class User {
 					break;
 				case 4:
 					// Run
-					int num_e4 = enemy.getRand().nextInt(4);
 					if (enemy.isWild() && friend.getAbility().equals("Run Away")) {
 						// 特性「にげあし」の場合は必ず逃げられる
 						this.run();
 						break;
 					}
+					int num_e4 = enemy.getRand().nextInt(4);
 					if (!friend.getStuck() && num_e4 != 1) {
 						// 75%の確率で逃げる(stuckの場合は逃げられない)
 						this.run();
