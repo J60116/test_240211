@@ -402,20 +402,10 @@ public class User {
 					break;
 				case 2:
 				//Pokemon
-					if(this.countPokemon() <= 1){
-						//ポケモンの数が不足している場合
-						System.out.println("MISS! " + this.getName() + " don't have enough Pokemon.");
+					//メニュー選択が可能か
+					if (!this.canPokemon(friend)){
 						break;
-					}
-					if(this.countCanBattlePokemon() == 0){
-						//Can Battleのポケモンがいない場合
-						System.out.println("MISS! " + this.getName() + " don't have Pokemon that can battle.");
-						break;
-					}
-					if (friend.getStuck()){
-						System.out.println(this.getName() + " cannot switch Pokemon because " + friend.getName() + " is stuck in special move!");
-						break;
-					}
+                    }
 					//入れ替え予定のポケモンを宣言
 					Pokemon substitute = this.selectPokemon();
 					//入れ替えが可能か確認する
@@ -440,11 +430,10 @@ public class User {
 					break;
 				case 3:
 				//Throw PokeBall
-					//対戦相手が野生のポケモンではない場合
-					if(!enemy.isWild()){
-						System.out.println("MISS! Enemy's owner is " + enemy.getOwner());
+					//メニュー選択が可能か
+					if(!this.canThrowPokeBall(enemy)){
 						break;
-					}
+                    }
 					//ボールの種類を入力
 					// String msgBall = "[1]Poke Ball [2]Super Ball [3]Hyper Ball [4]Master Ball: ";
 					this.dispBallQuantity();
@@ -691,20 +680,11 @@ public class User {
 	private void throwPokeBall(Pokemon pokemon, int num) {
 		//ボールの数値情報を文字列に変換
 		String ball = ARRAY_BALL[num][0];
-		//既に捕まえられている場合
-		if(!pokemon.isWild()) {
-			if(pokemon.getOwner().equals(this.getName())) {
-				System.out.println("MISS! " + this.getName() + " has already caught " + pokemon.getName() + ".");
-				return;
-			} else {
-				System.out.println("MISS! " + pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
-				return;
-			}
-		}
-		int quantity = this.getBall()[0] + this.getBall()[1] + this.getBall()[2] + this.getBall()[3];
 		//ボールの所持数が0の場合
-		if(quantity == 0 || this.getBall()[num - 1] == 0){
-			System.out.println("MISS! " + this.getName() + " doesn't have enough ball.");
+		if(this.getBall()[num - 1] == 0){
+			if(!ball.equals(User.getArrayBall()[4][0])){
+				System.out.println("MISS! " + this.getName() + " doesn't have " + ball + ".");
+			}
 			return;
 		}
 		//ボールの所持数を１つ減らす
@@ -790,6 +770,46 @@ public class User {
 		//				break;
 		//			}
 		//		}
+	}
+			
+	//ポケモンを入れ替えできる条件であるか確認する
+	private boolean canPokemon(Pokemon pokemon) {
+		if(this.countPokemon() <= 1){
+			//ポケモンの数が不足している場合
+			System.out.println("MISS! " + this.getName() + " doesn't have enough Pokemon.");
+			return false;
+		}
+		if(this.countCanBattlePokemon() == 0){
+			//Can Battleのポケモンがいない場合
+			System.out.println("MISS! " + this.getName() + " doesn't have Pokemon that can battle.");
+			return false;
+		}
+		if (pokemon.getStuck()){
+			System.out.println("MISS! " + this.getName() + " cannot switch Pokemon because " + pokemon.getName() + " is stuck in special move!");
+			return false;
+		}
+		return true;
+	}
+
+	//ボールを投げられる条件であるか確認する
+	private boolean canThrowPokeBall(Pokemon pokemon) {
+		//既に捕まえられている場合
+		if(!pokemon.isWild()) {
+			if(pokemon.getOwner().equals(this.getName())) {
+				System.out.println("MISS! " + this.getName() + " has already caught " + pokemon.getName() + ".");
+				return false;
+			} else {
+				System.out.println("MISS! " + pokemon.getName() + "'s owner is " + pokemon.getOwner() + ".");
+				return false;
+			}
+		}
+		int quantity = this.getBall()[0] + this.getBall()[1] + this.getBall()[2] + this.getBall()[3];
+		//ボールの所持数が0の場合
+		if(quantity == 0){
+			System.out.println("MISS! " + this.getName() + " doesn't have enough PokeBalls.");
+			return false;
+		}
+		return true;
 	}
 
 	//ポケモンセンターに行く
