@@ -631,6 +631,9 @@ public class User {
 			while (true) {
 				System.out.print("Nickname: ");
 				input = sc.nextLine();
+				if (input.isEmpty()){
+					continue;
+				}
 				String str = input.substring(0, 1).toUpperCase() + input.substring(1);
 				if (str.equals(pokemon.getName())) {
 					System.out.println("ERROR >> Please input nickname except \"" + pokemon.getName() + "\"");
